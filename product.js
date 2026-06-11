@@ -89,16 +89,19 @@ document
   const model =
   sizeSelect.value;
 
-  let cart = JSON.parse(localStorage.getItem("cart"));
+let cart = JSON.parse(localStorage.getItem("cart"));
 
-cart = Array.isArray(cart) ? cart : [];
+if (!Array.isArray(cart)) {
+    cart = [];
+}
 
-  const exist =
-  cart.find(item =>
+console.log("cart =", cart);
+
+const exist = cart.find(item =>
     item.id === productData.id &&
     item.model === model
-  );
-
+);
+  
   if(exist){
 
       exist.quantity += quantity;
