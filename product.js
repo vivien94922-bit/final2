@@ -42,39 +42,79 @@ function requireLogin(redirectTo) {
   return true;
 }
   
-  // ===== 加入購物車 =====
-];
 const sizeSelect = document.getElementById("sizeSelect");
 
 sizeSelect.innerHTML = `
-
-<optgroup label="Apple">
-
 <option>iPhone 17 Pro Max</option>
 <option>iPhone 17 Pro</option>
 <option>iPhone 17 Air</option>
 <option>iPhone 17</option>
-
 <option>iPhone 16 Pro Max</option>
 <option>iPhone 16 Pro</option>
 <option>iPhone 16 Plus</option>
 <option>iPhone 16</option>
-
 <option>iPhone 15 Pro Max</option>
 <option>iPhone 15 Pro</option>
 <option>iPhone 15</option>
-
-</optgroup>
-
-<optgroup label="Samsung">
-
 <option>Galaxy S25 Ultra</option>
 <option>Galaxy S24 Ultra</option>
 <option>Galaxy A56</option>
-
-</optgroup>
-
 `;
+
+document
+.getElementById("addCartBtn")
+.addEventListener("click", () => {
+
+```
+const quantity =
+parseInt(
+  document.querySelector('input[type="number"]').value
+) || 1;
+
+const model =
+sizeSelect.value;
+
+let cart =
+JSON.parse(localStorage.getItem("cart"))
+|| [];
+
+const exist =
+cart.find(
+  item =>
+  item.id === productData.id &&
+  item.model === model
+);
+
+if(exist){
+
+    exist.quantity += quantity;
+
+}else{
+
+    cart.push({
+
+        id: productData.id,
+        name: productData.name,
+        price: productData.price,
+        img: productData.images[0],
+        model: model,
+        quantity: quantity
+    });
+}
+
+localStorage.setItem(
+  "cart",
+  JSON.stringify(cart)
+);
+
+alert(
+  productData.name +
+  " 已加入購物車"
+);
+```
+
+});
+
 
 
 document
