@@ -53,44 +53,48 @@ function requireLogin(redirectTo) {
 }
   
   // ===== 加入購物車 =====
-  document.addEventListener("click", (e) => {
-    const btn = e.target.closest(".add-cart");
-    if (!btn) return;
+  document
+.querySelectorAll(".add-cart-btn")
+.forEach(btn=>{
 
-    if (!requireLogin(window.location.href)) return;
-    const productEl = btn.closest(".product-container");
-    if (!productEl) return;
+    btn.addEventListener("click",function(){
 
-    const { id, name, price, img } = productEl.dataset;
+        const product =
+        this.closest(".product");
 
-    if (id === undefined || name === undefined || price === undefined || img === undefined) {
-      alert("商品資料不完整");
-      return;
-    }
+        const item = {
 
-    const size = document.getElementById("sizeSelect").value;
-    const qtyInput = productEl.querySelector('input[type="number"]');
-    const quantity = parseInt(qtyInput.value) || 1;
+            id: product.dataset.id,
+            name: product.dataset.name,
+            price: parseInt(product.dataset.price),
+            img: product.dataset.img,
+            quantity:1
+        };
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || {};
-    const key = `${id}_${size}`;
+        let cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
 
-    if (cart[key]) {
-      cart[key].quantity += quantity;
-    } else {
-      cart[key] = {
-        id: Number(id),
-        name,
-        price: Number(price),
-        img,
-        size,
-        quantity
-      };
-    }
+        const exist =
+        cart.find(p=>p.id===item.id);
 
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert(` ${name}（${size}）已加入購物車`);
-  });
+        if(exist){
+
+            exist.quantity++;
+
+        }else{
+
+            cart.push(item);
+        }
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+        alert(item.name + " 已加入購物車");
+    });
+
+});
 
   // ===== Tab 切換 =====
   document.querySelectorAll(".tab").forEach(tab => {
