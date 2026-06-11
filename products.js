@@ -610,3 +610,46 @@ const products = [
     images: ["images/15.jpg"]
   },
 ];
+
+document
+.querySelectorAll(".add-cart-btn")
+.forEach(btn=>{
+
+    btn.addEventListener("click",function(){
+
+        const product =
+        this.closest(".product");
+
+        const item = {
+
+            id: product.dataset.id,
+            name: product.dataset.name,
+            price: parseInt(product.dataset.price),
+            img: product.dataset.img,
+            quantity:1
+        };
+
+        let cart =
+        JSON.parse(localStorage.getItem("cart")) || [];
+
+        const exist =
+        cart.find(p=>p.id===item.id);
+
+        if(exist){
+
+            exist.quantity++;
+
+        }else{
+
+            cart.push(item);
+        }
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+        alert(item.name + " 已加入購物車");
+    });
+
+});
