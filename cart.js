@@ -1,6 +1,9 @@
 let cart =
-JSON.parse(localStorage.getItem("cart")) || [];
+JSON.parse(localStorage.getItem("cart"));
 
+if (!Array.isArray(cart)) {
+    cart = [];
+}
 const cartItems =
 document.getElementById("cartItems");
 
