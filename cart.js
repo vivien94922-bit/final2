@@ -36,6 +36,7 @@ function renderCart(){
             <div class="info">
 
                 <h3>${item.name}</h3>
+                <p>${item.model || ""}</p>
 
                 <div class="price">
                     NT$${item.price}
