@@ -1,96 +1,114 @@
-function renderCart() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || {};
-    const container = document.body; // cart-item 原本就直接在 body 底下
-  
-    
-    document.querySelectorAll(".cart-item").forEach(item => item.remove());
-  
-    Object.values(cart).forEach(item => {
-      const div = document.createElement("div");
-      div.className = "cart-item";
-      div.dataset.price = item.price;
-  
-      div.innerHTML = `
-        <img src="${item.img}" alt="${item.name}">
-        <div class="item-info">
-          <p>${item.name}</p>
-          <p>單價：NT$${item.price.toLocaleString()}</p>
-          <div class="quantity-controls">
-            <button class="decrease">-</button>
-            <input type="number" class="quantity" value="${item.quantity}" min="0">
-            <button class="increase">+</button>
-            <button class="remove-btn">刪除</button>
-          </div>
-        </div>
-      `;
-  
-      // 插在總計前面
-      document.querySelector(".total").before(div);
-    });
-  
-    bindCartEvents();
-    updateTotal();
-  }
-  
-  function updateTotal() {
-    let total = 0;
-    document.querySelectorAll(".cart-item").forEach(item => {
-      const price = parseInt(item.dataset.price);
-      const qty = parseInt(item.querySelector(".quantity").value) || 0;
-      total += price * qty;
-    });
-    document.getElementById("totalAmount").textContent = total.toLocaleString();
-  }
-  
-  function bindCartEvents() {
-    document.querySelectorAll(".increase").forEach(btn => {
-      btn.onclick = () => {
-        const input = btn.parentElement.querySelector(".quantity");
-        input.value++;
-        saveCart();
-      };
-    });
-  
-    document.querySelectorAll(".decrease").forEach(btn => {
-      btn.onclick = () => {
-        const input = btn.parentElement.querySelector(".quantity");
-        if (input.value > 0) input.value--;
-        saveCart();
-      };
-    });
-  
-    document.querySelectorAll(".remove-btn").forEach(btn => {
-      btn.onclick = () => {
-        btn.closest(".cart-item").remove();
-        saveCart();
-      };
-    });
-  }
-  
-  function saveCart() {
-    const cart = {};
-    document.querySelectorAll(".cart-item").forEach(item => {
-      const name = item.querySelector("p").innerText;
-      const price = parseInt(item.dataset.price);
-      const img = item.querySelector("img").src;
-      const qty = parseInt(item.querySelector(".quantity").value);
-  
-      if (qty > 0) {
-        cart[name] = { name, price, img, quantity: qty };
-      }
-    });
-  
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateTotal();
-  }
-  
-  document.getElementById("checkoutBtn").addEventListener("click", () => {
-    const total = document.getElementById("totalAmount").textContent;
-    if (total === "0") {
-      alert("您的購物車目前是空的喔！");
-    } else {
-      window.location.href = "check.html";
+let cart =
+JSON.parse(localStorage.getItem("cart")) || [];
+
+const cartItems =
+document.getElementById("cartItems");
+
+function renderCart(){
+
+    if(cart.length===0){
+
+        cartItems.innerHTML=
+        "<div class='empty'>購物車目前沒有商品</div>";
+
+        document.getElementById("totalPrice")
+        .innerText="NT$0";
+
+        return;
     }
-  });
-  document.addEventListener("DOMContentLoaded", renderCart);
+
+    let html="";
+    let total=0;
+
+    cart.forEach((item,index)=>{
+
+        let subtotal =
+        item.price * item.quantity;
+
+        total += subtotal;
+
+        html += `
+
+        <div class="cart-item">
+
+            <img src="${item.img}">
+
+            <div class="info">
+
+                <h3>${item.name}</h3>
+
+                <div class="price">
+                    NT$${item.price}
+                </div>
+
+            </div>
+
+            <div class="quantity">
+
+                <button onclick="decrease(${index})">-</button>
+
+                <span>${item.quantity}</span>
+
+                <button onclick="increase(${index})">+</button>
+
+            </div>
+
+            <div class="subtotal">
+                NT$${subtotal}
+            </div>
+
+            <button
+            class="delete-btn"
+            onclick="removeItem(${index})">
+
+                🗑️
+
+            </button>
+
+        </div>
+
+        `;
+    });
+
+    cartItems.innerHTML = html;
+
+    document.getElementById("totalPrice")
+    .innerText = "NT$" + total;
+}
+
+function increase(index){
+
+    cart[index].quantity++;
+
+    saveCart();
+}
+
+function decrease(index){
+
+    if(cart[index].quantity>1){
+
+        cart[index].quantity--;
+
+        saveCart();
+    }
+}
+
+function removeItem(index){
+
+    cart.splice(index,1);
+
+    saveCart();
+}
+
+function saveCart(){
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    renderCart();
+}
+
+renderCart();
   
