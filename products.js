@@ -1,612 +1,136 @@
+const phoneModels = `
+
+<p><strong>材質</strong></p>
+
+<p>依商品款式採用 TPU 軟邊、PC 硬背板、MagSafe 磁吸模組、IMD 彩印工藝等高品質材質製成，兼顧防摔保護與外觀設計。</p>
+
+<p><strong>適用品牌與型號</strong></p>
+
+<table class="size-table">
+<tr><th>品牌</th><th>型號</th></tr>
+
+<tr><td>Apple</td><td>iPhone 16 Pro Max</td></tr>
+<tr><td>Apple</td><td>iPhone 16 Pro</td></tr>
+<tr><td>Apple</td><td>iPhone 16 Plus</td></tr>
+<tr><td>Apple</td><td>iPhone 16</td></tr>
+<tr><td>Apple</td><td>iPhone 15 Pro Max</td></tr>
+<tr><td>Apple</td><td>iPhone 15 Pro</td></tr>
+<tr><td>Apple</td><td>iPhone 15</td></tr>
+
+<tr><td>Samsung</td><td>Galaxy S25 Ultra</td></tr>
+<tr><td>Samsung</td><td>Galaxy S24 Ultra</td></tr>
+<tr><td>Samsung</td><td>Galaxy A56</td></tr>
+</table>
+`;
+
 const products = [
-  {
-    id: 1,
-    name: "夢幻粉色大衣",
-    price: 1280,
-    desc: "帶給你暖呼呼的冬日氛圍，打造慵懶休閒的穿搭",
-    detail:  `
-    <p><strong>材質</strong></p>
-    <p>Polyester 80% / Wool 20%</p>
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-      <tr>
-        <td>S</td>
-        <td>40</td>
-        <td>96</td>
-        <td>105</td>
-        <td>58</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>42</td>
-        <td>100</td>
-        <td>110</td>
-        <td>59</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>44</td>
-        <td>104</td>
-        <td>115</td>
-        <td>60</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L"],
-    images: ["images/01.jpg"]
-  },
-   {
-    id: 2,
-    name: "百搭基礎牛仔褲",
-    price: 960,
-    desc: "衣櫃裡一定要有的一條牛仔褲，不挑身材的日常款式",
-    detail: `
-    <p><strong>材質</strong></p>
-    <p>Cotton 98% / Spandex 2%</p>
+{
+id:1,
+name:"千禧霓虹．幻彩星際防摔殼",
+price:1280,
+desc:"融合Y2K未來感與炫彩星際元素，隨光線折射展現迷人色彩變化。",
+detail:phoneModels,
+images:["images/01.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>腰圍</th>
-        <th>臀圍</th>
-        <th>褲長</th>
-      </tr>
-      <tr>
-        <td>S</td>
-        <td>64</td>
-        <td>90</td>
-        <td>98</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>68</td>
-        <td>94</td>
-        <td>100</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>72</td>
-        <td>98</td>
-        <td>102</td>
-      </tr>
-      <tr>
-        <td>XL</td>
-        <td>76</td>
-        <td>102</td>
-        <td>104</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L","XL"],
-    images: ["images/02.jpg"]
-  },
-   {
-    id: 3,
-    name: "時尚週限定條紋長裙",
-    price: 840,
-    desc: "時髦剪裁搭配深色條紋，展現精緻氣息",
-    detail: `
-    <p><strong>材質</strong></p>
-    <p>Polyester 100%</p>
+{
+id:2,
+name:"多巴胺女孩．立體笑臉原宿風吊飾殼",
+price:1100,
+desc:"繽紛多巴胺配色搭配立體笑臉吊飾，打造活潑可愛的原宿風格。",
+detail:phoneModels,
+images:["images/02.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>腰圍</th>
-        <th>臀圍</th>
-        <th>裙長</th>
-      </tr>   
-       <tr>
-        <td>F</td>
-        <td>66</td>
-        <td>92</td>
-        <td>80</td>
-      </tr>
-      </table>
-  `,
-    sizes: ["F"],
-    images: ["images/03.jpg"]
-  },
-    {
-    id: 4,
-    name: "學院格紋顯身短裙",
-    price: 590,
-    desc: "經典格紋，甜美的復古學院感",
-    detail:  `
-    <p><strong>材質</strong></p>
-    <p>Polyester 70% / Rayon 30%</p>
+{
+id:3,
+name:"Y2K 辣妹基因．金屬科技星芒吊飾殼",
+price:1280,
+desc:"結合未來科技感與金屬星芒元素，展現獨特Y2K潮流魅力。",
+detail:phoneModels,
+images:["images/03.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>腰圍</th>
-        <th>臀圍</th>
-        <th>裙長</th>
-      </tr>   
-       <tr>
-        <td>S</td>
-        <td>64</td>
-        <td>88</td>
-        <td>33</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>68</td>
-        <td>90</td>
-        <td>34</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>71</td>
-        <td>92</td>
-        <td>35</td>
-      </tr>
-      </table>
-  `,
-    sizes: ["S", "M", "L"],
-    images: ["images/04.jpg"]
-  },
-    {
-    id: 5,
-    name: "質感牛仔夾克",
-    price: 1100,
-    desc: "牛仔元素永不過時，顯身材比例的最佳單品",
-    detail:  `
-    <p><strong>材質</strong></p>
-    <p>Cotton 100%</p>
+{
+id:4,
+name:"少女像素心．電子雞與厚底鞋療癒防摔殼",
+price:999,
+desc:"以電子雞與厚底鞋為靈感，喚醒千禧世代的童年回憶。",
+detail:phoneModels,
+images:["images/04.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-     <tr>
-        <td>S</td>
-        <td>38</td>
-        <td>88</td>
-        <td>56</td>
-        <td>56</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>40</td>
-        <td>92</td>
-        <td>58</td>
-        <td>57</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>42</td>
-        <td>96</td>
-        <td>60</td>
-        <td>58</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L"],
-    images: ["images/05.jpg"]
-  },
-    {
-    id: 6,
-    name: "質感黑色牛仔夾克",
-    price: 1280,
-    desc: "牛仔元素永不過時，顯身材比例的最佳單品",
-    detail:  `
-    <p><strong>材質</strong></p>
-    <p>Cotton 100%</p>
+{
+id:5,
+name:"純粹美學．霧面微透磁吸防摔殼",
+price:960,
+desc:"簡約霧透質感設計，支援磁吸充電，兼具美感與實用性。",
+detail:phoneModels,
+images:["images/05.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-      <tr>
-        <td>S</td>
-        <td>38</td>
-        <td>88</td>
-        <td>56</td>
-        <td>56</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>40</td>
-        <td>92</td>
-        <td>58</td>
-        <td>57</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>42</td>
-        <td>96</td>
-        <td>60</td>
-        <td>58</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L"],
-    images: ["images/06.jpg"]
-  },
-    {
-    id: 7,
-    name: "紳士透膚襯衫",
-    price: 1280,
-    desc: "簡約日常的百搭單品",
-    detail:   `
-    <p><strong>材質</strong></p>
-    <p>Polyester 100%</p>
+{
+id:6,
+name:"極簡冷冽．鈦空拉絲紋防摔殼",
+price:840,
+desc:"低調拉絲紋理結合科技金屬風格，展現俐落專業質感。",
+detail:phoneModels,
+images:["images/06.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-      <tr>
-        <td>S</td>
-        <td>38</td>
-        <td>88</td>
-        <td>56</td>
-        <td>56</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>40</td>
-        <td>92</td>
-        <td>58</td>
-        <td>57</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>42</td>
-        <td>96</td>
-        <td>60</td>
-        <td>58</td>
-      </tr>
-       <tr>
-        <td>XL</td>
-        <td>44</td>
-        <td>100</td>
-        <td>62</td>
-        <td>59</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L","XL"],
-    images: ["images/07.jpg"]
-  },
-    {
-    id: 8,
-    name: "超前衛運動上衣",
-    price: 590,
-    desc: "絕不會出錯的T-shirt，本店最熱賣的上衣款式",
-    detail:    `
-    <p><strong>材質</strong></p>
-    <p>Cotton 100%</p>
+{
+id:7,
+name:"純白秩序．啞光霧面 MagSafe 磁吸殼",
+price:590,
+desc:"純白霧面設計搭配MagSafe磁吸技術，打造極簡生活美學。",
+detail:phoneModels,
+images:["images/07.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-     <tr>
-        <td>S</td>
-        <td>38</td>
-        <td>88</td>
-        <td>56</td>
-        <td>13</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>40</td>
-        <td>92</td>
-        <td>58</td>
-        <td>14</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>42</td>
-        <td>96</td>
-        <td>60</td>
-        <td>15</td>
-      </tr>
-       <tr>
-        <td>XL</td>
-        <td>44</td>
-        <td>100</td>
-        <td>62</td>
-        <td>16</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L","XL"],      
-    images: ["images/08.jpg"]
-  },
-    {
-    id: 9,
-    name: "象牙白打底上衣",
-    price: 690,
-    desc: "品牌打版T-shirt，簡單但不普通，值得一試的質感上衣",
-    detail:   `
-    <p><strong>材質</strong></p>
-    <p>Cotton 100%</p>
+{
+id:8,
+name:"經典工藝．午夜藍荔枝紋皮革保護殼",
+price:999,
+desc:"細膩荔枝紋皮革與午夜藍配色，展現成熟沉穩的質感風格。",
+detail:phoneModels,
+images:["images/08.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-      <tr>
-        <td>S</td>
-        <td>38</td>
-        <td>88</td>
-        <td>56</td>
-        <td>13</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>40</td>
-        <td>92</td>
-        <td>58</td>
-        <td>14</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>42</td>
-        <td>96</td>
-        <td>60</td>
-        <td>15</td>
-      </tr>
-       <tr>
-        <td>XL</td>
-        <td>44</td>
-        <td>100</td>
-        <td>62</td>
-        <td>16</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L","XL"],
-    images: ["images/09.jpg"]
-  },
-    {
-    id: 10,
-    name: "復古垂感束腳工裝褲",
-    price: 690,
-    desc: "垂墜感與挺度同時兼具的工裝褲，品牌隱藏的熱賣款",
-    detail:  `
-    <p><strong>材質</strong></p>
-    <p>Polyseter 65% / Cotton 35%</p>
+{
+id:9,
+name:"森林物語．暖心手繪小鹿插畫殼",
+price:1280,
+desc:"溫暖森林系插畫設計，搭配可愛小鹿圖樣，帶來療癒氛圍。",
+detail:phoneModels,
+images:["images/09.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>腰圍</th>
-        <th>臀圍</th>
-        <th>褲長</th>
-      </tr>
-      <tr>
-        <td>S</td>
-        <td>64</td>
-        <td>90</td>
-        <td>98</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>68</td>
-        <td>94</td>
-        <td>100</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>72</td>
-        <td>98</td>
-        <td>102</td>
-      </tr>
-      <tr>
-        <td>XL</td>
-        <td>76</td>
-        <td>102</td>
-        <td>104</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L","XL"],
-    images: ["images/10.jpg"]
-  },
-    {
-    id: 11,
-    name: "男裝天絲彈力直筒卡其褲",
-    price: 730,
-    desc: "低調百搭的褲型，穿起來舒適度極佳",
-    detail:  `
-    <p><strong>材質</strong></p>
-    <p>Tencel 60% / Cotton 35% / Spandex 5%</p>
+{
+id:10,
+name:"森林讀卡冊：小狐狸與雛菊",
+price:1100,
+desc:"結合讀卡夾功能與森林系插畫，兼顧美感與便利性。",
+detail:phoneModels,
+images:["images/10.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>腰圍</th>
-        <th>臀圍</th>
-        <th>褲長</th>
-      </tr>
-      <tr>
-        <td>S</td>
-        <td>64</td>
-        <td>90</td>
-        <td>98</td>
-      </tr>
-      <tr>
-        <td>M</td>
-        <td>68</td>
-        <td>94</td>
-        <td>100</td>
-      </tr>
-      <tr>
-        <td>L</td>
-        <td>72</td>
-        <td>98</td>
-        <td>102</td>
-      </tr>
-      <tr>
-        <td>XL</td>
-        <td>76</td>
-        <td>102</td>
-        <td>104</td>
-      </tr>
-    </table>
-  `,
-    sizes: ["S", "M", "L","XL"],
-    images: ["images/11.jpg"]
-    },
-  
-    {
-    id: 12,
-    name: "亮鑽百褶網紗白色長裙",
-    price: 730,
-    desc: "充滿亮點的裙裝款式，為穿搭創造華麗的個性",
-    detail: `
-    <p><strong>材質</strong></p>
-    <p>Polyester 100%</p>
+{
+id:11,
+name:"星際漫遊記：冒險起航",
+price:1280,
+desc:"以浩瀚宇宙與太空探索為主題，打造充滿想像力的設計。",
+detail:phoneModels,
+images:["images/11.png"]
+},
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>腰圍</th>
-        <th>臀圍</th>
-        <th>裙長</th>
-      </tr>   
-       <tr>
-        <td>F</td>
-        <td>66</td>
-        <td>92</td>
-        <td>80</td>
-      </tr>
-      </table>
-  `,
-    sizes: ["F"],
-    images: ["images/12.jpg"]
-  },
-    {
-    id: 13,
-    name: "歐美紫色西裝外套",
-    price: 1190,
-    desc: "穿上自帶氣場的西裝外套，非常時髦的剪裁設計",
-    detail:   `
-    <p><strong>材質</strong></p>
-    <p>Polyester 75% / Rayon 25%</p>
+{
+id:12,
+name:"貓咪散步中：繽紛插畫小鎮",
+price:999,
+desc:"可愛貓咪漫步於童話小鎮之中，充滿溫馨與童趣氛圍。",
+detail:phoneModels,
+images:["images/12.png"]
+}
 
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-      <tr>
-        <td>F</td>
-        <td>42</td>
-        <td>94</td>
-        <td>60</td>
-        <td>58</td>
-    </tr>
-      </table>
-  `,
-    sizes: ["F"],
-    images: ["images/13.jpg"]
-  },
-    {
-    id: 14,
-    name: "斜肩氣質荷葉邊上衣",
-    price: 350,
-    desc: "除了斜肩也能拉成平口上衣來穿，依照心情自由變換穿法",
-    detail:   `
-    <p><strong>材質</strong></p>
-    <p>Polyester 100%
-
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-      <tr>
-        <td>F</td>
-        <td>36</td>
-        <td>92</td>
-        <td>50</td>
-        <td>13</td>
-    </tr>
-      </table>
-  `,
-    sizes: ["F"],
-    images: ["images/14.jpg"]
-  },
-   {
-    id: 15,
-    name: "短板聯名渲染上衣",
-    price: 440,
-    desc: "穿上帶你回到千禧年，渲染設計獨具特色",
-    detail:  `
-    <p><strong>材質</strong></p>
-    <p>Cotton 100%
-
-    <p><strong>尺寸表（cm）</strong></p>
-    <table class="size-table">
-      <tr>
-        <th>Size</th>
-        <th>肩寬</th>
-        <th>胸圍</th>
-        <th>衣長</th>
-        <th>袖長</th>
-      </tr>
-      <tr>
-        <td>F</td>
-        <td>36</td>
-        <td>94</td>
-        <td>40</td>
-        <td>13</td>
-    </tr>
-      </table>
-  `,
-    sizes: ["F"],
-    images: ["images/15.jpg"]
-  },
 ];
