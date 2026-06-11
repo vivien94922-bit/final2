@@ -7,12 +7,20 @@ const phoneModels = `
 <p><strong>適用品牌與型號</strong></p>
 
 <table class="size-table">
-<tr><th>品牌</th><th>型號</th></tr>
+<tr>
+<th>品牌</th>
+<th>型號</th>
+</tr>
+<tr><td>Apple</td><td>iPhone 17 Pro Max</td></tr>
+<tr><td>Apple</td><td>iPhone 17 Pro</td></tr>
+<tr><td>Apple</td><td>iPhone 17 Air</td></tr>
+<tr><td>Apple</td><td>iPhone 17</td></tr>
 
 <tr><td>Apple</td><td>iPhone 16 Pro Max</td></tr>
 <tr><td>Apple</td><td>iPhone 16 Pro</td></tr>
 <tr><td>Apple</td><td>iPhone 16 Plus</td></tr>
 <tr><td>Apple</td><td>iPhone 16</td></tr>
+
 <tr><td>Apple</td><td>iPhone 15 Pro Max</td></tr>
 <tr><td>Apple</td><td>iPhone 15 Pro</td></tr>
 <tr><td>Apple</td><td>iPhone 15</td></tr>
@@ -21,7 +29,7 @@ const phoneModels = `
 <tr><td>Samsung</td><td>Galaxy S24 Ultra</td></tr>
 <tr><td>Samsung</td><td>Galaxy A56</td></tr>
 </table>
-`;
+;
 
 const products = [
 
