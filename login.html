@@ -77,6 +77,15 @@
     </div>
 
 </div>
+<script>
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+    e.preventDefault();
 
+    // 假設登入成功
+    localStorage.setItem("isLogin", "true");
+
+    window.location.href = "member.html";
+});
+</script>
 </body>
 </html>
