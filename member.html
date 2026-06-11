@@ -500,6 +500,14 @@
   </div>
 
   <script>
+    
+const isLogin = localStorage.getItem("isLogin");
+
+if(!isLogin){
+    alert("請先登入會員");
+    window.location.href = "login.html";
+}
+    
     /* ==================== 頁面切換 ==================== */
     function showSection(id) {
       document.querySelectorAll('.content-section').forEach(section => {
