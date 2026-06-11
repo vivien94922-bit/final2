@@ -89,10 +89,9 @@ document
   const model =
   sizeSelect.value;
 
-  let cart =
-  JSON.parse(
-  localStorage.getItem("cart")
-  ) || [];
+  let cart = JSON.parse(localStorage.getItem("cart"));
+
+cart = Array.isArray(cart) ? cart : [];
 
   const exist =
   cart.find(item =>
