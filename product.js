@@ -80,7 +80,7 @@ document
 .getElementById("addCartBtn")
 .addEventListener("click", () => {
 
-```
+
   const quantity =
   parseInt(
   document.querySelector('input[type="number"]').value
@@ -126,7 +126,7 @@ document
     productData.name +
     " 已加入購物車"
   );
-```
+
 
 });
 
@@ -135,7 +135,7 @@ document
 .querySelectorAll(".tab")
 .forEach(tab => {
 
-```
+
 tab.addEventListener("click", () => {
 
   document
@@ -154,7 +154,6 @@ tab.addEventListener("click", () => {
   .getElementById(tab.dataset.tab)
   .classList.add("active");
 });
-```
 
 });
 
@@ -176,7 +175,7 @@ localStorage.getItem(
 
 if (!productFeedbacks) {
 
-```
+
 productFeedbacks =
 reviews[productId] || [];
 
@@ -184,13 +183,13 @@ localStorage.setItem(
   `feedbacks_${productId}`,
   JSON.stringify(productFeedbacks)
 );
-```
+
 
 }
 
 function renderFeedbacks() {
 
-```
+
 feedbackContainer.innerHTML = "";
 
 if(productFeedbacks.length === 0){
@@ -221,7 +220,7 @@ if(productFeedbacks.length === 0){
 
   });
 }
-```
+
 
 }
 
@@ -230,7 +229,7 @@ renderFeedbacks();
 submitFeedbackButton
 .addEventListener("click", () => {
 
-```
+
 const name =
 document.getElementById(
 "feedback-name").value;
@@ -268,7 +267,7 @@ document.getElementById(
 "feedback-text").value = "";
 
 renderFeedbacks();
-```
+
 
 });
 
@@ -277,14 +276,14 @@ document
 .getElementById("shipping")
 .innerHTML = ` <h3>配送方式</h3> <p>宅配</p> <p>7-ELEVEN 取貨</p> <p>全家取貨</p>
 
-```
+
 <h3>付款方式</h3>
 <p>Apple Pay</p>
 <p>LINE Pay</p>
 <p>信用卡付款</p>
 <p>銀行轉帳</p>
 <p>超商取貨付款</p>
-```
+
 
 `;
 
