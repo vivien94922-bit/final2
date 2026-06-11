@@ -50,7 +50,6 @@ sizeSelect.innerHTML = `
 
   <optgroup label="Apple">
 
-```
 <option>iPhone 17 Pro Max</option>
 <option>iPhone 17 Pro</option>
 <option>iPhone 17 Air</option>
@@ -64,17 +63,14 @@ sizeSelect.innerHTML = `
 <option>iPhone 15 Pro Max</option>
 <option>iPhone 15 Pro</option>
 <option>iPhone 15</option>
-```
 
   </optgroup>
 
   <optgroup label="Samsung">
 
-```
 <option>Galaxy S25 Ultra</option>
 <option>Galaxy S24 Ultra</option>
 <option>Galaxy A56</option>
-```
 
   </optgroup>
   `;
