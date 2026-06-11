@@ -2,7 +2,7 @@ const phoneModels = `
 
 <p><strong>材質</strong></p>
 
-<p>依商品款式採用 TPU 軟邊、PC 硬背板、MagSafe 磁吸模組、IMD 彩印工藝等高品質材質製成，兼顧防摔保護與外觀設計。</p>
+<p>TPU 軟邊、PC 硬背板、MagSafe 磁吸模組、IMD 彩印工藝製成。</p>
 
 <p><strong>適用品牌與型號</strong></p>
 
@@ -133,4 +133,3 @@ detail:phoneModels,
 images:["images/12.png"]
 }
 
-];
