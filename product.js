@@ -26,16 +26,6 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("mainImage").src = productData.images[0];
   document.getElementById("mainImage").alt = productData.name;
 
-  // ===== 填充尺寸選單 =====
-  const sizeSelect = document.getElementById("sizeSelect");
-  sizeSelect.innerHTML = "";
-  productData.sizes.forEach(size => {
-    const option = document.createElement("option");
-    option.value = size;
-    option.textContent = size;
-    sizeSelect.appendChild(option);
-  });
-
    // ===== 登入檢查 =====
 function requireLogin(redirectTo) {
   if (localStorage.getItem("isLogin") !== "true") {
@@ -53,48 +43,76 @@ function requireLogin(redirectTo) {
 }
   
   // ===== 加入購物車 =====
-  document
-.querySelectorAll(".add-cart-btn")
-.forEach(btn=>{
+ const sizeSelect = document.getElementById("sizeSelect");
 
-    btn.addEventListener("click",function(){
+sizeSelect.innerHTML = `
 
-        const product =
-        this.closest(".product");
+<option>iPhone 16 Pro Max</option>
+<option>iPhone 16 Pro</option>
+<option>iPhone 16 Plus</option>
+<option>iPhone 16</option>
+<option>iPhone 15 Pro Max</option>
+<option>iPhone 15 Pro</option>
+<option>iPhone 15</option>
+<option>Galaxy S25 Ultra</option>
+<option>Galaxy S24 Ultra</option>
+<option>Galaxy A56</option>
+`;
 
-        const item = {
+document
+.getElementById("addCartBtn")
+.addEventListener("click", () => {
 
-            id: product.dataset.id,
-            name: product.dataset.name,
-            price: parseInt(product.dataset.price),
-            img: product.dataset.img,
-            quantity:1
-        };
+```
+const quantity =
+parseInt(
+  document.querySelector('input[type="number"]').value
+) || 1;
 
-        let cart =
-        JSON.parse(localStorage.getItem("cart")) || [];
+const model =
+sizeSelect.value;
 
-        const exist =
-        cart.find(p=>p.id===item.id);
+let cart =
+JSON.parse(localStorage.getItem("cart"))
+|| [];
 
-        if(exist){
+const exist =
+cart.find(
+  item =>
+  item.id === productData.id &&
+  item.model === model
+);
 
-            exist.quantity++;
+if(exist){
 
-        }else{
+    exist.quantity += quantity;
 
-            cart.push(item);
-        }
+}else{
 
-        localStorage.setItem(
-            "cart",
-            JSON.stringify(cart)
-        );
+    cart.push({
 
-        alert(item.name + " 已加入購物車");
+        id: productData.id,
+        name: productData.name,
+        price: productData.price,
+        img: productData.images[0],
+        model: model,
+        quantity: quantity
     });
+}
+
+localStorage.setItem(
+  "cart",
+  JSON.stringify(cart)
+);
+
+alert(
+  productData.name +
+  " 已加入購物車"
+);
+```
 
 });
+
 
   // ===== Tab 切換 =====
   document.querySelectorAll(".tab").forEach(tab => {
