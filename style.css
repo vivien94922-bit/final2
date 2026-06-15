@@ -236,7 +236,8 @@ nav a:hover {
   font-weight: bold;
 }
 
-.menu-item {
+.menu-item p {
+  color: #ddd;
   display: flex;
   justify-content: center;
 }
