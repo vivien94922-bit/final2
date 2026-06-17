@@ -29,7 +29,7 @@ private String adminOrderEscapeHtml(String value) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
   <style>
-    body { font-family: "Oxanium","Noto Sans TC", sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; display: flex; min-height: 100vh; }
+    body { font-family: Oxanium,Noto Sans TC, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; display: flex; min-height: 100vh; }
     
     /* 側邊欄樣式 */
     .admin-sidebar { width: 220px; background-color: #222; color: white; padding-top: 20px; }
