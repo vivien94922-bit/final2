@@ -8,11 +8,11 @@
 
     <!-- 搜尋 -->
     <div class="search-wrapper">
-      <img src="images/search.png" id="searchIcon">
+      <img src="../images/search.png" id="searchIcon">
 
       <div class="search-box" id="searchBox">
         <div class="search-input">
-          <img src="images/search.png">
+          <img src="../images/search.png">
 
           <input type="text" id="searchInput" placeholder="搜尋商品...">
 
@@ -23,7 +23,7 @@
 
     <!-- 選單 -->
     <div class="menu-wrapper">
-      <img src="images/suitcases.png" id="menuIcon">
+      <img src="../images/suitcases.png" id="menuIcon">
 
       <div class="menu-box" id="menuBox">
         <a href="JSP/travel.jsp" class="menu-item">旅行用
@@ -36,10 +36,10 @@
       </div>
     </div>
 
-    <a href="JSP/about.jsp"><img src="images/info.png"></a>
-    <a href="JSP/member.jsp"><img src="images/user.png"></a>
-    <a href="JSP/cart.jsp"><img src="images/shopping_cart.png"></a>
-    <a href="JSP/dmin_login.jsp"><img src="images/tool.png"></a>
+    <a href="JSP/about.jsp"><img src="../images/info.png"></a>
+    <a href="JSP/member.jsp"><img src="../images/user.png"></a>
+    <a href="JSP/cart.jsp"><img src="../images/shopping_cart.png"></a>
+    <a href="JSP/dmin_login.jsp"><img src="../images/tool.png"></a>
 
   </div>
 </header>
