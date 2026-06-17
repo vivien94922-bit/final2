@@ -371,7 +371,7 @@ while(rs2.next()){
 <h2>登機用 Boarding</h2>
 <div class="product-grid">
 <%
-PreparedStatement psTop = con2.prepareStatement("SELECT * FROM product WHERE category = 'plane' LIMIT 3");
+PreparedStatement psTop = con2.prepareStatement("SELECT * FROM product WHERE category = 'boarding' LIMIT 3");
 ResultSet rsTop = psTop.executeQuery();
 
 while(rsTop.next()){
