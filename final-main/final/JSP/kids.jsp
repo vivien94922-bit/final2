@@ -8,11 +8,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>親子友善 | VANTERA</title>
-<link rel="stylesheet" href="CSS/style.css">
+<link rel="stylesheet" href="../CSS/style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&family=Oxanium&display=swap" rel="stylesheet">
-<script src="JavaScript/script.js" defer></script>
+<script src="../JavaScript/script.js" defer></script>
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -57,7 +57,7 @@ ResultSet rs = ps.executeQuery();
 
       </a>
 
-      <img src="images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
+      <img src="../images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
       <button class="add-cart-btn">加入購物車</button>
 
     </div>
@@ -81,7 +81,7 @@ ResultSet rs = ps.executeQuery();
 <button id="backToTop" title="回到頂部">↑</button>
 
 <!-- Cookie 同意提示（組員D：個資法/Cookie） -->
-<script src="JavaScript/cookie-consent.js" defer></script>
+<script src="../JavaScript/cookie-consent.js" defer></script>
 <script>
     // 頁面載入時自動執行：同步收藏狀態
     document.addEventListener("DOMContentLoaded", () => {
