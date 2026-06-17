@@ -114,7 +114,7 @@ body{
       <button class="login-btn" type="submit">登入</button>
     </form>
 
-    <div class="register-link" onclick="location.href='register.jsp'">
+    <div class="register-link" onclick="location.href='JSP/register.jsp'">
   還沒有帳號？立即註冊
 </div>
   </div>
