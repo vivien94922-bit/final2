@@ -23,7 +23,7 @@
 
     <!-- 選單 -->
     <div class="menu-wrapper">
-      <img src="images/clothes.png" id="menuIcon">
+      <img src="images/suitcases.png" id="menuIcon">
 
       <div class="menu-box" id="menuBox">
         <a href="travel.jsp" class="menu-item">旅行用
