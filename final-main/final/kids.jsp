@@ -47,7 +47,7 @@ ResultSet rs = ps.executeQuery();
         <div class="product-info">
           <div class="product-name" style="line-height: 1.4; min-height: 48px; text-align: left;">
               <span style="font-weight: 600; display: block; color: #222;"><%= escapeHtml(engName) %></span>
-              <span style="font-size: 14px; color: #666; display: block; margin-top: 2px;"><%= escapeHtml(chName) %></span>
+              <span style="font-size: 20px; color: #666; display: block; margin-top: 2px;"><%= escapeHtml(chName) %></span>
           </div>
           <div class="product-price">NT$<%= price %></div>
         </div>
