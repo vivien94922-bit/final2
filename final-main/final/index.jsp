@@ -333,122 +333,105 @@ if (session.getAttribute("intro_shown") == null) {
 <section class="products">
 
 <h2>熱門商品</h2>
-
 <div class="product-grid">
-
 <%
 Connection con2 = getConnection();
-PreparedStatement ps2 = con2.prepareStatement(
-    "SELECT * FROM product LIMIT 3"
-);
+PreparedStatement ps2 = con2.prepareStatement("SELECT * FROM product LIMIT 3");
 ResultSet rs2 = ps2.executeQuery();
 
 while(rs2.next()){
+    String fullName = rs2.getString("name");
+    // 🔍 尋找最後一個英文跟中文交界的空格
+    int splitIdx = fullName.lastIndexOf(" "); 
+    String engName = (splitIdx != -1) ? fullName.substring(0, splitIdx) : fullName;
+    String chName = (splitIdx != -1) ? fullName.substring(splitIdx + 1) : "";
 %>
-
 <div class="product"
      data-id="<%= rs2.getInt("id") %>"
-     data-name="<%=escapeHtml(rs2.getString("name"))%>"
+     data-name="<%=escapeHtml(fullName)%>"
      data-price="<%= rs2.getInt("price") %>"
      data-img="<%=escapeHtml(rs2.getString("image"))%>">
     
     <a href="product.jsp?id=<%= rs2.getInt("id") %>" class="product-link">
-        <img src="<%=escapeHtml(rs2.getString("image"))%>" alt="<%=escapeHtml(rs2.getString("name"))%>">
+        <img src="<%=escapeHtml(rs2.getString("image"))%>" alt="<%=escapeHtml(fullName)%>">
         <div class="product-info">
-            <div class="product-name"><%=escapeHtml(rs2.getString("name"))%></div>
+            <div class="product-name" style="line-height: 1.4; min-height: 48px; text-align: left;">
+                <span style="font-weight: 600; display: block; color: #222;"><%= escapeHtml(engName) %></span>
+                <span style="font-size: 20px; color: #666; display: block; margin-top: 2px;"><%= escapeHtml(chName) %></span>
+            </div>
             <div class="product-price">NT$<%= rs2.getInt("price") %></div>
         </div>
     </a>
-
     <img src="/final/final/images/heart.png" class="favorite-icon" alt="收藏" onclick="toggleFavorite(event, this)">
-
     <button class="add-cart-btn">加入購物車</button>
 </div>
-
-<%
-}
-rs2.close();
-ps2.close();
-%>
-
+<% } rs2.close(); ps2.close(); %>
 </div>
 
-<h2>旅行Travel</h2>
-
+<h2>登機用 Boarding</h2>
 <div class="product-grid">
-
 <%
-PreparedStatement psTop = con2.prepareStatement(
-     "SELECT * FROM product WHERE category = 'plane' LIMIT 3"
-);
+PreparedStatement psTop = con2.prepareStatement("SELECT * FROM product WHERE category = 'plane' LIMIT 3");
 ResultSet rsTop = psTop.executeQuery();
 
 while(rsTop.next()){
+    String fullName = rsTop.getString("name");
+    int splitIdx = fullName.lastIndexOf(" "); 
+    String engName = (splitIdx != -1) ? fullName.substring(0, splitIdx) : fullName;
+    String chName = (splitIdx != -1) ? fullName.substring(splitIdx + 1) : "";
 %>
-
 <div class="product" data-id="<%= rsTop.getInt("id") %>">
     <a href="product.jsp?id=<%= rsTop.getInt("id") %>" class="product-link">
-        <img src="<%=escapeHtml(rsTop.getString("image"))%>" alt="<%=escapeHtml(rsTop.getString("name"))%>">
+        <img src="<%=escapeHtml(rsTop.getString("image"))%>" alt="<%=escapeHtml(fullName)%>">
         <div class="product-info">
-            <div class="product-name"><%=escapeHtml(rsTop.getString("name"))%></div>
+            <div class="product-name" style="line-height: 1.4; min-height: 48px; text-align: left;">
+                <span style="font-weight: 600; display: block; color: #222;"><%= escapeHtml(engName) %></span>
+                <span style="font-size: 20px; color: #666; display: block; margin-top: 2px;"><%= escapeHtml(chName) %></span>
+            </div>
             <div class="product-price">NT$<%= rsTop.getInt("price") %></div>
         </div>
     </a>
-
-    <img src="../images/heart.png"
-         class="favorite-icon"
-         onclick="toggleFavorite(event, this)">
-
+    <img src="../images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
     <button class="add-cart-btn">加入購物車</button>
 </div>
-
-<%
-}
-rsTop.close();
-psTop.close();
-%>
-
+<% } rsTop.close(); psTop.close(); %>
 </div>
-<h2>登機Boarding</h2>
 
+<h2>旅行 Travel Series</h2>
 <div class="product-grid">
-
 <%
-PreparedStatement psBottom = con2.prepareStatement(
-    "SELECT * FROM product WHERE category = 'travel' LIMIT 3"
-);
+PreparedStatement psBottom = con2.prepareStatement("SELECT * FROM product WHERE category = 'travel' LIMIT 3");
 ResultSet rsBottom = psBottom.executeQuery();
 
 while(rsBottom.next()){
+    String fullName = rsBottom.getString("name");
+    int splitIdx = fullName.lastIndexOf(" "); 
+    String engName = (splitIdx != -1) ? fullName.substring(0, splitIdx) : fullName;
+    String chName = (splitIdx != -1) ? fullName.substring(splitIdx + 1) : "";
 %>
-
 <div class="product" data-id="<%= rsBottom.getInt("id") %>">
     <a href="product.jsp?id=<%= rsBottom.getInt("id") %>" class="product-link">
-        <img src="<%=escapeHtml(rsBottom.getString("image"))%>" alt="<%=escapeHtml(rsBottom.getString("name"))%>">
+        <img src="<%=escapeHtml(rsBottom.getString("image"))%>" alt="<%=escapeHtml(fullName)%>">
         <div class="product-info">
-            <div class="product-name"><%=escapeHtml(rsBottom.getString("name"))%></div>
+            <div class="product-name" style="line-height: 1.4; min-height: 48px; text-align: left;">
+                <span style="font-weight: 600; display: block; color: #222;"><%= escapeHtml(engName) %></span>
+                <span style="font-size: 20px; color: #666; display: block; margin-top: 2px;"><%= escapeHtml(chName) %></span>
+            </div>
             <div class="product-price">NT$<%= rsBottom.getInt("price") %></div>
         </div>
     </a>
-
-    <img src="../images/heart.png"
-         class="favorite-icon"
-         onclick="toggleFavorite(event, this)">
-
+    <img src="../images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
     <button class="add-cart-btn">加入購物車</button>
 </div>
-
 <%
 }
 rsBottom.close();
 psBottom.close();
 con2.close();
 %>
-
 </div>
 
 </section>
-
 <footer>
   <p>聯絡我們｜ventera2026@gmail.com</p>
   <p>© 2026 VENTERA. All rights reserved.</p>
