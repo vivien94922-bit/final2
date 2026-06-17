@@ -20,7 +20,7 @@
 <%@ include file="header.jsp" %>
 
 <section class="products">
-  <h2>旅行用 Travel</h2>
+  <h2>長途旅行 Check-In Travel</h2>
 
   <div class="product-grid">
 
@@ -39,22 +39,33 @@ try {
     rs = ps.executeQuery();
 
     while(rs.next()){
+        int id = rs.getInt("id");
+        String fullName = rs.getString("name");
+        int price = rs.getInt("price");
+        String image = rs.getString("image");
+
+        // 🔍 自動尋找最後一個英文跟中文交界的空格進行拆分
+        int splitIdx = fullName.lastIndexOf(" "); 
+        String engName = (splitIdx != -1) ? fullName.substring(0, splitIdx) : fullName;
+        String chName = (splitIdx != -1) ? fullName.substring(splitIdx + 1) : "";
 %>
 
     <div class="product"
-         data-id="<%= rs.getInt("id") %>"
-         data-name="<%=escapeHtml(rs.getString("name"))%>"
-         data-price="<%= rs.getInt("price") %>"
-         data-img="<%=escapeHtml(rs.getString("image"))%>">
+         data-id="<%= id %>"
+         data-name="<%=escapeHtml(fullName)%>"
+         data-price="<%= price %>"
+         data-img="<%=escapeHtml(image)%>">
 
-      <!-- ✅ 改 JSP，不要 html -->
-      <a href="product.jsp?id=<%= rs.getInt("id") %>" class="product-link">
+      <a href="product.jsp?id=<%= id %>" class="product-link">
 
-        <img src="<%=escapeHtml(rs.getString("image"))%>" alt="<%=escapeHtml(rs.getString("name"))%>">
+        <img src="<%=escapeHtml(image)%>" alt="<%=escapeHtml(fullName)%>">
 
         <div class="product-info">
-          <div class="product-name"><%=escapeHtml(rs.getString("name"))%></div>
-          <div class="product-price">NT$<%= rs.getInt("price") %></div>
+          <div class="product-name" style="line-height: 1.4; min-height: 48px; text-align: left;">
+              <span style="font-weight: 600; display: block; color: #222;"><%= escapeHtml(engName) %></span>
+              <span style="font-size: 14px; color: #666; display: block; margin-top: 2px;"><%= escapeHtml(chName) %></span>
+          </div>
+          <div class="product-price">NT$<%= price %></div>
         </div>
 
       </a>
