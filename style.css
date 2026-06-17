@@ -4,7 +4,8 @@ body {
   background-size: cover;        
   background-position: center;   
   background-repeat: no-repeat;  
-  font-family: "Montserrat", sans-serif;}
+  font-family: "Oxanium", "Noto Sans TC", sans-serif;
+}
 
 .intro {
   position: fixed;
