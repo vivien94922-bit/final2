@@ -19,7 +19,7 @@ if (keyword != null && !keyword.trim().equals("")) {
     while(rs.next()){
 %>
         <div class="search-item">
-          <a href="product.jsp?id=<%= rs.getInt("id") %>">
+          <a href="JSP/product.jsp?id=<%= rs.getInt("id") %>">
             <%=escapeHtml(rs.getString("name"))%>
           </a>
         </div>
