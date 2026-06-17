@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>登機用 |VANTERA</title>
+<title>登機用 | VANTERA</title>
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
 </head>
@@ -26,7 +26,7 @@ ResultSet rs = ps.executeQuery();
 
   <div class="product-grid">
 
-  <%
+<%
   while(rs.next()){
       int id = rs.getInt("id");
       String fullName = rs.getString("name");
@@ -39,7 +39,7 @@ ResultSet rs = ps.executeQuery();
       String chName = (splitIdx != -1) ? fullName.substring(splitIdx + 1) : "";
   %>
 
-    <div class="product" data-id="<%= id %>">
+    <div class="product" data-id="<%= id %>" data-name="<%= escapeHtml(fullName) %>" data-price="<%= price %>" data-img="<%= escapeHtml(image) %>">
       <a href="product.jsp?id=<%= id %>" class="product-link">
 
         <img src="<%=escapeHtml(image)%>" alt="<%=escapeHtml(fullName)%>">
@@ -47,14 +47,14 @@ ResultSet rs = ps.executeQuery();
         <div class="product-info">
           <div class="product-name" style="line-height: 1.4; min-height: 48px; text-align: left;">
               <span style="font-weight: 600; display: block; color: #222;"><%= escapeHtml(engName) %></span>
-              <span style="font-size: 14px; color: #666; display: block; margin-top: 2px;"><%= escapeHtml(chName) %></span>
+              <span style="font-size: 20px; color: #666; display: block; margin-top: 2px;"><%= escapeHtml(chName) %></span>
           </div>
           <div class="product-price">NT$<%= price %></div>
         </div>
 
       </a>
 
-      <img src="images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
+      <img src="images/heart.png" class="favorite-icon" alt="收藏" onclick="toggleFavorite(event, this)">
       <button class="add-cart-btn">加入購物車</button>
 
     </div>
@@ -77,7 +77,6 @@ ResultSet rs = ps.executeQuery();
 
 <button id="backToTop" title="回到頂部">↑</button>
 
-<!-- Cookie 同意提示（組員D：個資法/Cookie） -->
 <script src="cookie-consent.js" defer></script>
 <script>
     // 頁面載入時自動執行：同步收藏狀態
@@ -85,16 +84,14 @@ ResultSet rs = ps.executeQuery();
         fetch("favorite_list.jsp")
             .then(res => res.json())
             .then(data => {
-                // 將後端回傳的 ID 整理成陣列 (假設回傳結構是 [{id: 1}, {id: 2}])
+                if (!data) return;
                 const favoriteIds = data.map(item => item.id);
 
-                // 檢查頁面上每一個產品卡片
                 document.querySelectorAll(".product").forEach(product => {
                     const id = parseInt(product.dataset.id);
                     const icon = product.querySelector(".favorite-icon");
 
                     if (icon) {
-                        // 如果該 ID 在清單內，顯示實心；否則顯示空心
                         if (favoriteIds.includes(id)) {
                             icon.src = "images/love.png";
                         } else {
@@ -102,7 +99,8 @@ ResultSet rs = ps.executeQuery();
                         }
                     }
                 });
-            });
+            })
+            .catch(err => console.log("目前無登入或收藏列表為空"));
     });
 </script>
 
