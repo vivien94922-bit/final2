@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="CSS/style.css">
+<link rel="stylesheet" href="../CSS/style.css">
 <style>
     footer {
         background-color: #222;
@@ -191,7 +191,7 @@
     <div class="team-grid">
 
       <div class="team-card">
-        <img src="images/member1.jpg" alt="蕭小雯">
+        <img src="../images/member1.jpg" alt="蕭小雯">
         <div class="student-id">11344222</div>
         <h3>蕭小雯</h3>
         <h4 style="text-align:left;">主要負責整個電商網站最核心的「交易邏輯」，包含加入購物車 API、結帳流程處理、管理者訂單瀏覽功能，以及購買完成後自動扣減資料庫庫存的 SQL 事務處理。在確保商業系統核心的資料一致性上花費了許多心力 debug。</h4>
@@ -205,7 +205,7 @@
       </div>
 
       <div class="team-card">
-        <img src="images/member3.jpg" alt="簡嘉葳">
+        <img src="../images/member3.jpg" alt="簡嘉葳">
         <div class="student-id">11344218</div>
         <h3>簡嘉葳</h3>
         <h4 style="text-align:left;">負責留言板功能（支援中文顯示、日期排序及最新留言置頂）、會員登入控制、商品搜尋、訪客計數器、產品管理（新增、上架、修改、刪除商品）、管理者訂單瀏覽、會員優惠設計，及網站整合測試工作；同時參與購物車結帳功能開發、CSS版面設計與背景圖製作。</h4>
@@ -255,8 +255,8 @@
     });
 </script>
 
-<script src="JavaScript/script.js"></script>
-<script src="JavaScript/cookie-consent.js" defer></script>
+<script src="../JavaScript/script.js"></script>
+<script src="..JavaScript/cookie-consent.js" defer></script>
 
 </body>
 </html>
