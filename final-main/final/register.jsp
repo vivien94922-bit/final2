@@ -130,7 +130,11 @@ body{
   </div>
 
 </div>
-
+<footer>
+  <p>聯絡我們｜vantera2026@gmail.com</p>
+  <p>© 2026 VANTERA. All rights reserved.</p>
+  <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
+</footer>
 <script src="cookie-consent.js" defer></script>
 
 </body>
