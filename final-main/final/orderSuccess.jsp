@@ -37,7 +37,7 @@
         <p id="orderIdText"></p>
         <p id="totalText"></p>
         <p>感謝您的購買，我們將盡快為您處理。</p>
-        <a href="index.jsp">繼續購物</a>
+        <a href="index.html">繼續購物</a>
     </div>
     <script>
         const params = new URLSearchParams(location.search);
