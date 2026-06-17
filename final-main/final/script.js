@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let current = 0;
 
   const images = ["images/banner1.jpg","images/banner2.jpg","images/banner3.jpg"];
-  const titles = ["NEW ARRIVAL","SUMMER SALE","WINTER COLLECTION"];
-  const descs = ["秋冬新品 8 折起","夏季促銷","冬季系列"];
+  const titles = ["NEW ARRIVAL", "WANDERLUST", "BUSINESS CLASS"];
+  const descs = ["年度新品・限時 8 折起", "尋找你的完美旅行隊友", "專屬商務菁英的頂級移動美學"];
   const ids = [4,14,3];
 
   function updateBanner() {
