@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="CSS/style.css">
 <style>
     footer {
         background-color: #222;
@@ -255,10 +255,8 @@
     });
 </script>
 
-<script src="script.js"></script>
-
-
-<script src="cookie-consent.js" defer></script>
+<script src="JavaScript/script.js"></script>
+<script src="JavaScript/cookie-consent.js" defer></script>
 
 </body>
 </html>
