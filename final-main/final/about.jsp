@@ -9,10 +9,13 @@
 <title>關於我們｜VENTERA</title>
 
 <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&family=Oxanium&display=swap" rel="stylesheet">
 <style>
     body {
         margin: 0;
-        font-family: Arial, sans-serif;
+        font-family: "Oxanium","Noto Sans TC", sans-serif;
         font-weight:100;
     }
     
