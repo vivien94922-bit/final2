@@ -13,6 +13,7 @@
     body {
         margin: 0;
         font-family: Arial, sans-serif;
+        font-weight:100;
     }
     
     footer {
@@ -229,8 +230,8 @@
 </main>
 
 <footer>
-  <p>聯絡我們｜service@standardday.com</p>
-  <p>© 2025 STANDARD DAY</p>
+  <p>聯絡我們｜ventera2026@gmail.com</p>
+  <p>© 2026 VENTERA</p>
   <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
 </footer>
 
