@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>註冊｜STANDARD DAY</title>
+<title>註冊｜VANTERA</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
 <style>
 body{
     margin:0;
-    font-family: Arial, sans-serif;
+    font-family: "Oxanium","Noto Sans TC", sans-serif;
     background: #f6f6f6;
 }
 
