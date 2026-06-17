@@ -13,6 +13,9 @@
     <meta charset="UTF-8">
     <title>STANDARD DAY | 感謝您的購買</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
     
     <style>
         /* ===== 成功頁面專屬極簡視覺 ===== */
