@@ -31,7 +31,7 @@ if (q1 != null && q2 != null && q3 != null && q4 != null && q5 != null) {
         resultMsg = "你的旅行頻率與天數非常標準，推薦 24-26 吋的中型行李箱，容量與機動性完美平衡。";
     } else {
         resultType = "豪華大容量奢華深箱";
-        resultMsg = "看來你熱愛長途旅行或是一位購物狂潮兒！29吋以上的大容量巨無霸行李箱絕對是你的神隊友。";
+        resultMsg = "看來你熱愛長途旅行或是一位購物狂！29吋以上的大容量巨無霸行李箱絕對是你的神隊友。";
     }
 }
 %>
@@ -80,7 +80,7 @@ try{
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VENTERA OFFCIAL</title>
+  <title>VANTERA OFFICIAL</title>
 
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -230,8 +230,8 @@ if (session.getAttribute("intro_shown") == null) {
 %>
     <div class="intro" id="intro">
       <div class="title">
-        <span class="left">STANDARD</span>
-        <span class="right">DAY</span>
+        <span class="left">VANTERA</span>
+        <span class="right">OFFICIAL</span>
       </div>
     </div>
 <%
@@ -242,7 +242,7 @@ if (session.getAttribute("intro_shown") == null) {
 }
 %>
 <section class="banner">
-  <img id="bannerImage" src="../images/banner1.jpg">
+  <img id="bannerImage" src="../images/banner1.png">
 
   <div class="banner-text">
     <h1 id="bannerTitle"></h1>
@@ -433,8 +433,8 @@ con2.close();
 
 </section>
 <footer>
-  <p>聯絡我們｜ventera2026@gmail.com</p>
-  <p>© 2026 VENTERA. All rights reserved.</p>
+  <p>聯絡我們｜vantera2026@gmail.com</p>
+  <p>© 2026 VANTERA. All rights reserved.</p>
   <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
 </footer>
 
