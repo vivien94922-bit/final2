@@ -8,8 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>旅行用Travel</title>
-
+<title>旅行用 | VANTERA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&family=Oxanium&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
 </head>
@@ -95,8 +97,8 @@ try {
 </section>
 
 <footer>
-  <p>聯絡我們｜service@standardday.com</p>
-  <p>© 2025 STANDARD DAY. All rights reserved.</p>
+  <p>聯絡我們｜vantera2026@gmail.com</p>
+  <p>© 2026 VANTERA. All rights reserved.</p>
   <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
 </footer>
 
