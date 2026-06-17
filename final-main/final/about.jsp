@@ -16,7 +16,7 @@
     body {
         margin: 0;
         font-family: "Oxanium","Noto Sans TC", sans-serif;
-        font-weight:100;
+        font-weight:200;
     }
     
     footer {
