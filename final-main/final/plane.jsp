@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>上裝 Tops</title>
+<title>登機用 boarding</title>
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
 </head>
@@ -16,13 +16,13 @@
 <%
 Connection con = getConnection();
 PreparedStatement ps = con.prepareStatement(
-    "SELECT * FROM product WHERE category = 'tops'"
+    "SELECT * FROM product WHERE category = 'plane'"
 );
 ResultSet rs = ps.executeQuery();
 %>
 
 <section class="products">
-  <h2>上裝 Tops</h2>
+  <h2>登機用 boarding</h2>
 
   <div class="product-grid">
 
