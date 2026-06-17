@@ -8,6 +8,6 @@ session.invalidate();
 
 <script>
 setTimeout(() => {
-    location.href = "index.jsp";
+    location.href = "index.html";
 }, 1000);
 </script>
