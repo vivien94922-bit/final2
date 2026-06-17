@@ -124,7 +124,7 @@
                 submitBtn.innerText = subtotal > 0 ? "確認送出訂單" : "購物車沒有商品";
             }
     
-            fetch("getCartItems.jsp", { cache: "no-store" })
+            fetch("JSP/getCartItems.jsp", { cache: "no-store" })
                 .then(res => res.ok ? res.json() : Promise.reject())
                 .then(cart => {
                     if (Array.isArray(cart) && cart.length > 0) {
@@ -142,7 +142,7 @@
                 submitBtn.disabled = true;
                 submitBtn.innerText = "訂單處理中...";
     
-                fetch('doCheckout.jsp', {
+                fetch('JSP/doCheckout.jsp', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
                     body: new URLSearchParams(new FormData(this)).toString()
@@ -205,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // 初始化請求
-    fetch("getCartItems.jsp", { cache: "no-store" })
+    fetch("JSP/getCartItems.jsp", { cache: "no-store" })
         .then(res => res.ok ? res.json() : Promise.reject())
         .then(cart => {
             if (Array.isArray(cart) && cart.length > 0) {
@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function() {
         submitBtn.disabled = true;
         submitBtn.innerText = "訂單處理中...";
 
-        fetch('doCheckout.jsp', {
+        fetch('JSP/doCheckout.jsp', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' },
             body: new URLSearchParams(new FormData(this)).toString()
