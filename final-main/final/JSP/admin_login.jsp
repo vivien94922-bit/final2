@@ -16,7 +16,7 @@ if ("POST".equalsIgnoreCase(request.getMethod())) {
                 session.setAttribute("isAdmin", Boolean.TRUE);
                 session.setAttribute("admin_id", rs.getInt("id"));
                 session.setAttribute("admin_username", rs.getString("username"));
-                response.sendRedirect("admin_orders.jsp");
+                response.sendRedirect("JSP/admin_orders.jsp");
                 return;
             }
         }
