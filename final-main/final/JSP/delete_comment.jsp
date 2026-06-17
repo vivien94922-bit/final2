@@ -11,7 +11,7 @@ try{
 
     // 未登入不能刪
     if(userId == null){
-        response.sendRedirect("login.jsp");
+        response.sendRedirect("JSP/login.jsp");
         return;
     }
 
@@ -29,7 +29,7 @@ try{
 
     ps.executeUpdate();
 
-    response.sendRedirect("product.jsp?id=" + productId);
+    response.sendRedirect("JSP/product.jsp?id=" + productId);
 
 }catch(Exception e){
     out.println(e.getMessage());
