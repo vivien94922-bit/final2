@@ -48,7 +48,7 @@ try {
 }
 
 if(ok){
-    response.sendRedirect("member.jsp");
+    response.sendRedirect("JSP/member.jsp");
 } else {
     out.println("<script>alert('登入失敗'); history.back();</script>");
 }
