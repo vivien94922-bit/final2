@@ -26,12 +26,13 @@
       <img src="images/clothes.png" id="menuIcon">
 
       <div class="menu-box" id="menuBox">
-        <a href="tops.jsp" class="menu-item">
-          <img src="images/tops.png">
+        <a href="tops.jsp" class="menu-item">旅行用
         </a>
-        <a href="bottoms.jsp" class="menu-item">
-          <img src="images/bottoms.png">
+        <a href="bottoms.jsp" class="menu-item">登機用
         </a>
+        <a href="bottoms.jsp" class="menu-item">親子用
+        </a>
+        
       </div>
     </div>
 
