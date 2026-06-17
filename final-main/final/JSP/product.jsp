@@ -504,7 +504,7 @@ body {
 
         <div id="feedback-form">
         <% if (userId != -1) { %>
-            <form action="add.jsp" method="post">
+            <form action="JSP/add.jsp" method="post">
                 <input type="hidden" name="product_id" value="<%=id%>">
                 <input type="text" value="<%=escapeHtml(sessionName)%>" readonly>
 
@@ -557,7 +557,7 @@ body {
                     <small style="color:#999;"><%=rs3.getTimestamp("create_time")%></small>
 
                     <% if (userId != -1 && userId == commentUserId) { %>
-                        <form action="delete_comment.jsp" method="post" style="display:inline; margin-left:10px;">
+                        <form action="JSP/delete_comment.jsp" method="post" style="display:inline; margin-left:10px;">
                             <input type="hidden" name="comment_id" value="<%=rs3.getInt("id")%>">
                             <input type="hidden" name="product_id" value="<%=id%>">
                             <button type="submit" style="color:red; background:none; border:none; cursor:pointer; padding:0;">[刪除]</button>
@@ -586,7 +586,7 @@ body {
         <%
             } else {
         %>
-                <a href="product.jsp?id=<%=id%>&page=<%=i%>" style="margin: 0 5px; text-decoration: none; color: #666;"><%=i%></a>
+                <a href="JSP/product.jsp?id=<%=id%>&page=<%=i%>" style="margin: 0 5px; text-decoration: none; color: #666;"><%=i%></a>
         <%
             }
         }
@@ -640,7 +640,7 @@ async function addToCart(productId) {
 
     if (res.status === 401) {
         alert('請先登入');
-        location.href = 'login.jsp';
+        location.href = 'JSP/login.jsp';
         return;
     }
 
@@ -650,7 +650,7 @@ async function addToCart(productId) {
         const data = JSON.parse(text);
         if (data.success) {
             if (confirm(data.msg + '\n\n前往購物車？')) {
-                location.href = 'cart.jsp';
+                location.href = 'JSP/cart.jsp';
             }
         } else {
             alert(data.msg);
