@@ -6,7 +6,7 @@
     Integer userId = (Integer) session.getAttribute("user_id");
     if (userId == null) {
         // 如果沒有登入的 Session，直接踢回首頁
-        out.println("<script>alert('請先登入！'); location.href='index.jsp';</script>");
+        out.println("<script>alert('請先登入！'); location.href='index.html';</script>");
         return; // 結束執行
     }
 
