@@ -16,7 +16,7 @@
 <%
 Connection con = getConnection();
 PreparedStatement ps = con.prepareStatement(
-    "SELECT * FROM product WHERE category = 'plane'"
+    "SELECT * FROM product WHERE category = 'boarding'"
 );
 ResultSet rs = ps.executeQuery();
 %>
