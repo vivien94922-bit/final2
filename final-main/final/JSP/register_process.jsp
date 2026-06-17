@@ -39,7 +39,7 @@ try {
 
     ps.executeUpdate();
 
-    out.println("<script>alert('註冊成功！請登入'); location.href='login.jsp';</script>");
+    out.println("<script>alert('註冊成功！請登入'); location.href='JSP/login.jsp';</script>");
 
 } catch(Exception e) {
     out.println("<h3>錯誤：</h3>" + e.getMessage());
