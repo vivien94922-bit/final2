@@ -24,6 +24,10 @@ private String adminOrderEscapeHtml(String value) {
 <head>
   <meta charset="UTF-8">
   <title>後台管理中心｜STANDARD DAY</title>
+
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
   <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; display: flex; min-height: 100vh; }
     
