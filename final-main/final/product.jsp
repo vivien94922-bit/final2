@@ -109,7 +109,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title><%=escapeHtml(name)%> - STANDARD DAY</title>
+<title><%=escapeHtml(name)%> | VANTERA</title>
 <link rel="stylesheet" href="style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -118,7 +118,7 @@
 /* ================= 基礎設定 ================= */
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: "Oxanium", "Noto Sans TC", sans-serif;
   color: #000;
   background-color: #fff;
 }
@@ -598,8 +598,8 @@ body {
 </section>
 
 <footer>
-    <p>聯絡我們｜service@standardday.com</p>
-    <p>© 2025 STANDARD DAY. All rights reserved.</p>
+    <p>聯絡我們｜vantera2026@gmail.com</p>
+    <p>© 2026 VANTERA. All rights reserved.</p>
     <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
 </footer>
 
