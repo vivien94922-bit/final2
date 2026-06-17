@@ -4,166 +4,155 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>VANTERA OFFICIAL</title>
-<script src="script.js"></script>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
   <style>
-  .visitor{
-      width:200px;
-      margin:10px auto;
-      padding:5px;
-      text-align:center;
-      font-size:18px;
-  }
+    .visitor {
+        width: 200px;
+        margin: 10px auto;
+        padding: 5px;
+        text-align: center;
+        font-size: 18px;
+    }
 
-  /* 🧳 測驗專屬全新美化樣式 */
-  .quiz-section {
-      max-width: 600px;
-      margin: 40px auto;
-      padding: 30px;
-      background: #ffffff;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-      text-align: center;
-      font-family: 'Noto Sans TC', sans-serif;
-  }
-  .quiz-section h3 {
-      font-size: 24px;
-      color: #222;
-      margin-bottom: 25px;
-      font-weight: 600;
-      letter-spacing: 1px;
-  }
-  .quiz-progress {
-      font-size: 14px;
-      color: #888;
-      margin-bottom: 15px;
-  }
-  .quiz-step {
-      display: none; /* 預設隱藏，由 JS 控制顯示 */
-      animation: fadeIn 0.4s ease-in-out;
-  }
-  .quiz-step.active {
-      display: block;
-  }
-  .quiz-step p {
-      font-size: 18px;
-      color: #444;
-      margin-bottom: 20px;
-      font-weight: 500;
-  }
-  .quiz-section select {
-      width: 100%;
-      padding: 12px 20px;
-      font-size: 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      background-color: #fafafa;
-      color: #333;
-      outline: none;
-      transition: all 0.3s ease;
-      cursor: pointer;
-  }
-  .quiz-section select:focus {
-      border-color: #222;
-      background-color: #fff;
-  }
-  .quiz-btn-group {
-      margin-top: 30px;
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-  }
-  .quiz-btn {
-      flex: 1;
-      padding: 12px;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 500;
-  }
-  .quiz-btn.next-btn, .quiz-btn.submit-btn {
-      background-color: #222;
-      color: #fff;
-  }
-  .quiz-btn.next-btn:hover, .quiz-btn.submit-btn:hover {
-      background-color: #444;
-  }
-  .quiz-btn.prev-btn {
-      background-color: #eee;
-      color: #555;
-  }
-  .quiz-btn.prev-btn:hover {
-      background-color: #ddd;
-  }
+    /* 🧳 測驗專屬全新美化樣式 */
+    .quiz-section {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        text-align: center;
+        font-family: 'Noto Sans TC', sans-serif;
+    }
+    .quiz-section h3 {
+        font-size: 24px;
+        color: #222;
+        margin-bottom: 25px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+    .quiz-progress {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 15px;
+    }
+    .quiz-step {
+        display: none; /* 預設隱藏，由 JS 控制顯示 */
+        animation: fadeIn 0.4s ease-in-out;
+    }
+    .quiz-step.active {
+        display: block;
+    }
+    .quiz-step p {
+        font-size: 18px;
+        color: #444;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+    .quiz-section select {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #fafafa;
+        color: #333;
+        outline: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .quiz-section select:focus {
+        border-color: #222;
+        background-color: #fff;
+    }
+    .quiz-btn-group {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+    .quiz-btn {
+        flex: 1;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    .quiz-btn.next-btn, .quiz-btn.submit-btn {
+        background-color: #222;
+        color: #fff;
+    }
+    .quiz-btn.next-btn:hover, .quiz-btn.submit-btn:hover {
+        background-color: #444;
+    }
+    .quiz-btn.prev-btn {
+        background-color: #eee;
+        color: #555;
+    }
+    .quiz-btn.prev-btn:hover {
+        background-color: #ddd;
+    }
 
-  /* ✨ 測驗結果美化樣式 */
-  .quiz-result-box {
-      background: #f9f9f9;
-      border-left: 5px solid #222;
-      padding: 20px;
-      margin-top: 25px;
-      border-radius: 4px 12px 12px 4px;
-      text-align: left;
-      animation: fadeIn 0.5s ease;
-  }
-  .quiz-result-box h4 {
-      margin: 0 0 10px 0;
-      font-size: 20px;
-      color: #222;
-  }
-  .quiz-result-box p {
-      margin: 0;
-      font-size: 15px;
-      color: #666;
-      line-height: 1.6;
-  }
+    /* ✨ 測驗結果美化樣式 */
+    .quiz-result-box {
+        background: #f9f9f9;
+        border-left: 5px solid #222;
+        padding: 20px;
+        margin-top: 25px;
+        border-radius: 4px 12px 12px 4px;
+        text-align: left;
+        animation: fadeIn 0.5s ease;
+    }
+    .quiz-result-box h4 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+        color: #222;
+    }
+    .quiz-result-box p {
+        margin: 0;
+        font-size: 15px;
+        color: #666;
+        line-height: 1.6;
+    }
 
-  @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-  }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
+
 <header>
   <div class="nav-left">
     <a href="index.html" class="logo">VANTERA</a>
   </div>
 
   <div class="nav-icons">
-
-    <!-- 搜尋 -->
     <div class="search-wrapper">
       <img src="images/search.png" id="searchIcon">
-
       <div class="search-box" id="searchBox">
         <div class="search-input">
           <img src="images/search.png">
-
           <input type="text" id="searchInput" placeholder="搜尋商品...">
-
           <div class="search-result" id="searchResult"></div>
         </div>
       </div>
     </div>
 
-    <!-- 選單 -->
     <div class="menu-wrapper">
       <img src="images/suitcases.png" id="menuIcon">
-
       <div class="menu-box" id="menuBox">
-        <a href="travel.jsp" class="menu-item">旅行用
-        </a>
-        <a href="plane.jsp" class="menu-item">登機用
-        </a>
-        <a href="kids.jsp" class="menu-item">親子用
-        </a>
-        
+        <a href="travel.jsp" class="menu-item">旅行用</a>
+        <a href="plane.jsp" class="menu-item">登機用</a>
+        <a href="kids.jsp" class="menu-item">親子用</a>
       </div>
     </div>
 
@@ -171,12 +160,8 @@
     <a href="member.jsp"><img src="images/user.png"></a>
     <a href="cart.jsp"><img src="images/shopping_cart.png"></a>
     <a href="admin_login.jsp"><img src="images/tool.png"></a>
-
   </div>
 </header>
-<div id="header-container"></div>
-
-<script src="script.js"></script>
 
 <div class="intro" id="intro" style="display: none;">
   <div class="title">
@@ -187,22 +172,18 @@
 
 <section class="banner">
   <img id="bannerImage" src="../images/banner1.png">
-
   <div class="banner-text">
     <h1 id="bannerTitle"></h1>
     <p id="bannerDesc"></p>
     <button id="bannerBuyNowBtn">立即選購</button>
   </div>
-
   <div id="dotsContainer"></div>
   <button class="prev">‹</button>
   <button class="next">›</button>
 </section>
 
-
 <section class="quiz-section" id="quizSection">
     <h3>測驗你最適合的行李箱</h3>
-    
     <div class="quiz-progress" id="quizProgress">第 1 / 5 題</div>
 
     <form id="quizForm">
@@ -281,32 +262,97 @@
 </footer>
 
 <button id="backToTop">↑</button>
+
+<script src="script.js"></script>
 <script src="cookie-consent.js" defer></script>
 
 <script>
-    // 1. 頁面載入時，抓取訪客數與商品資料
-    document.addEventListener("DOMContentLoaded", () => {
-        fetch("index_data.jsp")
-            .then(res => res.json())
-            .then(data => {
-                // 更新訪客數
-                document.getElementById("visitorCount").innerText = data.visitorCount;
+    // 🎮 心理測驗：一題題動態切換邏輯
+    let currentStep = 1;
+    const totalSteps = 5;
 
-                // 渲染三個區塊的商品
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressText = document.getElementById('quizProgress');
+
+    function updateQuizStep() {
+        if (!prevBtn || !nextBtn) return; 
+        
+        document.querySelectorAll('.quiz-step').forEach(step => {
+            step.classList.remove('active');
+        });
+        const currentStepEl = document.querySelector(`.quiz-step[data-step="${currentStep}"]`);
+        if (currentStepEl) currentStepEl.classList.add('active');
+
+        if (progressText) progressText.innerText = `第 ${currentStep} / ${totalSteps} 題`;
+
+        prevBtn.style.visibility = (currentStep === 1) ? 'hidden' : 'visible';
+
+        if (currentStep === totalSteps) {
+            nextBtn.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
+        } else {
+            nextBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'none';
+        }
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateQuizStep();
+            }
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateQuizStep();
+            }
+        });
+    }
+
+    // 🚀 頁面載入核心：AJAX 非同步抓取（加入安全防呆）
+    document.addEventListener("DOMContentLoaded", () => {
+        // 開場特效 (Intro) 的本地快取控制
+        if (!sessionStorage.getItem("intro_shown")) {
+            sessionStorage.setItem("intro_shown", "true");
+            const introEl = document.getElementById("intro");
+            if (introEl) introEl.style.display = "block";
+        }
+
+        // 抓取首頁資料（訪客數與商品清單）
+        fetch("index_data.jsp")
+            .then(res => {
+                if (!res.ok) throw new Error("後端 JSP 檔案不存在或回傳錯誤");
+                return res.json();
+            })
+            .then(data => {
+                const visitorCountEl = document.getElementById("visitorCount");
+                if (visitorCountEl) visitorCountEl.innerText = data.visitorCount;
+
                 renderProducts(data.hot, "hot-grid");
                 renderProducts(data.boarding, "boarding-grid");
                 renderProducts(data.travel, "travel-grid");
                 
-                // 同步收藏狀態 (你原本的邏輯)
                 syncFavorites();
+            })
+            .catch(err => {
+                console.warn("首頁商品資料載入失敗（若尚未連線 Tomcat 伺服器屬正常現象）:", err.message);
             });
     });
 
-    // 2. 商品渲染函式（代替原本的 while 迴圈）
+    // 🛍️ 商品 HTML 模板渲染函式
     function renderProducts(products, containerId) {
         const container = document.getElementById(containerId);
-        container.innerHTML = ""; // 清空
+        if (!container) return;
+        container.innerHTML = ""; 
 
+        if (!products) return;
         products.forEach(p => {
             const fullName = p.name;
             const splitIdx = fullName.lastIndexOf(" "); 
@@ -333,11 +379,11 @@
         });
     }
 
-    // 3. 心理測驗非同步送出邏輯 (替代原本的 Form 刷新)
+    // 📝 心理測驗：AJAX 非同步送出表單
     const quizForm = document.getElementById('quizForm');
-    if(quizForm) {
+    if (quizForm) {
         quizForm.addEventListener('submit', (e) => {
-            e.preventDefault(); // 阻止網頁刷新
+            e.preventDefault(); 
             const formData = new FormData(quizForm);
             const searchParams = new URLSearchParams(formData);
 
@@ -347,8 +393,7 @@
             })
             .then(res => res.json())
             .then(data => {
-                if(data.success) {
-                    // 將測驗區塊替換為結果
+                if (data.success) {
                     document.getElementById('quizSection').innerHTML = `
                         <h3>測驗你最適合的行李箱</h3>
                         <div class="quiz-result-box">
@@ -360,13 +405,32 @@
                         </div>
                     `;
                 }
-            });
+            })
+            .catch(err => console.error("測驗送出失敗:", err));
         });
     }
 
-    // 你原本的其它 JS 切換題目邏輯 (currentStep, nextBtn 等等) 繼續放在下面...
-    
-    
+    // ❤️ 使用者收藏清單同步（防呆保護）
+    function syncFavorites() {
+        fetch("favorite_list.jsp")
+            .then(res => res.json())
+            .then(data => {
+                if (!data) return;
+                const favoriteIds = data.map(item => item.id);
+                document.querySelectorAll(".product").forEach(product => {
+                    const id = parseInt(product.dataset.id);
+                    const icon = product.querySelector(".favorite-icon");
+                    if (icon) {
+                        if (favoriteIds.includes(id)) {
+                            icon.src = "images/love.png";
+                        } else {
+                            icon.src = "images/heart.png";
+                        }
+                    }
+                });
+            })
+            .catch(err => console.log("目前未登入或收藏列表為空"));
+    }
 </script>
 </body>
 </html>
