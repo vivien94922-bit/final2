@@ -40,7 +40,7 @@ ResultSet rs = ps.executeQuery();
   %>
 
     <div class="product" data-id="<%= id %>" data-name="<%= escapeHtml(fullName) %>" data-price="<%= price %>" data-img="<%= escapeHtml(image) %>">
-      <a href="product.jsp?id=<%= id %>" class="product-link">
+      <a href="JSP/product.jsp?id=<%= id %>" class="product-link">
 
         <img src="<%=escapeHtml(image)%>" alt="<%=escapeHtml(fullName)%>">
 
@@ -81,7 +81,7 @@ ResultSet rs = ps.executeQuery();
 <script>
     // 頁面載入時自動執行：同步收藏狀態
     document.addEventListener("DOMContentLoaded", () => {
-        fetch("favorite_list.jsp")
+        fetch("JSP/favorite_list.jsp")
             .then(res => res.json())
             .then(data => {
                 if (!data) return;
