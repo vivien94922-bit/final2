@@ -189,7 +189,7 @@
     <div class="team-grid">
 
       <div class="team-card">
-        <img src="images/member2.jpg" alt="蕭小雯">
+        <img src="images/member3.jpg" alt="蕭小雯">
         <div class="student-id">11344222</div>
         <h3>蕭小雯</h3>
         <h4>主要負責整個電商網站最核心的「交易邏輯」，包含加入購物車 API、結帳流程處理、管理者訂單瀏覽功能，以及購買完成後自動扣減資料庫庫存的 SQL 事務處理。在確保商業系統核心的資料一致性上花費了許多心力 debug。</h4>
