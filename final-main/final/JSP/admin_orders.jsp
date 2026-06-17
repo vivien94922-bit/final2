@@ -3,7 +3,7 @@
     // 💡 1. 檢查管理員登入權限
     Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
     if(isAdmin == null || !isAdmin){
-        response.sendRedirect("admin_login.jsp");
+        response.sendRedirect("JSP/admin_login.jsp");
         return;
     }
 %>
