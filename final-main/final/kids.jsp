@@ -19,7 +19,7 @@
 <%
 Connection con = getConnection();
 PreparedStatement ps = con.prepareStatement(
-    "SELECT * FROM product WHERE category = 'kids'"
+    "SELECT * FROM product WHERE category = 'family'"
 );
 ResultSet rs = ps.executeQuery();
 %>
