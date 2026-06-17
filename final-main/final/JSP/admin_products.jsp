@@ -122,6 +122,6 @@ function cancelEditMode(id){document.querySelectorAll('.view-mode-'+id).forEach(
 function submitEdit(id){document.getElementById('form-'+id).submit()}
 function confirmDelete(){return confirm("確定刪除這件商品嗎？訂單明細會保留，其餘關聯資料會一併刪除。")}
 </script>
-<script src="JavaScript/cookie-consent.js" defer></script>
+<script src="../JavaScript/cookie-consent.js" defer></script>
 </body>
 </html>
