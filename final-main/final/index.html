@@ -126,10 +126,72 @@
         from { opacity: 0; transform: translateY(10px); }
         to { opacity: 1; transform: translateY(0); }
     }
+    /* 全螢幕覆蓋 */
+.intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+
+    animation: fadeOut 0.8s ease forwards;
+    animation-delay: 2s; /* 停留2秒後消失 */
+}
+
+/* 文字區 */
+.intro-content {
+    text-align: center;
+    color: white;
+    animation: zoomIn 1.2s ease;
+}
+
+/* 主標 */
+.logo {
+    font-size: 48px;
+    letter-spacing: 6px;
+    font-weight: 600;
+}
+
+/* 副標 */
+.sub {
+    font-size: 16px;
+    opacity: 0.7;
+    margin-top: 10px;
+}
+
+/* 放大進場 */
+@keyframes zoomIn {
+    from {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 淡出 */
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
   </style>
 </head>
 <body>
-
+<div id="intro" class="intro">
+  <div class="intro-content">
+    <div class="logo">VANTERA</div>
+    <div class="sub">OFFICIAL</div>
+  </div>
+</div>
 <header>
   <div class="nav-left">
     <a href="index.html" class="logo">VANTERA</a>
@@ -150,16 +212,16 @@
     <div class="menu-wrapper">
       <img src="images/suitcases.png" id="menuIcon">
       <div class="menu-box" id="menuBox">
-        <a href="JSP/travel.jsp" class="menu-item">旅行用</a>
-        <a href="JSP/plane.jsp" class="menu-item">登機用</a>
-        <a href="JSP/kids.jsp" class="menu-item">親子用</a>
+        <a href="travel.jsp" class="menu-item">旅行用</a>
+        <a href="plane.jsp" class="menu-item">登機用</a>
+        <a href="kids.jsp" class="menu-item">親子用</a>
       </div>
     </div>
 
-    <a href="JSP/about.jsp"><img src="images/info.png"></a>
-    <a href="JSP/member.jsp"><img src="images/user.png"></a>
-    <a href="JSP/cart.jsp"><img src="images/shopping_cart.png"></a>
-    <a href="JSP/admin_login.jsp"><img src="images/tool.png"></a>
+    <a href="about.jsp"><img src="images/info.png"></a>
+    <a href="member.jsp"><img src="images/user.png"></a>
+    <a href="cart.jsp"><img src="images/shopping_cart.png"></a>
+    <a href="admin_login.jsp"><img src="images/tool.png"></a>
   </div>
 </header>
 
@@ -263,10 +325,21 @@
 
 <button id="backToTop">↑</button>
 
-<script src="JavaScript/script.js"></script>
-<script src="JavaScript/cookie-consent.js" defer></script>
+<script src="script.js"></script>
+<script src="cookie-consent.js" defer></script>
 
 <script>
+    function performAddToCart(productId) {
+        fetch("addToCart.jsp", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "product_id=" + productId + "&quantity=1"
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert(data.success ? "成功加入購物車！" : "加入購物車失敗");
+        });
+    }
     // 🎮 心理測驗：一題題動態切換邏輯
     let currentStep = 1;
     const totalSteps = 5;
@@ -275,6 +348,10 @@
     const nextBtn = document.getElementById('nextBtn');
     const submitBtn = document.getElementById('submitBtn');
     const progressText = document.getElementById('quizProgress');
+    
+    // 預先保存一份初始的 HTML 模板，方便重置時使用
+    const quizSection = document.getElementById('quizSection');
+    const originalQuizHTML = quizSection ? quizSection.innerHTML : "";
 
     function updateQuizStep() {
         if (!prevBtn || !nextBtn) return; 
@@ -298,23 +375,51 @@
         }
     }
 
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            if (currentStep < totalSteps) {
-                currentStep++;
-                updateQuizStep();
-            }
-        });
+    // 重新測驗函式：不重整頁面，只還原 HTML
+    function restartQuiz() {
+        currentStep = 1;
+        quizSection.innerHTML = originalQuizHTML;
+        
+        // 重新綁定事件（因為 innerHTML 替換後，舊的監聽器會失效）
+        bindQuizEvents();
+        updateQuizStep();
     }
 
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            if (currentStep > 1) {
-                currentStep--;
-                updateQuizStep();
-            }
-        });
+    function bindQuizEvents() {
+        const nextBtn = document.getElementById('nextBtn');
+        const prevBtn = document.getElementById('prevBtn');
+        const quizForm = document.getElementById('quizForm');
+
+        if (nextBtn) nextBtn.addEventListener('click', () => { if (currentStep < totalSteps) { currentStep++; updateQuizStep(); } });
+        if (prevBtn) prevBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateQuizStep(); } });
+        
+        if (quizForm) {
+            quizForm.addEventListener('submit', (e) => {
+                e.preventDefault(); 
+                const formData = new FormData(quizForm);
+                fetch("quiz_action.jsp", { method: "POST", body: new URLSearchParams(formData) })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('quizSection').innerHTML = `
+                            <h3>測驗你最適合的行李箱</h3>
+                            <div class="quiz-result-box">
+                                <h4>專屬你的測驗結果：${data.resultType}</h4>
+                                <p>${data.resultMsg}</p>
+                            </div>
+                            <div class="quiz-btn-group">
+                                <button type="button" class="quiz-btn next-btn" onclick="restartQuiz()">重新測驗</button>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(err => console.error("測驗送出失敗:", err));
+            });
+        }
     }
+
+    // 初始化綁定
+    bindQuizEvents();
 
     // 🚀 頁面載入核心：AJAX 非同步抓取（加入安全防呆）
     document.addEventListener("DOMContentLoaded", () => {
