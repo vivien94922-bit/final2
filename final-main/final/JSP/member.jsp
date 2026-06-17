@@ -363,7 +363,7 @@ button {
           </div>
         </div>
 
-        <form action="update_profile.jsp" method="post" class="form-box" id="profileEditForm" style="display: none;">
+        <form action="JSP/update_profile.jsp" method="post" class="form-box" id="profileEditForm" style="display: none;">
           <div class="form-row">
             <label>姓名</label>
             <input type="text" name="name" value="<%= (name == null) ? "" : name %>" required>
