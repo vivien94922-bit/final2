@@ -78,7 +78,7 @@ try (Connection conn = getConnection();
       <span><%="tops".equals(category) ? "上裝" : "下裝"%></span><br>
       <small><%=escapeHtml(description)%></small>
     </div>
-    <form action="product_process.jsp" method="post" id="form-<%=id%>" class="edit-fields" style="display:none;">
+    <form action="JSP/product_process.jsp" method="post" id="form-<%=id%>" class="edit-fields" style="display:none;">
       <input type="hidden" name="action" value="update">
       <input type="hidden" name="p_id" value="<%=id%>">
       <input type="text" name="name" value="<%=escapeHtml(name)%>" maxlength="100" required>
@@ -96,7 +96,7 @@ try (Connection conn = getConnection();
   <td>
     <div class="view-mode-<%=id%>">
       <button type="button" class="btn-edit" onclick="enterEditMode(<%=id%>)">修改</button>
-      <form action="product_process.jsp" method="post" style="display:inline;" onsubmit="return confirmDelete();">
+      <form action="JSP/product_process.jsp" method="post" style="display:inline;" onsubmit="return confirmDelete();">
         <input type="hidden" name="action" value="delete"><input type="hidden" name="p_id" value="<%=id%>">
         <button type="submit" class="btn-del">刪除</button>
       </form>
@@ -122,6 +122,6 @@ function cancelEditMode(id){document.querySelectorAll('.view-mode-'+id).forEach(
 function submitEdit(id){document.getElementById('form-'+id).submit()}
 function confirmDelete(){return confirm("確定刪除這件商品嗎？訂單明細會保留，其餘關聯資料會一併刪除。")}
 </script>
-<script src="cookie-consent.js" defer></script>
+<script src="JavaScript/cookie-consent.js" defer></script>
 </body>
 </html>
