@@ -36,11 +36,11 @@
 <head>
   <meta charset="UTF-8">
   <title>會員中心 | VANTERA</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="CSS/style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
-  <script src="script.js"></script>
+  <script src="JavaScript/script.js"></script>
   <style>
     header {
       display: flex;
