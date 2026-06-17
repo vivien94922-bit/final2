@@ -4,7 +4,7 @@
 <%
 Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
 if (isAdmin == null || !isAdmin) {
-    response.sendRedirect("admin_login.jsp");
+    response.sendRedirect("JSP/admin_login.jsp");
     return;
 }
 if (!"POST".equalsIgnoreCase(request.getMethod())) {
