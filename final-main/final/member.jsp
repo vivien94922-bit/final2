@@ -35,7 +35,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>會員中心</title>
+  <title>會員中心 | VANTERA</title>
   <link rel="stylesheet" href="style.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,11 +50,6 @@
       background-color: #222;
       position: relative;
       z-index: 1000;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
     }
 
     .member-container {
@@ -520,7 +515,7 @@ button {
           </button>
           <div class="faq-answer">
             <p>客服電話：03-1234-4321</p>
-            <p>客服信箱：standardday@gmail.com</p>
+            <p>客服信箱：vantera2026@gmail.com</p>
             <p>週一至週五 10:00-12:00/13:00-18:00</p>
           </div>
         </div>
