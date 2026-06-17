@@ -116,7 +116,7 @@
             btn.innerText = '處理中...';
             
             setTimeout(() => {
-                location.href = 'checkout.jsp?amount=' + pureTotalNumber;
+                location.href = 'JSP/checkout.jsp?amount=' + pureTotalNumber;
             }, 400);
         }
     </script>
