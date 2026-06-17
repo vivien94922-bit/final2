@@ -431,7 +431,7 @@
         }
 
         // 抓取首頁資料（訪客數與商品清單）
-        fetch("index_data.jsp")
+        fetch("JSP/index_data.jsp")
             .then(res => {
                 if (!res.ok) throw new Error("後端 JSP 檔案不存在或回傳錯誤");
                 return res.json();
