@@ -3,7 +3,7 @@
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8">
-    <title>結帳成功</title>
+    <title>結帳成功 | VANTERA</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
