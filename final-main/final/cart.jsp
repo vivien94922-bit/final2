@@ -85,10 +85,6 @@
 </head>
 <body>
     <%@ include file="header.jsp" %>
-    
-    <nav class="breadcrumb">
-        <a href="index.html">首頁</a> &gt; <span>購物車</span>
-    </nav>
 
     <div id="cart-container"></div>
 
