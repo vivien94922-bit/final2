@@ -19,7 +19,7 @@ if (isAdmin == null || !isAdmin) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
 <style>
-body{font-family:Noto Sans TC,Oxanium,sans-serif;margin:30px;background:#f4f4f4}
+body{font-family:"Noto Sans TC","Oxanium",sans-serif;margin:30px;background:#f4f4f4}
 .box{background:#fff;padding:20px;border-radius:8px;margin-bottom:30px;box-shadow:0 2px 5px rgba(0,0,0,.1)}
 .form-grid{display:grid;grid-template-columns:120px minmax(240px,1fr);gap:10px;align-items:center;max-width:720px}
 .form-grid label{font-weight:bold}
