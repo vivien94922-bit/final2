@@ -81,8 +81,8 @@ private String adminOrderEscapeHtml(String value) {
     <h2>管理員後台</h2>
     <ul>
       <li id="tab-orders" class="active-tab">訂單管理</li>
-      <li onclick="location.href='admin_products.jsp'">商品管理</li>
-      <li onclick="location.href='logout.jsp'">登出系統</li>
+      <li onclick="location.href='JSP/admin_products.jsp'">商品管理</li>
+      <li onclick="location.href='JSP/logout.jsp'">登出系統</li>
     </ul>
   </aside>
 
