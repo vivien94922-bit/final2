@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <header>
   <div class="nav-left">
-    <a href="index.jsp" class="logo">VENTERA</a>
+    <a href="index.jsp" class="logo">VANTERA</a>
   </div>
 
   <div class="nav-icons">
