@@ -109,7 +109,7 @@ body{
   <div class="register-card">
     <div class="register-title">新會員註冊</div>
 
-    <form action="register_process.jsp" method="post">
+    <form action="JSP/register_process.jsp" method="post">
       
       <input class="register-input" type="text" name="username" placeholder="請設定帳號" required>
       <input class="register-input" type="password" name="password" placeholder="請設定密碼" required>
@@ -124,7 +124,7 @@ body{
       <button class="register-btn" type="submit">確認註冊</button>
     </form>
 
-    <div class="login-link" onclick="location.href='login.jsp'">
+    <div class="login-link" onclick="location.href='JSP/login.jsp'">
       已有帳號？返回登入
     </div>
   </div>
