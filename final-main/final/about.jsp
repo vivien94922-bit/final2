@@ -9,9 +9,6 @@
 <title>關於我們｜VENTERA</title>
 
 <link rel="stylesheet" href="style.css">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
 <style>
     body {
         margin: 0;
@@ -180,14 +177,17 @@
   <section class="about-section">
     <h2>品牌故事</h2>
     <p>
-      STANDARD DAY 成立於 2025 年，致力於打造簡約、舒適又實穿的服裝。我們相信每一天都是新的開始，因此希望提供能陪伴你日常的服飾。
+      VENTERA 成立於 2025 年，專注於打造高品質旅行行李箱與旅遊配件。
+      我們相信每一次旅行，都是探索世界與自己的開始，因此致力於提供兼具耐用性與設計感的行李箱，
+      陪伴你走過每一段旅程。
     </p>
   </section>
 
   <section class="about-section">
     <h2>我們的理念</h2>
     <p>
-      我們堅持高品質、環保素材，並注重每一件商品的細節。穿上 STANDARD DAY，不只是穿衣服，而是一種生活態度。
+      我們重視產品的安全性、耐用性與使用體驗，從材質選擇到結構設計皆嚴格把關。
+      VENTERA 不只是行李箱品牌，更希望成為你旅途中最可靠的夥伴。
     </p>
   </section>
 
@@ -197,21 +197,7 @@
     <div class="team-grid">
 
       <div class="team-card">
-        <img src="../images/member1.jpg" alt="翁逸岑">
-        <div class="student-id">11344231</div>
-        <h3>翁逸岑</h3>
-        <h4>負責商品展示功能開發，透過資料庫動態讀取商品資訊並顯示庫存數量，實作購物時庫存自動扣減機制，參與購物車加入商品功能及資料庫整合作業。</h4>
-        <p>在期末要面對多份報告，雖然過程一度感到焦躁，但幸好有夥伴們的分工與配合，讓我們能順利完成專題。在兼顧多重任務的過程中，我也深刻體會到團隊協作的重要性，並從中累積了寶貴的實務經驗。</p>
-        <div class="work-progress">
-          <div class="progress-label">工作分配 25%</div>
-          <div class="progress-bar">
-            <div class="progress-fill" data-percent="25"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="team-card">
-        <img src="../images/member2.jpg" alt="蕭小雯">
+        <img src="images/member2.jpg" alt="蕭小雯">
         <div class="student-id">11344222</div>
         <h3>蕭小雯</h3>
         <h4>主要負責整個電商網站最核心的「交易邏輯」，包含加入購物車 API、結帳流程處理、管理者訂單瀏覽功能，以及購買完成後自動扣減資料庫庫存的 SQL 事務處理。在確保商業系統核心的資料一致性上花費了許多心力 debug。</h4>
@@ -225,25 +211,11 @@
       </div>
 
       <div class="team-card">
-        <img src="../images/member3.jpg" alt="簡嘉葳">
+        <img src="images/member3.jpg" alt="簡嘉葳">
         <div class="student-id">11344218</div>
         <h3>簡嘉葳</h3>
         <h4>負責留言板功能（支援中文顯示、依日期排序及最新留言置頂）、會員登入控制、商品搜尋、訪客計數器、產品管理（新增、上架、修改、刪除商品）、管理者訂單瀏覽、會員優惠設計，以及網站整合測試工作；同時參與購物車結帳功能開發、CSS版面設計與背景圖製作。</h4>
         <p>這次專題讓我學習到如何將課堂上學到的 JSP 與資料庫知識實際應用在網站開發中。我負責留言板、登入系統、商品搜尋、商品管理等功能，在開發過程中遇到許多問題，但透過查資料、反覆測試及和組員討論，最終順利完成。這次經驗不僅提升了我的程式設計能力，也讓我更了解團隊合作的重要性。</p>
-        <div class="work-progress">
-          <div class="progress-label">工作分配 25%</div>
-          <div class="progress-bar">
-            <div class="progress-fill" data-percent="25"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="team-card">
-        <img src="../images/member4.jpg" alt="神林俊希">
-        <div class="student-id">11150214</div>
-        <h3>神林俊希</h3>
-        <h4>主要負責資料庫設計，網站安全與法規相關功能，包括 ERD 與資料表設計、SQL Injection 防護、個資法與 Cookie 告知等法律規範實作，並協助統一全站 API 資料結構、優化管理者系統及進行整體整合測試。</h4>
-        <p>透過這次專題，我了解到網站開發需要 Java、JSP、HTML、SQL 等多方面的知識，並不是只會單一技術就能完成。尤其在建構 SQL 與資料庫功能時，不只需要後端與資料庫的知識，也需要理解前端頁面如何傳送、接收與顯示資料，才能讓整個系統正常運作。此外，在實作 SQL Injection 防護、Cookie 提示與個資法相關內容時，我也發現將課堂上學到的知識實際套用到網站中並不簡單，需要注意很多細節。這次經驗也讓我更加理解分工合作、Git 管理與系統整合在團隊開發中的重要性。</p>
         <div class="work-progress">
           <div class="progress-label">工作分配 25%</div>
           <div class="progress-bar">
