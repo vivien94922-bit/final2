@@ -99,9 +99,9 @@ ResultSet rs = ps.executeQuery();
                     if (icon) {
                         // 如果該 ID 在清單內，顯示實心；否則顯示空心
                         if (favoriteIds.includes(id)) {
-                            icon.src = "images/love.png";
+                            icon.src = "..images/love.png";
                         } else {
-                            icon.src = "images/heart.png";
+                            icon.src = "../images/heart.png";
                         }
                     }
                 });
