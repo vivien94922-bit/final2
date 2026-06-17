@@ -39,7 +39,7 @@
     <a href="JSP/about.jsp"><img src="images/info.png"></a>
     <a href="JSP/member.jsp"><img src="images/user.png"></a>
     <a href="JSP/cart.jsp"><img src="images/shopping_cart.png"></a>
-    <a href="aJSP/dmin_login.jsp"><img src="images/tool.png"></a>
+    <a href="JSP/dmin_login.jsp"><img src="images/tool.png"></a>
 
   </div>
 </header>
