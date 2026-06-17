@@ -569,7 +569,7 @@ button {
             }
         });
     
-        fetch("favorite_list.jsp")
+        fetch("JSP/favorite_list.jsp")
             .then(res => res.json())
             .then(data => {
                 if (!data || data.length === 0) {
@@ -585,7 +585,7 @@ button {
                     div.dataset.id = item.id;
                     
                     div.innerHTML = 
-                        '<a href="product.jsp?id=' + item.id + '" class="product-link">' +
+                        '<a href="JSP/product.jsp?id=' + item.id + '" class="product-link">' +
                             '<img src="' + item.img + '" alt="' + item.name + '">' +
                             '<div class="product-info">' +
                                 '<div class="product-name">' + item.name + '</div>' +
