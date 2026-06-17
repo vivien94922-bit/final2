@@ -35,10 +35,10 @@ button{padding:7px 12px;border:0;border-radius:4px;cursor:pointer;font-weight:bo
 </head>
 <body>
 <h2>後台管理系統 - 商品管理</h2>
-<p><a href="admin_orders.jsp">前往瀏覽訂單</a></p>
+<p><a href="JSP/admin_orders.jsp">前往瀏覽訂單</a></p>
 <div class="box">
   <h3>上架新商品</h3>
-  <form action="product_process.jsp" method="post">
+  <form action="JSP/product_process.jsp" method="post">
     <input type="hidden" name="action" value="insert">
     <div class="form-grid">
       <label>商品名稱</label><input type="text" name="name" maxlength="100" required>
