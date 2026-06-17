@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <title>感謝您的購買 | VANTERA</title>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="../CSS/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
@@ -206,6 +206,6 @@
         <p>© 2026 VANTERA</p>
         <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
     </footer>
-    <script src="JavaScript/cookie-consent.js" defer></script>
+    <script src="../JavaScript/cookie-consent.js" defer></script>
 </body>
 </html>
