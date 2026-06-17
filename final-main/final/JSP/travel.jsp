@@ -58,7 +58,7 @@ try {
          data-price="<%= price %>"
          data-img="<%=escapeHtml(image)%>">
 
-      <a href="product.jsp?id=<%= id %>" class="product-link">
+      <a href="JSP/product.jsp?id=<%= id %>" class="product-link">
 
         <img src="<%=escapeHtml(image)%>" alt="<%=escapeHtml(fullName)%>">
 
@@ -108,7 +108,7 @@ try {
 <script>
     // 頁面載入時自動執行：同步收藏狀態
     document.addEventListener("DOMContentLoaded", () => {
-        fetch("favorite_list.jsp")
+        fetch("JSP/favorite_list.jsp")
             .then(res => res.json())
             .then(data => {
                 // 將後端回傳的 ID 整理成陣列 (假設回傳結構是 [{id: 1}, {id: 2}])
