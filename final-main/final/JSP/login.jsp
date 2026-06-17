@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>登入｜VANTERA</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="CSS/style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
@@ -126,7 +126,7 @@ body{
   <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
 </footer>
 <!-- Cookie 同意 -->
-<script src="cookie-consent.js" defer></script>
+<script src="JavaScript/cookie-consent.js" defer></script>
 
 </body>
 </html>
