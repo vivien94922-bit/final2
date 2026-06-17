@@ -428,12 +428,64 @@ body {
     <button class="tab" data-target="tab-reviews">顧客評價</button>
 </div>
 
-<div class="tab-content">
-
-    <div id="tab-desc" class="content active">
-        <h3>材質</h3>
-        <p>Polyester 80% / Wool 20%</p>
+<div id="tab-desc" class="content active" style="font-family: 'Helvetica Neue', Arial, sans-serif; color: #333; line-height: 1.8; padding: 20px 0;">
+    
+    <!-- 1. 商品規格與材質說明 -->
+    <div class="spec-section" style="margin-bottom: 35px;">
+        <h4 style="font-size: 20px; font-weight: 600; color: #111; margin-bottom: 16px; border-left: 4px solid #222; padding-left: 10px;">
+            【 商品規格與材質說明 】
+        </h4>
+        <ul style="list-style: none; padding-left: 0; margin: 0; font-size: 16px;">
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+                <span style="color: #444; margin-right: 10px; font-size: 18px;">▪</span>
+                <div><strong style="color: #000;">產品材質：</strong>德國拜耳 100% 純 PC 高強度抗壓硬殼 + 航空級加粗鋁合金拉桿</div>
+            </li>
+            <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+                <span style="color: #444; margin-right: 10px; font-size: 18px;">▪</span>
+                <div><strong style="color: #000;">輪軸規格：</strong>360度超靜音吸震萬向飛機輪</div>
+            </li>
+        </ul>
     </div>
+
+    <!-- 2. VANTERA 專屬尺碼對照指引 -->
+    <div class="size-section">
+        <h4 style="font-size: 20px; font-weight: 600; color: #111; margin-bottom: 20px; border-left: 4px solid #222; padding-left: 10px;">
+            【 VANTERA 專屬尺碼對照指引 】
+        </h4>
+        
+        <!-- 精緻網頁微型對照表（加大字體版） -->
+        <div style="overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 16px;">
+                <thead>
+                    <tr style="background-color: #f8f9fa; border-bottom: 2px solid #ccc;">
+                        <th style="padding: 14px 12px; font-weight: 600; color: #444; width: 15%; font-size: 17px;">網頁尺碼</th>
+                        <th style="padding: 14px 12px; font-weight: 600; color: #444; width: 25%; font-size: 17px;">對應吋數</th>
+                        <th style="padding: 14px 12px; font-weight: 600; color: #444; font-size: 17px;">建議旅程與適用情境</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 16px 12px;"><span style="display: inline-block; padding: 4px 12px; background: #222; color: #fff; border-radius: 4px; font-size: 14px; font-weight: bold; letter-spacing: 0.5px;">S 碼</span></td>
+                        <td style="padding: 16px 12px; font-weight: 600; color: #111; font-size: 17px;">20 吋 登機箱</td>
+                        <td style="padding: 16px 12px; color: #444;">適合 1-3 天短途輕旅行，符合隨身登機標準，免託運快速通關。</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 16px 12px;"><span style="display: inline-block; padding: 4px 11px; background: #e0e0e0; color: #222; border-radius: 4px; font-size: 14px; font-weight: bold; letter-spacing: 0.5px;">M 碼</span></td>
+                        <td style="padding: 16px 12px; font-weight: 600; color: #111; font-size: 17px;">24 吋 旅行箱</td>
+                        <td style="padding: 16px 12px; color: #444;">適合 4-7 天常規旅遊，出國實用首選尺寸，需辦理機場託運。</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid #ddd;">
+                        <td style="padding: 16px 12px;"><span style="display: inline-block; padding: 4px 13px; background: #e0e0e0; color: #222; border-radius: 4px; font-size: 14px; font-weight: bold; letter-spacing: 0.5px;">L 碼</span></td>
+                        <td style="padding: 16px 12px; font-weight: 600; color: #111; font-size: 17px;">28 吋 託運箱</td>
+                        <td style="padding: 16px 12px; color: #444;">適合 7 天以上長途壯遊與血拼收納，容量最大化，海外爆買必備。</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+
+</div>
 
     <div id="tab-shipping" class="content">
         <p>
@@ -627,3 +679,4 @@ async function addToCart(productId) {
     try { if (ps3 != null) ps3.close(); } catch (Exception e) {}
     try { if (conn != null) conn.close(); } catch (Exception e) {}
 %>
+
