@@ -182,6 +182,6 @@ private String adminOrderEscapeHtml(String value) {
     }
   %>
 
-  <script src="JavaScript/cookie-consent.js" defer></script>
+  <script src="../JavaScript/cookie-consent.js" defer></script>
 </body>
 </html>
