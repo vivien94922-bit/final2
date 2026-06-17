@@ -38,5 +38,5 @@ try (Connection conn = getConnection();
     ps.setString(5, content);
     ps.executeUpdate();
 }
-response.sendRedirect("product.jsp?id=" + productId);
+response.sendRedirect("JSP/product.jsp?id=" + productId);
 %>
