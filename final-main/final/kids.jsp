@@ -7,8 +7,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>親子友善 family</title>
+<title>親子友善 | VANTERA</title>
 <link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100&family=Oxanium&display=swap" rel="stylesheet">
 <script src="script.js" defer></script>
 </head>
 <body>
