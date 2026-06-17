@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>上裝 Tops</title>
+<title>親子友善 family</title>
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
 </head>
@@ -16,13 +16,13 @@
 <%
 Connection con = getConnection();
 PreparedStatement ps = con.prepareStatement(
-    "SELECT * FROM product WHERE category = 'tops'"
+    "SELECT * FROM product WHERE category = 'kids'"
 );
 ResultSet rs = ps.executeQuery();
 %>
 
 <section class="products">
-  <h2>上裝 Tops</h2>
+  <h2>親子友善 family</h2>
 
   <div class="product-grid">
 
@@ -100,3 +100,4 @@ ResultSet rs = ps.executeQuery();
 
 </body>
 </html>
+
