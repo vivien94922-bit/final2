@@ -8,8 +8,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>登機用 | VANTERA</title>
-<link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
+<link rel="stylesheet" href="CSS/style.css">
+<script src="JavaScript/script.js" defer></script>
 </head>
 <body>
 <%@ include file="header.jsp" %>
@@ -77,7 +77,7 @@ ResultSet rs = ps.executeQuery();
 
 <button id="backToTop" title="回到頂部">↑</button>
 
-<script src="cookie-consent.js" defer></script>
+<script src="JavaScript/cookie-consent.js" defer></script>
 <script>
     // 頁面載入時自動執行：同步收藏狀態
     document.addEventListener("DOMContentLoaded", () => {
