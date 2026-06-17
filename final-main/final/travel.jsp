@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>下裝 Bottoms</title>
+<title>旅行用Travel</title>
 
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
@@ -20,7 +20,7 @@
 <%@ include file="header.jsp" %>
 
 <section class="products">
-  <h2>下裝 Bottoms</h2>
+  <h2>旅行用 Travel</h2>
 
   <div class="product-grid">
 
@@ -33,7 +33,7 @@ try {
     con = getConnection();
 
     ps = con.prepareStatement(
-        "SELECT * FROM product WHERE category = 'bottoms'"
+        "SELECT * FROM product WHERE category = 'travel'"
     );
 
     rs = ps.executeQuery();
