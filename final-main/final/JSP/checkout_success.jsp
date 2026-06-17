@@ -195,7 +195,7 @@
             
             <div class="btn-group">
                 <a href="index.html" class="btn-primary">繼續購物</a>
-                <a href="member.jsp#orders" class="btn-secondary">查看訂單紀錄</a>
+                <a href="JSP/member.jsp#orders" class="btn-secondary">查看訂單紀錄</a>
             </div>
             
         </div>
