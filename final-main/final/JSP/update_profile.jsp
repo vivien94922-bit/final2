@@ -43,7 +43,7 @@
             // 更新成功：彈出通知，並「重導向」回會員中心，加上 #profile 讓前端錨點自動切換到會員資料頁
             out.println("<script>");
             out.println("  alert('已成功修改資料');");
-            out.println("  location.href = 'member.jsp#profile';");
+            out.println("  location.href = 'JSP/member.jsp#profile';");
             out.println("</script>");
         } else {
             out.println("<script>alert('修改失敗，找不到對應的會員帳號！'); history.back();</script>");
