@@ -373,13 +373,13 @@ ps2.close();
 
 </div>
 
-<h2>上裝</h2>
+<h2>旅行Travel</h2>
 
 <div class="product-grid">
 
 <%
 PreparedStatement psTop = con2.prepareStatement(
-     "SELECT * FROM product WHERE category = 'tops' LIMIT 3"
+     "SELECT * FROM product WHERE category = 'plane' LIMIT 3"
 );
 ResultSet rsTop = psTop.executeQuery();
 
@@ -409,13 +409,13 @@ psTop.close();
 %>
 
 </div>
-<h2>下裝</h2>
+<h2>登機Boarding</h2>
 
 <div class="product-grid">
 
 <%
 PreparedStatement psBottom = con2.prepareStatement(
-    "SELECT * FROM product WHERE category = 'bottoms' LIMIT 3"
+    "SELECT * FROM product WHERE category = 'travel' LIMIT 3"
 );
 ResultSet rsBottom = psBottom.executeQuery();
 
