@@ -1,7 +1,6 @@
 body {
     font-family: "Oxanium", "Noto Sans TC", sans-serif;
     font-weight:100;
-    background: url('your-background-image.jpg') no-repeat center center fixed; /* 替換成你的背景圖 */
     background-size: cover;
     padding: 40px 20px;
 }
