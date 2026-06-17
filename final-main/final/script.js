@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ===================== banner ===================== */
   let current = 0;
 
-  const images = ["../images/banner1.jpg","../images/banner2.jpg","../images/banner3.jpg"];
+  const images = ["images/banner1.jpg","images/banner2.jpg","images/banner3.jpg"];
   const titles = ["NEW ARRIVAL","SUMMER SALE","WINTER COLLECTION"];
   const descs = ["秋冬新品 8 折起","夏季促銷","冬季系列"];
   const ids = [4,14,3];
