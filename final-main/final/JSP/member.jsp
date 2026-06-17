@@ -336,7 +336,7 @@ button {
           <li onclick="showSection('orders')">訂單紀錄</li>
           <li onclick="showSection('like')">收藏商品</li>
           <li onclick="showSection('question')">常見問題</li>
-          <li onclick="location.href='logout.jsp'">登出</li>
+          <li onclick="location.href='JSP/logout.jsp'">登出</li>
         <% } else { %>
           <li onclick="location.href='login.jsp'">會員登入和註冊</li>
           <li onclick="alert('請先登入會員！')">會員資料</li>
@@ -608,7 +608,7 @@ button {
     };
     
     function removeFavorite(id, element) {
-        fetch("favorite_toggle.jsp?product_id=" + id, { method: "POST" })
+        fetch("JSP/favorite_toggle.jsp?product_id=" + id, { method: "POST" })
             .then(res => res.text()) 
             .then(data => {
                 if (data.trim() === "remove") {
