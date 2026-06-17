@@ -267,7 +267,7 @@
 
 <script src="script.js"></script>
 
-<!-- Cookie 同意提示（組員D：個資法/Cookie） -->
+
 <script src="cookie-consent.js" defer></script>
 
 </body>
