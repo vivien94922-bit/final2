@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>登機用 boarding</title>
+<title>登機用 |VANTERA</title>
 <link rel="stylesheet" href="style.css">
 <script src="script.js" defer></script>
 </head>
@@ -70,8 +70,8 @@ ResultSet rs = ps.executeQuery();
 </section>
 
 <footer>
-  <p>聯絡我們｜service@standardday.com</p>
-  <p>© 2025 STANDARD DAY. All rights reserved.</p>
+  <p>聯絡我們｜vantera2026@gmail.com</p>
+  <p>© 2026 VANTERA. All rights reserved.</p>
   <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
 </footer>
 
