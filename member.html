@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>會員中心｜VANTERA</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
-    
+  <meta charset="UTF-8">
+  <title>會員中心</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+  <script src="script.js"></script>
   <style>
     header {
       display: flex;
@@ -293,70 +294,303 @@ button {
 #orders tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.03);
 }
-        .loading { text-align: center; padding: 20px; }
-    </style>
+  </style>
 </head>
+
 <body>
+  <div id="header-placeholder"></div>
+  <div class="member-container">  
 
-<div id="header-placeholder"></div>
+   <aside class="member-sidebar">
+    <ul id="sidebar-menu">
+        <li data-role="member" onclick="checkAuth('profile')">會員資料</li>
+        <li data-role="member" onclick="checkAuth('orders')">訂單紀錄</li>
+        <li data-role="member" onclick="checkAuth('like')">收藏商品</li>
+        
+        <li onclick="showSection('question')">常見問題</li>
+        
+        <li id="auth-btn" onclick="toggleAuth()">會員登入</li>
+    </ul>
+</aside>
 
-<div class="member-container">
-    <aside class="member-sidebar">
-        <ul>
-            <li onclick="showSection('profile')">會員資料</li>
-            <li onclick="showSection('orders')">訂單紀錄</li>
-            <li onclick="showSection('like')">收藏商品</li>
-            <li onclick="showSection('question')">常見問題</li>
-            <li onclick="location.href='logout.jsp'">登出</li>
-        </ul>
-    </aside>
+    <main class="member-content">
+      <h1>會員中心</h1>
 
-    <main class="member-content" id="member-main">
-        <h1>會員中心</h1>
-        <div id="content-area"></div>
+      <section id="profile" class="content-section <%= isLogin ? "active" : "" %>">
+        <h2>會員資料</h2>
+        
+        <div id="profileViewBox" class="profile-box">
+          <p><b>姓名：</b> <%= (name == null || name.equals("")) ? "（未取得資料）" : name %></p>
+          <p><b>Email：</b> <%= (email == null || email.equals("")) ? "（未取得資料）" : email %></p>
+          <p><b>電話：</b> <%= (phone == null || phone.equals("")) ? "（未取得資料）" : phone %></p>
+          
+          <div class="form-actions" style="margin-top: 20px;">
+            <button type="button" class="save-btn" onclick="switchToEditMode()">修改資料</button>
+          </div>
+        </div>
+
+        <form action="update_profile.jsp" method="post" class="form-box" id="profileEditForm" style="display: none;">
+          <div class="form-row">
+            <label>姓名</label>
+            <input type="text" name="name" value="<%= (name == null) ? "" : name %>" required>
+          </div>
+          
+          <div class="form-row">
+            <label>Email</label>
+            <input type="email" name="email" value="<%= (email == null) ? "" : email %>" required>
+          </div>
+          
+          <div class="form-row">
+            <label>電話</label>
+            <input type="text" name="phone" value="<%= (phone == null) ? "" : phone %>" required>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="save-btn" style="background-color: #28a745;">送出修改</button>
+            <button type="button" class="save-btn" style="background-color: #dc3545;" onclick="switchToViewMode()">取消</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="like" class="content-section">
+        <h2>收藏商品</h2>
+        <div id="favorite-list" class="product-grid">
+          <!-- 收藏商品會動態生成在這裡 -->
+        </div>
+      </section>
+
+      <section id="orders" class="content-section">
+        <h2>訂單紀錄</h2>
+  <div class="box">
+    <table>
+      <thead>
+        <tr>
+          <th>訂單編號</th>
+          <th>商品內容</th>
+          <th>總金額</th>
+          <th>訂單狀態</th>
+          <th>訂單日期</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+      </section>
+        <h2 class="faq-title">常見問題</h2>
+      
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            如何修改會員資料？
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            你可以在會員中心的「會員資料」頁面修改。
+          </div>
+        </div>
+      
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            忘記密碼怎麼辦？
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            請點擊登入頁的「忘記密碼」進行重設。
+          </div>
+        </div>
+      
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            有提供海外配送服務嗎？
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            目前無法提供海外配送服務，請見諒。
+          </div>
+        </div>
+      
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            可以以非會員身分購買嗎？
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            所有訂單皆需以電子信箱註冊並登入後方可結帳。
+          </div>
+        </div>
+      
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            如何取消訂單？
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            若需訂單取消，請儘早於出貨前聯絡客服。若商品已進倉或已發貨，可能需依「退貨流程」處理，且可能產生運費。
+          </div>
+        </div>
+      
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            訂單送出後我可以修改我的運送地址嗎？
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            若訂單已付費且欲修改地址，請立即以訂單編號聯絡我們。一旦倉庫已處理訂單，將無法編輯地址或修改訂單。
+          </div>
+        </div>
+      
+        <div class="faq-item">
+          <button type="button" class="faq-question">
+            聯絡我們
+            <span class="icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p>客服電話：03-1234-4321</p>
+            <p>客服信箱：standardday@gmail.com</p>
+            <p>週一至週五 10:00-12:00/13:00-18:00</p>
+          </div>
+        </div>
+      </section>
+
     </main>
-</div>
+  </div>
 
-<div id="footer-placeholder"></div>
+  <script>
+    // 模擬登入狀態 (你可以從 localStorage 或 API 取得)
+let isLogin = localStorage.getItem('isLoggedIn') === 'true';
 
-<script>
-        // 會員中心專屬邏輯
-        function showSection(id) {
-            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-        }
+// 初始化選單文字
+document.addEventListener('DOMContentLoaded', () => {
+    const authBtn = document.getElementById('auth-btn');
+    authBtn.textContent = isLogin ? "登出" : "會員登入";
+});
 
-        // 初始化頁面資料
-        document.addEventListener("DOMContentLoaded", () => {
-            // 1. 載入會員資料 (對接後端 API)
-            fetch("member_api.jsp")
-                .then(res => res.json())
-                .then(data => {
-                    // 渲染會員資料
-                    document.getElementById('profile-content').innerHTML = `
-                        <p>姓名：${data.name}</p>
-                        <p>Email：${data.email}</p>
-                        <p>電話：${data.phone}</p>
-                    `;
-                    // 渲染訂單
-                    renderOrders(data.orders);
-                });
+// 核心檢查函式
+function checkAuth(sectionId) {
+    if (isLogin) {
+        showSection(sectionId);
+    } else {
+        alert("請先登入會員！");
+        location.href = 'login.html'; // 導向登入頁
+    }
+}
 
-            // 2. 載入收藏 (這是你原本的函式)
-            if (typeof loadFavorites === 'function') loadFavorites();
+// 切換登入狀態的範例
+function toggleAuth() {
+    if (isLogin) {
+        localStorage.removeItem('isLoggedIn');
+        location.href = 'logout.html';
+    } else {
+        location.href = 'login.html';
+    }
+}
+    // 點擊「修改資料」：隱藏文字，顯示輸入框
+    function switchToEditMode() {
+      document.getElementById('profileViewBox').style.display = 'none';  // 隱藏純文字
+      document.getElementById('profileEditForm').style.display = 'block'; // 顯示表單
+    }
+
+    // 點擊「取消」：隱藏輸入框，顯示文字
+    function switchToViewMode() {
+      document.getElementById('profileEditForm').style.display = 'none';  // 隱藏表單
+      document.getElementById('profileViewBox').style.display = 'block'; // 顯示純文字
+      
+      // 可選：如果使用者有改動欄位但點了取消，重整頁面可以將輸入框內容重設回原本的資料
+      // location.reload(); 
+    }
+    /* ==================== 頁面切換 ==================== */
+    function showSection(id) {
+      document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+      });
+      const target = document.getElementById(id);
+      if (target) target.classList.add('active');
+    }
+
+    /* ==================== 收藏 ==================== */
+    window.loadFavorites = function() {
+        const box = document.getElementById("favorite-list");
+        if (!box) return;
+    
+        // 事件委派：統一處理容器內的點擊事件
+        box.addEventListener("click", function(e) {
+            if (e.target.classList.contains("favorite-icon")) {
+                const productDiv = e.target.closest(".product");
+                const productId = productDiv.dataset.id;
+                
+                if (confirm("確定要取消收藏嗎？")) {
+                    removeFavorite(productId, productDiv);
+                }
+            }
         });
+    
+        fetch("favorite_list.jsp")
+            .then(res => res.json())
+            .then(data => {
+                if (!data || data.length === 0) {
+                    box.innerHTML = "<p>目前沒有收藏商品</p>";
+                    return;
+                }
+    
+                const fragment = document.createDocumentFragment();
+    
+                data.forEach(item => {
+                    const div = document.createElement("div");
+                    div.className = "product";
+                    div.dataset.id = item.id;
+                    
+                    div.innerHTML = 
+                        '<a href="product.jsp?id=' + item.id + '" class="product-link">' +
+                            '<img src="' + item.img + '" alt="' + item.name + '">' +
+                            '<div class="product-info">' +
+                                '<div class="product-name">' + item.name + '</div>' +
+                                '<div class="product-price">NT$' + item.price + '</div>' +
+                            '</div>' +
+                        '</a>' +
+                        '<button class="add-cart-btn">加入購物車</button>' +
+                        '<img src="images/love.png" class="favorite-icon" title="取消收藏" style="cursor:pointer;">';
+                    
+                    fragment.appendChild(div);
+                });
+    
+                box.innerHTML = "";
+                box.appendChild(fragment);
+            })
+            .catch(err => {
+                console.error("載入收藏失敗:", err);
+                box.innerHTML = "<p style='color:red;'>載入失敗，請檢查網路連線。</p>";
+            });
+    };
+    
+    function removeFavorite(id, element) {
+        fetch("favorite_toggle.jsp?product_id=" + id, { method: "POST" })
+            .then(res => res.text()) 
+            .then(data => {
+                if (data.trim() === "remove") {
+                    element.remove(); // 成功移除
+                    alert("已取消收藏");
+                } else if (data.trim() === "add") {
+                    alert("已加入收藏");
+                }
+            })
+            .catch(err => console.error("請求失敗:", err));
+    }
+    /* ==================== 初始化與事件監聽 ==================== */
+    document.addEventListener('DOMContentLoaded', () => {
+      loadFavorites();
 
-        function renderOrders(orders) {
-            const body = document.getElementById('orders-body');
-            body.innerHTML = orders.map(o => `
-                <tr>
-                    <td>#${o.id}</td>
-                    <td>${o.items}</td>
-                    <td>NT$ ${o.total}</td>
-                    <td>${o.status}</td>
-                </tr>
-            `).join("");
-        }
-    </script>
+      // FAQ 切換
+      document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+          btn.closest('.faq-item').classList.toggle('active');
+        });
+      });
+
+      // 檢查網址 Hash
+      const hash = window.location.hash;
+      if (hash) {
+        const sectionId = hash.replace("#", "");
+        showSection(sectionId);
+      }
+    });
+  </script>
 </body>
 </html>

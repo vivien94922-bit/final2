@@ -250,39 +250,7 @@
     <div class="sub">OFFICIAL</div>
   </div>
 </div>
-<header>
-  <div class="nav-left">
-    <a href="index.html" class="logo">VANTERA</a>
-  </div>
-
-  <div class="nav-icons">
-    <div class="search-wrapper">
-      <img src="images/search.png" id="searchIcon">
-      <div class="search-box" id="searchBox">
-        <div class="search-input">
-          <img src="images/search.png">
-          <input type="text" id="searchInput" placeholder="搜尋商品...">
-          <div class="search-result" id="searchResult"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="menu-wrapper">
-      <img src="images/suitcases.png" id="menuIcon">
-      <div class="menu-box" id="menuBox">
-        <a href="travel.html" class="menu-item">旅行用</a>
-        <a href="plane.html" class="menu-item">登機用</a>
-        <a href="kids.html" class="menu-item">親子用</a>
-      </div>
-    </div>
-
-    <a href="about.jsp"><img src="images/info.png"></a>
-    <a href="member.jsp"><img src="images/user.png"></a>
-    <a href="cart.jsp"><img src="images/shopping_cart.png"></a>
-    <a href="admin_login.jsp"><img src="images/tool.png"></a>
-  </div>
-</header>
-
+<div id="header-placeholder"></div>
 <section class="banner">
   <img id="bannerImage" src="images/banner1.png">
     <div id="digital-clock" class="clock">
@@ -387,6 +355,42 @@
 <script src="cookie-consent.js" defer></script>
 
 <script>
+    // script.js
+async function initPage() {
+    // 1. 抓取 header 並塞入 id="header-placeholder" 的區塊
+    try {
+        const headerRes = await fetch('header.html');
+        const headerText = await headerRes.text();
+        const headerContainer = document.getElementById('header-placeholder');
+        if (headerContainer) {
+            headerContainer.innerHTML = headerText;
+            initHeaderUI(); // 載入後才綁定搜尋/選單事件
+        }
+
+        // 2. 抓取 footer 並塞入 id="footer-placeholder"
+        const footerRes = await fetch('footer.html');
+        const footerText = await footerRes.text();
+        const footerContainer = document.getElementById('footer-placeholder');
+        if (footerContainer) {
+            footerContainer.innerHTML = footerText;
+        }
+    } catch (err) {
+        console.error("Header/Footer 載入失敗:", err);
+    }
+}
+
+// 綁定 UI 事件
+function initHeaderUI() {
+    const searchIcon = document.getElementById("searchIcon");
+    const searchBox = document.getElementById("searchBox");
+    if (searchIcon && searchBox) {
+        searchIcon.addEventListener("click", () => searchBox.classList.toggle("active"));
+    }
+    // ... 其他選單互動邏輯
+}
+
+// 確保頁面載入時執行
+document.addEventListener("DOMContentLoaded", initPage);
     // 1. 開場特效邏輯
     window.addEventListener("load", () => {
         const intro = document.getElementById("intro");
