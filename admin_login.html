@@ -1,32 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="java.sql.*" %>
-<%@ include file="dbutil.jsp" %>
-<%
-String msg = "";
-request.setCharacterEncoding("UTF-8");
-if ("POST".equalsIgnoreCase(request.getMethod())) {
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    try (Connection conn = getConnection();
-         PreparedStatement ps = conn.prepareStatement(
-             "SELECT id,username,password,salt FROM members WHERE username=? AND role='admin'")) {
-        ps.setString(1, username == null ? "" : username.trim());
-        try (ResultSet rs = ps.executeQuery()) {
-            if (rs.next() && verifyPassword(password, rs.getString("salt"), rs.getString("password"))) {
-                session.setAttribute("isAdmin", Boolean.TRUE);
-                session.setAttribute("admin_id", rs.getInt("id"));
-                session.setAttribute("admin_username", rs.getString("username"));
-                response.sendRedirect("admin_orders.jsp");
-                return;
-            }
-        }
-        msg = "帳號或密碼錯誤";
-    } catch (Exception e) {
-        application.log("Admin login failed", e);
-        msg = "系統暫時無法登入，請稍後再試";
-    }
-}
-%>
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -214,7 +186,7 @@ body{
 </style>
 </head>
 <body>
-      <%@ include file="header.jsp" %>
+    <div id="header-placeholder"></div>
 <div class="admin-login-wrap">
 
     <div class="admin-panel">
@@ -246,15 +218,19 @@ body{
 
         </form>
 
-        <% if(!msg.equals("")){ %>
-            <div class="error-msg">
-                <%= msg %>
-            </div>
-        <% } %>
-
     </div>
 
 </div>
+
+<script src="cookie-consent.js" defer></script>
+<script>
+ // 簡單的 header 載入範例
+fetch('header.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('header-placeholder').innerHTML = data);
+</script>
+</body>
+</html>
 
 <script src="cookie-consent.js" defer></script>
 </body>
