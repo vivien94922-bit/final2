@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅行用 Travel | VANTERA</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<style>
+    .product { position: relative; }
+    .favorite-icon, .share-icon {
+        width: 24px !important; height: 24px !important; padding: 8px;
+        position: absolute; bottom: 75px; cursor: pointer;
+        box-sizing: content-box; transition: transform 0.2s; z-index: 2;
+    }
+    .favorite-icon { right: 50px; }
+    .share-icon { right: 10px; }
+</style>
+<body>
+
+<div id="header-placeholder"></div>
+
+<section class="products">
+    <h2>長途旅行 Check-In Travel</h2>
+    <div class="product-grid" id="travel-grid"></div>
+</section>
+<footer>
+  <p>聯絡我們｜
+    <a href="mailto:vantera2026@gmail.com?subject=關於VANTERA的詢問&body=您好，我想詢問關於..." 
+       style="color: #bbb; text-decoration: none;">
+       vantera2026@gmail.com
+    </a>
+  </p>
+  <p>© 2026 VANTERA. All rights reserved.</p>
+  <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
+</footer>
+<div id="footer-placeholder"></div>
+
+<button id="backToTop" title="回到頂部">↑</button>
+
+<script>
+    // 1. 定義 Header 與 Footer 載入及互動初始化函式
+    async function initPage() {
+        // 載入 Header 並等待完成
+        const headerRes = await fetch('header.html');
+        const headerText = await headerRes.text();
+        document.getElementById('header-placeholder').innerHTML = headerText;
+
+        // 載入 Footer 並等待完成
+        const footerRes = await fetch('footer.html');
+        const footerText = await footerRes.text();
+        document.getElementById('footer-placeholder').innerHTML = footerText;
+
+        // 【關鍵】Header 內容出現後，立刻初始化 UI 事件
+        initHeaderUI();
+    }
+
+    // 2. 初始化 Header 的互動功能
+    function initHeaderUI() {
+        const searchIcon = document.getElementById("searchIcon");
+        const searchBox = document.getElementById("searchBox");
+        const menuIcon = document.getElementById("menuIcon");
+        const menuBox = document.getElementById("menuBox");
+
+        if (searchIcon && searchBox) {
+            searchIcon.addEventListener("click", () => {
+                searchBox.classList.toggle("active");
+            });
+        }
+        if (menuIcon && menuBox) {
+            menuIcon.addEventListener("click", () => {
+                menuBox.classList.toggle("active");
+            });
+        }
+    }
+
+    // 3. 頁面啟動邏輯
+    document.addEventListener("DOMContentLoaded", async () => {
+        // 先載入 Layout
+        await initPage();
+
+        // 再載入商品資料
+        fetch("index_data.json")
+            .then(res => res.json())
+            .then(data => {
+                renderProducts(data.travel, "travel-grid");
+            });
+    });
+
+    // 4. 商品渲染函式
+    function renderProducts(products, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        // 讀取本地收藏狀態
+        const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+        products.forEach(p => {
+            const isFav = favorites.includes(p.id.toString());
+            const heartImg = isFav ? "images/love.png" : "images/heart.png";
+
+            container.insertAdjacentHTML('beforeend', `
+                <div class="product" data-id="${p.id}">
+                    <a href="product.html?id=${p.id}" class="product-link">
+                        <img src="${p.image}" alt="${p.name}">
+                        <div class="product-info">
+                            <div class="product-name">${p.name}</div>
+                            <div class="product-price">NT$${p.price}</div>
+                        </div>
+                    </a>
+                    <div class="product-actions">
+                        <img src="${heartImg}" class="favorite-icon" onclick="toggleFavorite(event, this)">
+                        <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${p.name}', 'product.html?id=${p.id}')">
+                    </div>
+                    <button class="add-cart-btn">加入購物車</button>
+                </div>
+            `);
+        });
+    }
+</script>
+</body>
+</html>

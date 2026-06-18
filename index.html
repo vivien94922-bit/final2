@@ -270,9 +270,9 @@
     <div class="menu-wrapper">
       <img src="images/suitcases.png" id="menuIcon">
       <div class="menu-box" id="menuBox">
-        <a href="travel.jsp" class="menu-item">旅行用</a>
-        <a href="plane.jsp" class="menu-item">登機用</a>
-        <a href="kids.jsp" class="menu-item">親子用</a>
+        <a href="travel.html" class="menu-item">旅行用</a>
+        <a href="plane.html" class="menu-item">登機用</a>
+        <a href="kids.html" class="menu-item">親子用</a>
       </div>
     </div>
 
@@ -460,7 +460,7 @@
 
             container.insertAdjacentHTML('beforeend', `
                 <div class="product" data-id="${p.id}">
-                    <a href="product.jsp?id=${p.id}" class="product-link">
+                    <a href="product.html?id=${p.id}" class="product-link">
                         <img src="${p.image}" alt="${fullName}">
                         <div class="product-info">
                             <div class="product-name" style="line-height: 1.4; min-height: 48px;">
@@ -472,7 +472,7 @@
                     </a>
                     <div class="product-actions">
                         <img src="images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
-                        <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${fullName}', 'product.jsp?id=${p.id}')">
+                        <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${fullName}', 'product.html?id=${p.id}')">
                     </div>
                     <button class="add-cart-btn">加入購物車</button>
                 </div>
@@ -515,19 +515,20 @@ document.getElementById('quizForm').addEventListener('submit', function(e) {
         link: ""
     };
 
-    if (score <= 8) {
-        result.title = "推薦：登機系列 (Boarding)";
-        result.desc = "你追求效率與輕便，登機系列最能配合你快速移動的節奏。";
-        result.link = "plane.jsp";
-    } else if (score <= 12) {
-        result.title = "推薦：旅行系列 (Travel)";
-        result.desc = "你注重旅途中的穩定感與空間，旅行系列是你最可靠的選擇。";
-        result.link = "travel.jsp";
-    } else {
-        result.title = "推薦：親子友善系列 (Family)";
-        result.desc = "你通常需要攜帶大量物品，親子友善系列提供你最強大的收納支援。";
-        result.link = "kids.jsp";
-    }
+    // 修改這一段
+if (score <= 8) {
+    result.title = "推薦：登機系列 (Boarding)";
+    result.desc = "你追求效率與輕便，登機系列最能配合你快速移動的節奏。";
+    result.link = "boarding.html"; // 改成你的頁面檔名
+} else if (score <= 12) {
+    result.title = "推薦：旅行系列 (Travel)";
+    result.desc = "你注重旅途中的穩定感與空間，旅行系列是你最可靠的選擇。";
+    result.link = "travel.html"; // 改成你的頁面檔名
+} else {
+    result.title = "推薦：親子友善系列 (Family)";
+    result.desc = "你通常需要攜帶大量物品，親子友善系列提供你最強大的收納支援。";
+    result.link = "family.html"; // 改成你的頁面檔名
+}
 
     // 3. 切換顯示內容
     document.getElementById('quizForm').style.display = 'none'; // 隱藏表單

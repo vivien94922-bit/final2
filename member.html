@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員中心｜VANTERA</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    
+  <style>
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 40px;
+      background-color: #222;
+      position: relative;
+      z-index: 1000;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .member-container {
+      display: flex;
+      min-height: 200vh;
+    }
+
+    .member-sidebar {
+      width: 200px;
+      background-color: #333;
+      color: white;
+    }
+
+    .member-sidebar ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .member-sidebar li {
+      padding: 15px 15px 15px 30px;
+      cursor: pointer;
+    }
+
+    .member-sidebar li:hover {
+      background-color: #555;
+    }
+
+    .member-content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .content-section {
+     opacity: 0;
+     max-height: 0;
+     overflow: hidden;
+     pointer-events: none;
+     transition: opacity 0.3s ease;
+    }
+
+    .content-section.active {
+     opacity: 1;
+     max-height: 2000px;
+     pointer-events: auto;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form-group input {
+      width: 300px;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .save-btn {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .save-btn:hover {
+      background-color: #555;
+    }
+
+    .logo {
+      color: white;
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+    }
+     /* ===== FAQ 樣式 ===== */
+
+  .faq {
+    max-width: 450px;
+    margin-top: 20px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid #ddd;
+    width:450px
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 15px;
+    font-size: 16px;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .faq-question .icon {
+    transition: transform 0.3s ease;
+    font-size: 20px;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    padding: 0 15px;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 200px;
+    padding: 10px 15px 20px;
+  }
+
+  .faq-item.active .icon {
+    transform: rotate(45deg); /* + 變成 × */
+  }
+  /* ===== 收藏 ===== */
+/* 收藏列表容器：改為並排模式 */
+#favorite-list {
+  display: flex;
+  flex-wrap: wrap; /* 允許換行 */
+  gap: 20px;       /* 卡片之間的間距 */
+  padding: 10px;
+  max-width: 1000px;
+}
+
+/* 每個商品卡片：改為垂直結構以符合變窄的需求 */
+#favorite-list .product {
+  display: flex;
+  flex-direction: column; /* 圖片在上方，文字在下方 */
+  width: 200px;           /* 設定卡片寬度，讓它變窄 */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  padding: 15px;
+  transition: box-shadow 0.2s;
+  position: relative;     /* 為了讓愛心可以放在右上角 */
+}
+
+#favorite-list .product:hover {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* 商品圖片：填滿卡片寬度 */
+#favorite-list .product img {
+  width: 100%;
+  height: 200px;          /* 根據你的美感調整高度 */
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* 文字區塊 */
+#favorite-list .product-info {
+  margin-top: 10px;
+}
+
+/* 商品名稱 */
+#favorite-list .product-name {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+  white-space: nowrap;    /* 防止名稱過長跑版 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 價格 */
+#favorite-list .product-price {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+/* 按鈕區塊 */
+#favorite-list .add-cart-btn {
+  width: 100%;            /* 按鈕寬度填滿 */
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+/* 收藏愛心 */
+#favorite-list .favorite-icon {
+  width: 24px;
+  height: 24px;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#favorite-list .favorite-icon:hover {
+  transform: scale(1.3);
+}
+
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-right: 10px;
+  transition: 0.2s ease;
+}
+
+.form-box {
+  width: 400px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.form-row label {
+  width: 80px;   /* 👉 關鍵：讓欄位統一寬度 */
+  font-weight: bold;
+}
+
+.form-row input {
+  flex: 1;
+  padding: 6px;
+}
+
+.form-actions {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+#orders {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  /* 加入背景色，遮住後方的背景圖 */
+  background-color: rgba(255, 255, 255, 0.9); 
+  /* 加入圓角與陰影，讓表格看起來更精緻且與背景脫離 */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+#orders th, #orders td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+  /* 確保文字顏色清晰，避免與背景圖混淆 */
+  color: #333;
+}
+
+#orders th {
+  /* 表頭用較深的顏色與內容區隔 */
+  background-color: #eee; 
+  font-weight: bold;
+}
+
+/* 增加斑馬紋效果，閱讀更方便 */
+#orders tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+        .loading { text-align: center; padding: 20px; }
+    </style>
+</head>
+<body>
+
+<div id="header-placeholder"></div>
+
+<div class="member-container">
+    <aside class="member-sidebar">
+        <ul>
+            <li onclick="showSection('profile')">會員資料</li>
+            <li onclick="showSection('orders')">訂單紀錄</li>
+            <li onclick="showSection('like')">收藏商品</li>
+            <li onclick="showSection('question')">常見問題</li>
+            <li onclick="location.href='logout.jsp'">登出</li>
+        </ul>
+    </aside>
+
+    <main class="member-content" id="member-main">
+        <h1>會員中心</h1>
+        <div id="content-area"></div>
+    </main>
+</div>
+
+<div id="footer-placeholder"></div>
+
+<script>
+        // 會員中心專屬邏輯
+        function showSection(id) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        // 初始化頁面資料
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. 載入會員資料 (對接後端 API)
+            fetch("member_api.jsp")
+                .then(res => res.json())
+                .then(data => {
+                    // 渲染會員資料
+                    document.getElementById('profile-content').innerHTML = `
+                        <p>姓名：${data.name}</p>
+                        <p>Email：${data.email}</p>
+                        <p>電話：${data.phone}</p>
+                    `;
+                    // 渲染訂單
+                    renderOrders(data.orders);
+                });
+
+            // 2. 載入收藏 (這是你原本的函式)
+            if (typeof loadFavorites === 'function') loadFavorites();
+        });
+
+        function renderOrders(orders) {
+            const body = document.getElementById('orders-body');
+            body.innerHTML = orders.map(o => `
+                <tr>
+                    <td>#${o.id}</td>
+                    <td>${o.items}</td>
+                    <td>NT$ ${o.total}</td>
+                    <td>${o.status}</td>
+                </tr>
+            `).join("");
+        }
+    </script>
+</body>
+</html>

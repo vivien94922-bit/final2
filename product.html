@@ -527,7 +527,7 @@ body {
 </style>
     </head>
 <body>
-
+<div id="header-placeholder"></div>
 <main class="product-container">
     <div class="product-images fade-up">
         <img id="p-image" src="" alt="商品圖片">
@@ -776,9 +776,41 @@ async function init() {
 function addToCart() {
     alert("商品已加入購物車！");
 }
-
+document.addEventListener("DOMContentLoaded", () => {
+    // 載入 Header
+    fetch('header.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('header-placeholder').innerHTML = data;
+            // 載入完成後，立刻初始化這些 UI 元件的點擊事件
+            initHeaderUI(); 
+        });
+    
+    // 載入 Footer
+    fetch('footer.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('footer-placeholder').innerHTML = data;
+        });
+});
 // 頁面載入時執行
 window.onload = init;
+// 新增這個函式，讓 header 載入後的互動功能恢復
+function initHeaderUI() {
+    const searchIcon = document.getElementById("searchIcon");
+    const menuIcon = document.getElementById("menuIcon");
+    
+    if (searchIcon) {
+        searchIcon.addEventListener("click", () => {
+            document.getElementById("searchBox").classList.toggle("active");
+        });
+    }
+    if (menuIcon) {
+        menuIcon.addEventListener("click", () => {
+            document.getElementById("menuBox").classList.toggle("active");
+        });
+    }
+}
 </script>
 </body>
 </html>

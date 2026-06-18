@@ -108,27 +108,17 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => t.remove(), 2000);
   }
 
-  /* ===================== header login UI ===================== */
-  const userArea = document.getElementById("user-area");
-  
-  if (userArea) {
-    fetch("check_login.jsp")
-      .then(r => r.text())
-      .then(s => {
-        if (s.trim() === "OK") {
-          userArea.innerHTML = `
-            <a href="member.jsp">會員中心</a>
-            <a href="logout.jsp">登出</a>
-          `;
-        } else {
-          userArea.innerHTML = `
-            <a href="login.jsp">
-              <img src="../images/user.png">
-            </a>
-          `;
-        }
-      });
-  }
+/* ===================== Header 登入 UI ===================== */
+const userArea = document.getElementById("user-area");
+if (userArea) {
+    // 假設你在登入頁面會存一個 "isLoggedIn": "true" 到 localStorage
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") {
+        userArea.innerHTML = `<a href="member.html">會員中心</a> <a href="logout.html" onclick="localStorage.removeItem('isLoggedIn')">登出</a>`;
+    } else {
+        userArea.innerHTML = `<a href="login.html"><img src="images/user.png"></a>`;
+    }
+}
   /* ===================== 回到頂部 ===================== */
   const topBtn = document.getElementById("backToTop");
 
@@ -142,77 +132,58 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ===================== 加入購物車（唯一版本） ===================== */
-  document.addEventListener("click", async (e) => {
+ /* ===================== 加入購物車 (靜態化版本) ===================== */
+document.addEventListener("click", async (e) => {
     if (!e.target.classList.contains("add-cart-btn")) return;
-
-    const res = await fetch("check_login.jsp");
-    const status = await res.text();
-
-    if (status.trim() !== "OK") {
-        alert("請先登入");
-        location.href = "login.jsp";
-        return;
-    }
 
     const p = e.target.closest(".product");
     if (!p) return;
 
     const id = p.dataset.id;
+    // 從 localStorage 獲取購物車，沒有則初始化為空陣列
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    
+    // 加入商品
+    cart.push({ id: id, quantity: 1 });
+    localStorage.setItem("cart", JSON.stringify(cart));
 
-    // 👉 改成直接寫 DB
-    const addRes = await fetch("addToCart.jsp", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded"
-        },
-        body: `product_id=${encodeURIComponent(id)}&quantity=1&size=M`
-    });
-
-    const data = await addRes.json();
-
-    alert(data.msg || (addRes.ok ? "已加入購物車" : "操作失敗"));
-  });
-
-  /* ===================== 收藏功能 ===================== */
-  window.updateAllHearts = function(productId, isFavorite) {
-    const newSrc = isFavorite ? "images/love.png" : "images/heart.png";
-    document.querySelectorAll(`.product[data-id="${productId}"] .favorite-icon`)
-      .forEach(icon => { icon.src = newSrc; });
-  };
-
-  window.toggleFavorite = async function (event, el) {
-    if (event) {
-      event.stopPropagation();
-      event.preventDefault();
-    }
-    const p = el.closest(".product");
-    const id = p.dataset.id;
-    const isFavoritePage = document.getElementById("favorite-list") !== null;
-
-    try {
-      const res = await fetch("favorite_toggle.jsp", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "product_id=" + id
-      });
-
-      if (res.status === 401) {
-        alert("請先登入");
-        window.location.href = "login.jsp";
-        return;
-      }
-
-      const status = (await res.text()).trim();
-      if (status === "add" || status === "remove") {
-        window.updateAllHearts(id, status === "add");
-        if (isFavoritePage && status === "remove") {
-          p.remove();
-        }
-        toast(status === "add" ? "已加入收藏" : "已移除收藏");
-      }
-    } catch (err) {
-      console.error("收藏失敗:", err);
-    }
-  };
+    alert("已加入購物車 (靜態儲存)");
 });
+/* ===================== 收藏功能 (靜態化版本) ===================== */
+window.toggleFavorite = function (event, el) {
+    if (event) { event.stopPropagation(); event.preventDefault(); }
+    
+    const id = el.closest(".product").dataset.id;
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+    const index = favorites.indexOf(id);
+    if (index === -1) {
+        favorites.push(id);
+        el.src = "images/love.png"; // 更新圖示
+        toast("已加入收藏");
+    } else {
+        favorites.splice(index, 1);
+        el.src = "images/heart.png";
+        toast("已移除收藏");
+    }
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+};
+});
+// 在 script.js 或各頁面的 <script> 中
+function initHeaderUI() {
+    const searchIcon = document.getElementById("searchIcon");
+    const menuIcon = document.getElementById("menuIcon");
+    const searchBox = document.getElementById("searchBox");
+    const menuBox = document.getElementById("menuBox");
+
+    if (searchIcon && searchBox) {
+        searchIcon.addEventListener("click", () => {
+            searchBox.classList.toggle("active");
+        });
+    }
+    if (menuIcon && menuBox) {
+        menuIcon.addEventListener("click", () => {
+            menuBox.classList.toggle("active");
+        });
+    }
+}
