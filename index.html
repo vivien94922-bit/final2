@@ -427,18 +427,24 @@
             if (introEl) introEl.style.display = "block";
         }
 
-        fetch("index_data.jsp")
-            .then(res => res.json())
-            .then(data => {
-                const visitorCountEl = document.getElementById("visitorCount");
-                if (visitorCountEl) visitorCountEl.innerText = data.visitorCount;
-                renderProducts(data.hot, "hot-grid");
-                renderProducts(data.boarding, "boarding-grid");
-                renderProducts(data.travel, "travel-grid");
-                syncFavorites();
-            })
-            .catch(err => console.warn("資料載入失敗:", err.message));
-    });
+        fetch("index_data.json")
+        .then(res => res.json())
+        .then(data => {
+            // 訪客計數器（靜態版無法即時更新，建議直接顯示一個固定數字或刪除）
+            const visitorCountEl = document.getElementById("visitorCount");
+            if (visitorCountEl) visitorCountEl.innerText = "1,250"; 
+            
+            // 渲染商品
+            renderProducts(data.hot, "hot-grid");
+            renderProducts(data.boarding, "boarding-grid");
+            renderProducts(data.travel, "travel-grid");
+            // 若你需要渲染親子區，確保 JSON 裡有 family 欄位
+            renderProducts(data.family, "family-grid");
+            
+            syncFavorites();
+        })
+        .catch(err => console.warn("資料載入失敗，請確認 JSON 格式正確:", err.message));
+});
 
     // 4. 商品渲染 (已加入分享按鈕)
     function renderProducts(products, containerId) {

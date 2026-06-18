@@ -1,0 +1,23 @@
+{
+  "visitorCount": "1,250",
+  "hot": [
+    { "id": 1, "name": "VANTERA Edge Pro", "price": 1280, "image": "images/01_0.png" },
+    { "id": 5, "name": "VANTERA Carbon Elite", "price": 1100, "image": "images/05_0.png" },
+    { "id": 7, "name": "VANTERA Cube White", "price": 1280, "image": "images/07_0.png" }
+  ],
+  "boarding": [
+    { "id": 2, "name": "VANTERA Wave Lite", "price": 960, "image": "images/02_0.png" },
+    { "id": 4, "name": "VANTERA Crystal Air", "price": 590, "image": "images/04_0.png" },
+    { "id": 9, "name": "VANTERA Smart Pocket", "price": 690, "image": "images/09_0.png" }
+  ],
+  "travel": [
+    { "id": 8, "name": "VANTERA Titan Gold", "price": 590, "image": "images/08_0.png" },
+    { "id": 10, "name": "VANTERA Steel Line", "price": 690, "image": "images/10_0.png" },
+    { "id": 11, "name": "VANTERA Forest Metal", "price": 730, "image": "images/11_0.png" }
+  ],
+  "family": [
+    { "id": 3, "name": "VANTERA Ocean Flow", "price": 840, "image": "images/03_0.png" },
+    { "id": 15, "name": "VANTERA Champagne Luxe", "price": 440, "image": "images/15_0.png" },
+    { "id": 7, "name": "VANTERA Cube White", "price": 1280, "image": "images/07_0.png" }
+  ]
+}

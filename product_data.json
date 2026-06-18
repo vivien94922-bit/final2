@@ -1,0 +1,19 @@
+{
+  "products": [
+    { "id": 1, "name": "VANTERA Edge Pro 極鋒商務行李箱", "price": 1280, "stock": 15, "image": "images/01_0.png", "description": "專為高階商務人士打造。採用俐落的硬派線條與前開式快取設計，內建獨立筆電防震層，讓您在高鐵與機場安檢時優雅通關，展現極致的都會專業魅力。", "category": "boarding", "comments": [{"username": "vivien", "rating": 5, "content": "出國五天，M 碼非常夠裝！", "date": "2026-06-10 14:37:59"}, {"username": "Jason", "rating": 5, "content": "高品質行李箱，質感一流。", "date": "2026-06-12 09:20:00"}]},
+    { "id": 2, "name": "VANTERA Wave Lite 流光輕旅行李箱", "price": 960, "stock": 29, "image": "images/02_0.png", "description": "主打極致輕量化與流線型美學。羽量級的外殼大幅減輕出行負擔，搭配頂級複合抗壓材質與靜音萬向輪，是您週末隨興出遊、城市輕旅行的最佳美型夥伴。", "category": "boarding", "comments": []},
+    { "id": 3, "name": "VANTERA Ocean Flow 深海律動行李箱", "price": 840, "stock": 15, "image": "images/03_0.png", "description": "以深海漸進浪韻為靈感設計。外殼具備極高彈性與耐衝擊防護，大容量高覆蓋率收納空間，最適合海島度假與全家放鬆行程，隨時感受自由律動。", "category": "family", "comments": [{"username": "媽媽愛旅行", "rating": 5, "content": "帶小孩出門，這個胖胖箱真的好用！", "date": "2026-06-11 16:00:00"}]},
+    { "id": 4, "name": "VANTERA Crystal Air 晶鑽輕航行李箱", "price": 590, "stock": 24, "image": "images/04_0.png", "description": "獨特的立體晶鑽切面外殼，在光線下折射出輕奢質感。兼具極輕量化空航規格與高剛性防刮塗層，深受女性與頻繁飛行者喜愛，讓每一次登機都是時尚亮點。", "category": "boarding", "comments": []},
+    { "id": 5, "name": "VANTERA Carbon Elite 碳纖旗艦行李箱", "price": 1100, "stock": 14, "image": "images/05_0.png", "description": "頂級工藝與尖端材料的結晶。採用碳纖維紋理複合結構，具備全系列最高階的抗壓、防震與耐低溫性能，能完美保護箱內貴重物品，無懼任何惡劣託運環境。", "category": "travel", "comments": []},
+    { "id": 6, "name": "VANTERA Urban Black 都會極簡行李箱", "price": 1280, "stock": 13, "image": "images/06_0.png", "description": "沉穩霧黑低調設計，不帶一絲多餘線條。極簡主義外觀下擁有高效率的雙面減震隔板與魔術收納空間，完美融入現代都會的各種移動與出差情境。", "category": "boarding", "comments": []},
+    { "id": 7, "name": "VANTERA Cube White 純境方格行李箱", "price": 1280, "stock": 22, "image": "images/07_0.png", "description": "採用大受好評的 3:7 比例深層胖胖箱設計。純白純淨方格美學，超深主艙能輕鬆塞入電器、厚重衣物或孩童大玩具，全家度假、海外代購一箱搞定。", "category": "family", "comments": [{"username": "ShoppingQueen", "rating": 5, "content": "胖胖箱就是好用，塞滿也不怕。", "date": "2026-06-14 20:45:12"}]},
+    { "id": 8, "name": "VANTERA Titan Gold 鈦金尊爵行李箱", "price": 590, "stock": 40, "image": "images/08_0.png", "description": "象徵尊榮地位的鈦金色調，搭配四角全金屬防撞包角。高剛性鋁合金框架與強化防盜鎖具，提供鋼鐵般的極致防護，專為長途蜜月、高階奢華度假量身打造。", "category": "travel", "comments": []},
+    { "id": 9, "name": "VANTERA Smart Pocket 智慧前開商務箱", "price": 690, "stock": 35, "image": "images/09_0.png", "description": "直立式前開專利口袋設計，免將行李箱躺平即可快速取放 15.6 吋筆電、護照與隨身行動電源。內建一體化防盜海關鎖，智慧出行、出差效率再升級。", "category": "boarding", "comments": []},
+    { "id": 10, "name": "VANTERA Steel Line 鋼曜旅行行李箱", "price": 690, "stock": 28, "image": "images/10_0.png", "description": "剛毅的鋼曜線條塗層，外殼具備業界頂級的防刮、耐磨損特性。多段式加粗鋁合金拉桿與防爆拉鍊設計，專為高頻率跨國壯遊設計，禁得起每一次地勤託運考驗。", "category": "travel", "comments": []},
+    { "id": 11, "name": "VANTERA Forest Metal 森嶼金屬行李箱", "price": 730, "stock": 26, "image": "images/11_0.png", "description": "採用全鋁鎂合金硬殼框架，無拉鍊的密封式金屬防盜鎖扣，徹底杜絕被原子筆劃開的風險。森林系輕奢配色，兼具極致防禦力與戶外野性美學。", "category": "travel", "comments": []},
+    { "id": 12, "name": "VANTERA Platinum Classic 鉑金經典行李箱", "price": 730, "stock": 12, "image": "images/12_0.png", "description": "致敬百年旅行傳統的經典條紋設計。高雅鉑金光澤外殼，內部配備豐富的雙面全包覆式網袋與X型束帶，大容量、好推拉，是不可或缺的長途跨國經典託運箱。", "category": "travel", "comments": []},
+    { "id": 13, "name": "VANTERA Executive Black 尊榮商務行李箱", "price": 1190, "stock": 14, "image": "images/13_0.png", "description": "專為企業主管與跨國商務艙常客定製。極致黑高彈性箱體與隱藏式吊掛吊帶，內部採用奢華抗菌內襯，完美收納西裝與商務正裝，彰顯不凡的商務風範。", "category": "boarding", "comments": []},
+    { "id": 14, "name": "VANTERA Graphite Prime 曜石旗艦行李箱", "price": 350, "stock": 33, "image": "images/14_0.png", "description": "石墨灰曜石質感外殼，導入最新微奈米防刮微粒塗層。全箱配備一體成型頂級避震輪，面對石磚路或顛簸路面依然絲滑靜音，是追求完美細節者的旗艦首選。", "category": "travel", "comments": []},
+    { "id": 15, "name": "VANTERA Champagne Luxe 香檳奢旅行李箱", "price": 440, "stock": 31, "image": "images/15_0.png", "description": "優雅迷人的香檳金網美色調。擁有頂級雙面全隔板豪華收納系統，方便大衣、保養品與紀念品分類分類。高顏值外觀，讓您在旅途中隨手一拍都是時尚大片。", "category": "family", "comments": []}
+  ]
+}
