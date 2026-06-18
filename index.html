@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VANTERA OFFICIAL</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&family=Oxanium:wght@200..800&display=swap" rel="stylesheet">
+  <style>
+    .visitor {
+        width: 200px;
+        margin: 10px auto;
+        padding: 5px;
+        text-align: center;
+        font-size: 18px;
+    }
+
+    /* 🧳 測驗專屬全新美化樣式 */
+    .quiz-section {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        text-align: center;
+        font-family: 'Noto Sans TC', sans-serif;
+    }
+    .quiz-section h3 {
+        font-size: 24px;
+        color: #222;
+        margin-bottom: 25px;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+    .quiz-progress {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 15px;
+    }
+    .quiz-step {
+        display: none; /* 預設隱藏，由 JS 控制顯示 */
+        animation: fadeIn 0.4s ease-in-out;
+    }
+    .quiz-step.active {
+        display: block;
+    }
+    .quiz-step p {
+        font-size: 18px;
+        color: #444;
+        margin-bottom: 20px;
+        font-weight: 500;
+    }
+    .quiz-section select {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 16px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #fafafa;
+        color: #333;
+        outline: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .quiz-section select:focus {
+        border-color: #222;
+        background-color: #fff;
+    }
+    .quiz-btn-group {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        gap: 15px;
+    }
+    .quiz-btn {
+        flex: 1;
+        padding: 12px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+    .quiz-btn.next-btn, .quiz-btn.submit-btn {
+        background-color: #222;
+        color: #fff;
+    }
+    .quiz-btn.next-btn:hover, .quiz-btn.submit-btn:hover {
+        background-color: #444;
+    }
+    .quiz-btn.prev-btn {
+        background-color: #eee;
+        color: #555;
+    }
+    .quiz-btn.prev-btn:hover {
+        background-color: #ddd;
+    }
+
+    /* ✨ 測驗結果美化樣式 */
+    .quiz-result-box {
+        background: #f9f9f9;
+        border-left: 5px solid #222;
+        padding: 20px;
+        margin-top: 25px;
+        border-radius: 4px 12px 12px 4px;
+        text-align: left;
+        animation: fadeIn 0.5s ease;
+    }
+    .quiz-result-box h4 {
+        margin: 0 0 10px 0;
+        font-size: 20px;
+        color: #222;
+    }
+    .quiz-result-box p {
+        margin: 0;
+        font-size: 15px;
+        color: #666;
+        line-height: 1.6;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    /* 開場動畫區塊 */
+/* 全螢幕覆蓋 */
+.intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+
+    animation: fadeOut 0.8s ease forwards;
+    animation-delay: 0.9s; /* 停留2秒後消失 */
+}
+
+/* 文字區 */
+.intro-content {
+    text-align: center;
+    color: white;
+    animation: zoomIn 1.2s ease;
+}
+
+/* 主標 */
+.logo {
+    font-size: 48px;
+    letter-spacing: 6px;
+    font-weight: 600;
+}
+
+/* 副標 */
+.sub {
+    font-size: 16px;
+    opacity: 0.7;
+    margin-top: 10px;
+}
+
+/* 放大進場 */
+@keyframes zoomIn {
+    from {
+        transform: scale(1.2);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 淡出 */
+@keyframes fadeOut {
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+.clock {
+    position: absolute; /* 相對於父容器定位 */
+    right: 20px;
+    bottom: 20px;
+    background: rgba(0, 0, 0, 0.6); /* 半透明黑 */
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-family: 'Oxanium', sans-serif;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px); /* 磨砂玻璃感 */
+    z-index: 10;
+    pointer-events: none;
+    text-align: right;
+}
+
+.clock .time {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.clock .date {
+    font-size: 10px;
+    opacity: 0.8;
+}
+  .product-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #666;
+  }
+.product-actions {
+    display: flex;
+    justify-content: center; /* 改為置中，或 flex-end 靠右 */
+    gap: 15px;               /* 收藏與分享的間距 */
+    margin: 10px 0;
+}
+/* 修正點號問題，並將邏輯分開 */
+.favorite-icon, .share-icon {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 8px;
+    position: absolute;
+    bottom: 75px; /* 這裡要根據你的「加入購物車」按鈕位置調整 */
+    cursor: pointer;
+    box-sizing: content-box;
+    transition: transform 0.2s;
+    z-index: 2;
+}
+
+/* 分開設定位置，才不會重疊在同一個座標 */
+.favorite-icon {
+    right: 50px; /* 愛心靠右一點 */
+}
+
+.share-icon {
+    right: 10px;  /* 分享靠最右邊 */
+}
+  </style>
+</head>
+<body>
+<div id="intro" class="intro">
+  <div class="intro-content">
+    <div class="logo">VANTERA</div>
+    <div class="sub">OFFICIAL</div>
+  </div>
+</div>
+<header>
+  <div class="nav-left">
+    <a href="index.html" class="logo">VANTERA</a>
+  </div>
+
+  <div class="nav-icons">
+    <div class="search-wrapper">
+      <img src="images/search.png" id="searchIcon">
+      <div class="search-box" id="searchBox">
+        <div class="search-input">
+          <img src="images/search.png">
+          <input type="text" id="searchInput" placeholder="搜尋商品...">
+          <div class="search-result" id="searchResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-wrapper">
+      <img src="images/suitcases.png" id="menuIcon">
+      <div class="menu-box" id="menuBox">
+        <a href="travel.jsp" class="menu-item">旅行用</a>
+        <a href="plane.jsp" class="menu-item">登機用</a>
+        <a href="kids.jsp" class="menu-item">親子用</a>
+      </div>
+    </div>
+
+    <a href="about.jsp"><img src="images/info.png"></a>
+    <a href="member.jsp"><img src="images/user.png"></a>
+    <a href="cart.jsp"><img src="images/shopping_cart.png"></a>
+    <a href="admin_login.jsp"><img src="images/tool.png"></a>
+  </div>
+</header>
+
+<section class="banner">
+  <img id="bannerImage" src="images/banner1.png">
+    <div id="digital-clock" class="clock">
+        <div class="time">00:00:00</div>
+        <div class="date">2026/06/18</div>
+    </div>
+  <div class="banner-text">
+    <h1 id="bannerTitle"></h1>
+    <p id="bannerDesc"></p>
+    <button id="bannerBuyNowBtn">立即選購</button>
+  </div>
+  <div id="dotsContainer"></div>
+  <button class="prev">‹</button>
+  <button class="next">›</button>
+</section>
+
+<section class="quiz-section" id="quizSection">
+    <h3>測驗你最適合的行李箱</h3>
+    <div class="quiz-progress" id="quizProgress">第 1 / 5 題</div>
+
+    <form id="quizForm">
+        <div class="quiz-step active" data-step="1">
+            <p>你旅行頻率？</p>
+            <select name="q1">
+                <option value="1">很常（每月）</option>
+                <option value="2">偶爾（每季）</option>
+                <option value="3">很少</option>
+            </select>
+        </div>
+
+        <div class="quiz-step" data-step="2">
+            <p>旅行天數？</p>
+            <select name="q2">
+                <option value="1">1–3天</option>
+                <option value="2">4–7天</option>
+                <option value="3">7天以上</option>
+            </select>
+        </div>
+
+        <div class="quiz-step" data-step="3">
+            <p>你偏好行李重量？</p>
+            <select name="q3">
+                <option value="1">越輕越好</option>
+                <option value="2">普通</option>
+                <option value="3">不在意</option>
+            </select>
+        </div>
+
+        <div class="quiz-step" data-step="4">
+            <p>出國還是國內？</p>
+            <select name="q4">
+                <option value="1">常出國</option>
+                <option value="2">國內旅遊</option>
+                <option value="3">都差不多</option>
+            </select>
+        </div>
+
+        <div class="quiz-step" data-step="5">
+            <p>你的收納習慣？</p>
+            <select name="q5">
+                <option value="1">精簡派</option>
+                <option value="2">普通整理</option>
+                <option value="3">東西很多</option>
+            </select>
+        </div>
+
+        <div class="quiz-btn-group">
+            <button type="button" class="quiz-btn prev-btn" id="prevBtn" style="visibility: hidden;">上一題</button>
+            <button type="button" class="quiz-btn next-btn" id="nextBtn">下一題</button>
+            <button type="submit" class="quiz-btn submit-btn" id="submitBtn" style="display: none;">看結果</button>
+        </div>
+    </form>
+</section>
+
+<div class="visitor">
+    您是本站第 <b id="visitorCount">...</b> 位訪客
+</div>
+
+<section class="products">
+    <h2>熱門商品</h2>
+    <div class="product-grid" id="hot-grid"></div>
+
+    <h2>登機用 Boarding</h2>
+    <div class="product-grid" id="boarding-grid"></div>
+
+    <h2>旅行 Travel Series</h2>
+    <div class="product-grid" id="travel-grid"></div>
+</section>
+<footer>
+  <p>聯絡我們｜
+    <a href="mailto:vantera2026@gmail.com?subject=關於VANTERA的詢問&body=您好，我想詢問關於..." 
+       style="color: #bbb; text-decoration: none;">
+       vantera2026@gmail.com
+    </a>
+  </p>
+  <p>© 2026 VANTERA. All rights reserved.</p>
+  <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
+</footer>
+<button id="backToTop">↑</button>
+
+<script src="script.js"></script>
+<script src="cookie-consent.js" defer></script>
+
+<script>
+    // 1. 開場特效邏輯
+    window.addEventListener("load", () => {
+        const intro = document.getElementById("intro");
+        if (intro) {
+            setTimeout(() => {
+                intro.remove();
+            }, 2500);
+        }
+    });
+
+    // 2. 心理測驗邏輯
+    let currentStep = 1;
+    const totalSteps = 5;
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressText = document.getElementById('quizProgress');
+
+    function updateQuizStep() {
+        if (!prevBtn || !nextBtn) return;
+        document.querySelectorAll('.quiz-step').forEach(step => step.classList.remove('active'));
+        const currentStepEl = document.querySelector(`.quiz-step[data-step="${currentStep}"]`);
+        if (currentStepEl) currentStepEl.classList.add('active');
+        if (progressText) progressText.innerText = `第 ${currentStep} / ${totalSteps} 題`;
+        prevBtn.style.visibility = (currentStep === 1) ? 'hidden' : 'visible';
+        nextBtn.style.display = (currentStep === totalSteps) ? 'none' : 'inline-block';
+        submitBtn.style.display = (currentStep === totalSteps) ? 'inline-block' : 'none';
+    }
+
+    if (nextBtn) nextBtn.addEventListener('click', () => { if (currentStep < totalSteps) { currentStep++; updateQuizStep(); } });
+    if (prevBtn) prevBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateQuizStep(); } });
+
+    // 3. 核心載入與渲染
+    document.addEventListener("DOMContentLoaded", () => {
+        if (!sessionStorage.getItem("intro_shown")) {
+            sessionStorage.setItem("intro_shown", "true");
+            const introEl = document.getElementById("intro");
+            if (introEl) introEl.style.display = "block";
+        }
+
+        fetch("index_data.jsp")
+            .then(res => res.json())
+            .then(data => {
+                const visitorCountEl = document.getElementById("visitorCount");
+                if (visitorCountEl) visitorCountEl.innerText = data.visitorCount;
+                renderProducts(data.hot, "hot-grid");
+                renderProducts(data.boarding, "boarding-grid");
+                renderProducts(data.travel, "travel-grid");
+                syncFavorites();
+            })
+            .catch(err => console.warn("資料載入失敗:", err.message));
+    });
+
+    // 4. 商品渲染 (已加入分享按鈕)
+    function renderProducts(products, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = "";
+        if (!products) return;
+        products.forEach(p => {
+            const fullName = p.name;
+            const splitIdx = fullName.lastIndexOf(" ");
+            const engName = (splitIdx !== -1) ? fullName.substring(0, splitIdx) : fullName;
+            const chName = (splitIdx !== -1) ? fullName.substring(splitIdx + 1) : "";
+
+            container.insertAdjacentHTML('beforeend', `
+                <div class="product" data-id="${p.id}">
+                    <a href="product.jsp?id=${p.id}" class="product-link">
+                        <img src="${p.image}" alt="${fullName}">
+                        <div class="product-info">
+                            <div class="product-name" style="line-height: 1.4; min-height: 48px;">
+                                <span style="font-weight: 600; display: block;">${engName}</span>
+                                <span style="font-size: 20px; color: #666;">${chName}</span>
+                            </div>
+                            <div class="product-price">NT$${p.price}</div>
+                        </div>
+                    </a>
+                    <div class="product-actions">
+                        <img src="images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
+                        <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${fullName}', 'product.jsp?id=${p.id}')">
+                    </div>
+                    <button class="add-cart-btn">加入購物車</button>
+                </div>
+            `);
+        });
+    }
+
+    // 5. 分享功能 (Web Share API)
+    function shareProduct(event, name, url) {
+        event.preventDefault();
+        event.stopPropagation();
+        const shareData = { title: 'VANTERA 推薦商品', text: `看看這個行李箱：${name}`, url: window.location.origin + '/' + url };
+        if (navigator.share) {
+            navigator.share(shareData).catch(err => console.error(err));
+        } else {
+            navigator.clipboard.writeText(shareData.url).then(() => alert('連結已複製！'));
+        }
+    }
+
+    // 6. 其他輔助函式 (測驗送出、收藏同步、時鐘)
+    // (確保這些函式在下方保持完整，特別是 toggleFavorite 和 quizForm 監聽)
+    // ... 這裡請保留你原有的 syncFavorites, toggleFavorite, 和 quizForm 邏輯 ...
+    
+    // 1. 確保表單提交時執行計算而非跳轉頁面
+document.getElementById('quizForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // 防止表單真正跳轉
+    
+    // 獲取選中的值並計算分數
+    const formData = new FormData(this);
+    let score = 0;
+    for (let value of formData.values()) {
+        score += parseInt(value);
+    }
+
+    // 2. 判斷邏輯：根據分數給出推薦
+    // 分數 5-8: Boarding, 9-12: Travel, 13-15: Family
+    let result = {
+        title: "",
+        desc: "",
+        link: ""
+    };
+
+    if (score <= 8) {
+        result.title = "推薦：登機系列 (Boarding)";
+        result.desc = "你追求效率與輕便，登機系列最能配合你快速移動的節奏。";
+        result.link = "plane.jsp";
+    } else if (score <= 12) {
+        result.title = "推薦：旅行系列 (Travel)";
+        result.desc = "你注重旅途中的穩定感與空間，旅行系列是你最可靠的選擇。";
+        result.link = "travel.jsp";
+    } else {
+        result.title = "推薦：親子友善系列 (Family)";
+        result.desc = "你通常需要攜帶大量物品，親子友善系列提供你最強大的收納支援。";
+        result.link = "kids.jsp";
+    }
+
+    // 3. 切換顯示內容
+    document.getElementById('quizForm').style.display = 'none'; // 隱藏表單
+    document.getElementById('quizProgress').style.display = 'none'; // 隱藏進度條
+    
+    // 將結果顯示在頁面上 (請確保 HTML 有這兩個元素)
+    const resultArea = document.createElement('div');
+    resultArea.className = 'quiz-result-box';
+    resultArea.innerHTML = `
+        <h4>${result.title}</h4>
+        <p>${result.desc}</p>
+        <a href="${result.link}" class="quiz-btn next-btn" style="display:inline-block; margin-top:20px; text-decoration:none;">前往選購</a>
+    `;
+    document.getElementById('quizSection').appendChild(resultArea);
+});
+</script>
+</body>
+</html>
