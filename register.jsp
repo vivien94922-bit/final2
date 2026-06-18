@@ -109,20 +109,20 @@ body{
   <div class="register-card">
     <div class="register-title">新會員註冊</div>
 
-    <form action="register_process.jsp" method="post">
-      
-      <input class="register-input" type="text" name="username" placeholder="請設定帳號" required>
-      <input class="register-input" type="password" name="password" placeholder="請設定密碼" required>
-      <input class="register-input" type="text" name="name" placeholder="真實姓名" required>
-      <input class="register-input" type="email" name="email" placeholder="電子信箱" required>
-      <input class="register-input" type="text" name="phone" placeholder="行動電話" required>
-      <label class="privacy-consent">
-        <input type="checkbox" name="agree_privacy" value="yes" required>
-        <span>我已閱讀並同意<a href="privacy.html" target="_blank" rel="noopener">隱私權政策</a>及個人資料蒐集、處理與利用說明。</span>
-      </label>
+    <form id="register-form">
+  <input class="register-input" type="text" id="reg-user" placeholder="請設定帳號" required>
+  <input class="register-input" type="password" id="reg-pass" placeholder="請設定密碼" required>
+  <input class="register-input" type="text" id="reg-name" placeholder="真實姓名" required>
+  <input class="register-input" type="email" id="reg-email" placeholder="電子信箱" required>
+  <input class="register-input" type="text" id="reg-phone" placeholder="行動電話" required>
+  
+  <label class="privacy-consent">
+    <input type="checkbox" name="agree_privacy" required>
+    <span>我已閱讀並同意<a href="privacy.html" target="_blank">隱私權政策</a></span>
+  </label>
 
-      <button class="register-btn" type="submit">確認註冊</button>
-    </form>
+  <button class="register-btn" type="submit">確認註冊</button>
+</form>
 
     <div class="login-link" onclick="location.href='login.jsp'">
       已有帳號？返回登入
@@ -132,6 +132,31 @@ body{
 </div>
 
 <script src="cookie-consent.js" defer></script>
+<script>
+    // 簡單的 header 載入範例
+fetch('header.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('header-placeholder').innerHTML = data);
+document.getElementById('register-form').addEventListener('submit', function(e) {
+    e.preventDefault(); // 防止表單真正送出
+
+    // 獲取使用者資料
+    const userData = {
+        username: document.getElementById('reg-user').value,
+        name: document.getElementById('reg-name').value,
+        email: document.getElementById('reg-email').value
+    };
+
+    // 模擬註冊過程
+    console.log("註冊資料已準備好：", userData);
+    
+    // 如果你有 API (如 Render.com)，就在這裡呼叫：
+    // fetch('https://your-api.onrender.com/register', { method: 'POST', body: JSON.stringify(userData) ... })
+
+    alert("註冊成功！請重新登入。");
+    location.href = 'login.html';
+});
+</script>
 
 </body>
 </html>

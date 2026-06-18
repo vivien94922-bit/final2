@@ -86,22 +86,14 @@
   <p>© 2026 VANTERA. All rights reserved.</p>
   <p><a href="privacy.html" style="color:#bbb;">隱私權政策</a></p>
 </footer>
-<div id="footer-placeholder"></div>
 
 <button id="backToTop" title="回到頂部">↑</button>
 
 <script>
-    // 統一的載入與初始化邏輯
-    async function loadLayout() {
-        const header = await fetch('header.html').then(r => r.text());
-        document.getElementById('header-placeholder').innerHTML = header;
-        
-        const footer = await fetch('footer.html').then(r => r.text());
-        document.getElementById('footer-placeholder').innerHTML = footer;
-        
-        // 如果 header.html 內有選單功能，需執行初始化
-        if (typeof initHeaderUI === 'function') initHeaderUI();
-    }
+    // 簡單的 header 載入範例
+fetch('header.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('header-placeholder').innerHTML = data);
 
     document.addEventListener("DOMContentLoaded", () => {
         loadLayout();

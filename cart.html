@@ -117,7 +117,10 @@
 
 <button id="backToTop" title="回到頂部">↑</button>
     <script>
-        
+        // 簡單的 header 載入範例
+fetch('header.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('header-placeholder').innerHTML = data);
         function handleCheckout() {
             const totalText = document.getElementById('cart-total').innerText; 
             const pureTotalNumber = parseInt(totalText.replace(/[^0-9]/g, ''));

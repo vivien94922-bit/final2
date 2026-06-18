@@ -355,29 +355,10 @@
 <script src="cookie-consent.js" defer></script>
 
 <script>
-    // script.js
-async function initPage() {
-    // 1. 抓取 header 並塞入 id="header-placeholder" 的區塊
-    try {
-        const headerRes = await fetch('header.html');
-        const headerText = await headerRes.text();
-        const headerContainer = document.getElementById('header-placeholder');
-        if (headerContainer) {
-            headerContainer.innerHTML = headerText;
-            initHeaderUI(); // 載入後才綁定搜尋/選單事件
-        }
-
-        // 2. 抓取 footer 並塞入 id="footer-placeholder"
-        const footerRes = await fetch('footer.html');
-        const footerText = await footerRes.text();
-        const footerContainer = document.getElementById('footer-placeholder');
-        if (footerContainer) {
-            footerContainer.innerHTML = footerText;
-        }
-    } catch (err) {
-        console.error("Header/Footer 載入失敗:", err);
-    }
-}
+    // 簡單的 header 載入範例
+fetch('header.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('header-placeholder').innerHTML = data);
 
 // 綁定 UI 事件
 function initHeaderUI() {
@@ -548,6 +529,32 @@ if (score <= 8) {
     `;
     document.getElementById('quizSection').appendChild(resultArea);
 });
+function updateClock() {
+    const now = new Date();
+
+    // 取得時間 (時:分:秒)
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    // 取得日期 (年/月/日)
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+
+    // 更新 DOM 內容
+    const timeElement = document.querySelector('#digital-clock .time');
+    const dateElement = document.querySelector('#digital-clock .date');
+
+    if (timeElement) timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+    if (dateElement) dateElement.textContent = `${year}/${month}/${day}`;
+}
+
+// 頁面載入後立即執行一次，避免剛打開時有 1 秒的延遲
+updateClock();
+
+// 每 1000 毫秒 (1秒) 執行一次 updateClock
+setInterval(updateClock, 1000);
 </script>
 </body>
 </html>

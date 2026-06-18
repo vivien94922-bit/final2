@@ -72,6 +72,10 @@
 <div id="footer-placeholder"></div>
 
 <script>
+    // 簡單的 header 載入範例
+fetch('header.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('header-placeholder').innerHTML = data);
     // 1. 定義 Header 與 Footer 載入及互動初始化函式
     async function initPage() {
         // 載入 Header 並等待完成

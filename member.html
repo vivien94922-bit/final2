@@ -454,6 +454,10 @@ button {
   </div>
 
   <script>
+    // 簡單的 header 載入範例
+fetch('header.html')
+    .then(res => res.text())
+    .then(data => document.getElementById('header-placeholder').innerHTML = data);
     // 模擬登入狀態 (你可以從 localStorage 或 API 取得)
 let isLogin = localStorage.getItem('isLoggedIn') === 'true';
 
@@ -505,92 +509,85 @@ function toggleAuth() {
       if (target) target.classList.add('active');
     }
 
-    /* ==================== 收藏 ==================== */
-    window.loadFavorites = function() {
-        const box = document.getElementById("favorite-list");
-        if (!box) return;
-    
-        // 事件委派：統一處理容器內的點擊事件
-        box.addEventListener("click", function(e) {
-            if (e.target.classList.contains("favorite-icon")) {
-                const productDiv = e.target.closest(".product");
-                const productId = productDiv.dataset.id;
-                
-                if (confirm("確定要取消收藏嗎？")) {
-                    removeFavorite(productId, productDiv);
-                }
+    /* ==================== 收藏 (修改後) ==================== */
+window.loadFavorites = function() {
+    const box = document.getElementById("favorite-list");
+    if (!box) return;
+
+    // 事件委派保持不變
+    box.addEventListener("click", function(e) {
+        if (e.target.classList.contains("favorite-icon")) {
+            const productDiv = e.target.closest(".product");
+            const productId = productDiv.dataset.id;
+            if (confirm("確定要取消收藏嗎？")) {
+                // 在靜態頁面中，這裡通常會改用 localStorage 處理移除邏輯
+                productDiv.remove(); 
+                alert("已取消收藏");
             }
-        });
-    
-        fetch("favorite_list.jsp")
-            .then(res => res.json())
-            .then(data => {
-                if (!data || data.length === 0) {
-                    box.innerHTML = "<p>目前沒有收藏商品</p>";
-                    return;
-                }
-    
-                const fragment = document.createDocumentFragment();
-    
-                data.forEach(item => {
-                    const div = document.createElement("div");
-                    div.className = "product";
-                    div.dataset.id = item.id;
-                    
-                    div.innerHTML = 
-                        '<a href="product.jsp?id=' + item.id + '" class="product-link">' +
-                            '<img src="' + item.img + '" alt="' + item.name + '">' +
-                            '<div class="product-info">' +
-                                '<div class="product-name">' + item.name + '</div>' +
-                                '<div class="product-price">NT$' + item.price + '</div>' +
-                            '</div>' +
-                        '</a>' +
-                        '<button class="add-cart-btn">加入購物車</button>' +
-                        '<img src="images/love.png" class="favorite-icon" title="取消收藏" style="cursor:pointer;">';
-                    
-                    fragment.appendChild(div);
-                });
-    
-                box.innerHTML = "";
-                box.appendChild(fragment);
-            })
-            .catch(err => {
-                console.error("載入收藏失敗:", err);
-                box.innerHTML = "<p style='color:red;'>載入失敗，請檢查網路連線。</p>";
-            });
-    };
-    
-    function removeFavorite(id, element) {
-        fetch("favorite_toggle.jsp?product_id=" + id, { method: "POST" })
-            .then(res => res.text()) 
-            .then(data => {
-                if (data.trim() === "remove") {
-                    element.remove(); // 成功移除
-                    alert("已取消收藏");
-                } else if (data.trim() === "add") {
-                    alert("已加入收藏");
-                }
-            })
-            .catch(err => console.error("請求失敗:", err));
-    }
-    /* ==================== 初始化與事件監聽 ==================== */
-    document.addEventListener('DOMContentLoaded', () => {
-      loadFavorites();
-
-      // FAQ 切換
-      document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-          btn.closest('.faq-item').classList.toggle('active');
-        });
-      });
-
-      // 檢查網址 Hash
-      const hash = window.location.hash;
-      if (hash) {
-        const sectionId = hash.replace("#", "");
-        showSection(sectionId);
-      }
+        }
     });
+
+    // 改為讀取 data.json
+    fetch("data.json")
+        .then(res => res.json())
+        .then(data => {
+            // 從 JSON 中取得收藏列表 (假設你的 JSON 結構為 { "favorites": [...] })
+            const favorites = data.favorites; 
+
+            if (!favorites || favorites.length === 0) {
+                box.innerHTML = "<p>目前沒有收藏商品</p>";
+                return;
+            }
+
+            const fragment = document.createDocumentFragment();
+            favorites.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "product";
+                div.dataset.id = item.id;
+                
+                div.innerHTML = `
+                    <a href="product.html?id=${item.id}" class="product-link">
+                        <img src="${item.img}" alt="${item.name}">
+                        <div class="product-info">
+                            <div class="product-name">${item.name}</div>
+                            <div class="product-price">NT$${item.price}</div>
+                        </div>
+                    </a>
+                    <button class="add-cart-btn">加入購物車</button>
+                    <img src="images/love.png" class="favorite-icon" title="取消收藏" style="cursor:pointer;">
+                `;
+                fragment.appendChild(div);
+            });
+
+            box.innerHTML = "";
+            box.appendChild(fragment);
+        })
+        .catch(err => {
+            console.error("載入收藏失敗:", err);
+            box.innerHTML = "<p style='color:red;'>無法讀取收藏資料。</p>";
+        });
+};
+    /* ==================== 初始化與事件監聽 (修改後) ==================== */
+document.addEventListener('DOMContentLoaded', () => {
+    // 檢查登入狀態
+    const isLogin = localStorage.getItem('isLoggedIn') === 'true';
+    
+    // 處理選單按鈕文字 (如果你的 header 有 id="auth-btn")
+    const authBtn = document.getElementById('auth-btn');
+    if (authBtn) {
+        authBtn.textContent = isLogin ? "登出" : "會員登入";
+    }
+
+    // 載入收藏
+    loadFavorites();
+
+    // FAQ 切換
+    document.querySelectorAll('.faq-question').forEach(btn => {
+        btn.addEventListener('click', () => {
+            btn.closest('.faq-item').classList.toggle('active');
+        });
+    });
+});
   </script>
 </body>
 </html>
