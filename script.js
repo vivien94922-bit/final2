@@ -140,3 +140,34 @@ function toast(msg) {
     setTimeout(() => t.classList.add("show"), 10);
     setTimeout(() => t.remove(), 2000);
 }
+// 使用事件代理，監聽整個網頁的點擊事件
+document.addEventListener("click", (e) => {
+    // 檢查點擊的目標是否為「加入購物車」按鈕
+    if (e.target.classList.contains("add-cart-btn")) {
+        const productElement = e.target.closest(".product");
+        const productId = productElement.dataset.id;
+        
+        // 取得商品基本資料（從 DOM 或 JSON 讀取）
+        const productName = productElement.querySelector(".product-name").textContent;
+        const productPrice = productElement.querySelector(".product-price").textContent;
+        
+        // 執行存入 localStorage 的邏輯
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        
+        // 檢查是否已存在（數量 +1），若無則新增
+        const existingItem = cart.find(item => item.id === productId);
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ 
+                id: productId, 
+                name: productName, 
+                price: productPrice, 
+                quantity: 1 
+            });
+        }
+        
+        localStorage.setItem("cart", JSON.stringify(cart));
+    
+    }
+});

@@ -316,7 +316,7 @@ button {
     <main class="member-content">
       <h1>會員中心</h1>
 
-      <section id="profile" class="content-section <%= isLogin ? "active" : "" %>">
+      <section id="profile" class="content-section <%= isLogin ? "active" : "" %>
         <h2>會員資料</h2>
         
         <div id="profileViewBox" class="profile-box">
@@ -481,7 +481,6 @@ function checkAuth(sectionId) {
 function toggleAuth() {
     if (isLogin) {
         localStorage.removeItem('isLoggedIn');
-        location.href = 'logout.html';
     } else {
         location.href = 'login.html';
     }
@@ -509,62 +508,29 @@ function toggleAuth() {
       if (target) target.classList.add('active');
     }
 
-    /* ==================== 收藏 (修改後) ==================== */
-window.loadFavorites = function() {
+    /* ==================== 收藏功能 ==================== */
+    window.loadFavorites = function() {
     const box = document.getElementById("favorite-list");
     if (!box) return;
 
-    // 事件委派保持不變
-    box.addEventListener("click", function(e) {
-        if (e.target.classList.contains("favorite-icon")) {
-            const productDiv = e.target.closest(".product");
-            const productId = productDiv.dataset.id;
-            if (confirm("確定要取消收藏嗎？")) {
-                // 在靜態頁面中，這裡通常會改用 localStorage 處理移除邏輯
-                productDiv.remove(); 
-                alert("已取消收藏");
-            }
-        }
-    });
-
-    // 改為讀取 data.json
     fetch("data.json")
         .then(res => res.json())
         .then(data => {
-            // 從 JSON 中取得收藏列表 (假設你的 JSON 結構為 { "favorites": [...] })
-            const favorites = data.favorites; 
+            const allProducts = data.products; // 確保這裡抓到的陣列名稱正確
+            const favIds = JSON.parse(localStorage.getItem("myFavorites")) || [];
+            
+            // 【關鍵點】：篩選出那些 ID 存在於 favIds 中的商品
+            const myFavorites = allProducts.filter(product => 
+                favIds.includes(product.id.toString())
+            );
 
-            if (!favorites || favorites.length === 0) {
+            if (myFavorites.length === 0) {
                 box.innerHTML = "<p>目前沒有收藏商品</p>";
                 return;
             }
 
-            const fragment = document.createDocumentFragment();
-            favorites.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "product";
-                div.dataset.id = item.id;
-                
-                div.innerHTML = `
-                    <a href="product.html?id=${item.id}" class="product-link">
-                        <img src="${item.img}" alt="${item.name}">
-                        <div class="product-info">
-                            <div class="product-name">${item.name}</div>
-                            <div class="product-price">NT$${item.price}</div>
-                        </div>
-                    </a>
-                    <button class="add-cart-btn">加入購物車</button>
-                    <img src="images/love.png" class="favorite-icon" title="取消收藏" style="cursor:pointer;">
-                `;
-                fragment.appendChild(div);
-            });
-
-            box.innerHTML = "";
-            box.appendChild(fragment);
-        })
-        .catch(err => {
-            console.error("載入收藏失敗:", err);
-            box.innerHTML = "<p style='color:red;'>無法讀取收藏資料。</p>";
+            // 接著進行渲染...
+            renderProducts(myFavorites, box);
         });
 };
     /* ==================== 初始化與事件監聽 (修改後) ==================== */

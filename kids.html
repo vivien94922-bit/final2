@@ -154,6 +154,49 @@ fetch('header.html')
             `);
         });
     }
+    // 確保 DOM 加載完成後，監聽「整個網頁」的點擊
+document.addEventListener("click", (e) => {
+    if (e.target.classList.contains("add-cart-btn")) {
+        e.preventDefault();
+        
+        const productEl = e.target.closest(".product");
+        const id = productEl.dataset.id;
+        const name = productEl.querySelector(".product-name").textContent;
+        const priceText = productEl.querySelector(".product-price").textContent;
+        const price = parseInt(priceText.replace(/[^0-9]/g, ''));
+        const image = productEl.querySelector("img").src;
+
+        // --- 核心修正區 ---
+        let cartData = localStorage.getItem("cart");
+        let cart = [];
+
+        try {
+            // 嘗試解析 JSON
+            cart = JSON.parse(cartData);
+            
+            // 如果解析出來的不是陣列，就強制把它變回空陣列，避免報錯
+            if (!Array.isArray(cart)) {
+                cart = [];
+            }
+        } catch (error) {
+            // 如果裡面存的是亂碼或壞掉的格式，重置為空陣列
+            cart = [];
+        }
+        // ------------------
+
+        // 現在 cart 保證是一個陣列，可以安全使用 find
+        const existingItem = cart.find(item => item.id === id);
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ id, name, price, image, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        console.log("購物車目前內容:", JSON.parse(localStorage.getItem("cart")));
+    }
+});
 </script>
 </body>
 </html>
