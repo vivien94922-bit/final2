@@ -80,7 +80,7 @@ function initBanner() {
         img.src = imgs[cur];
         t.innerText = titles[cur];
         d.innerText = descs[cur];
-        btn.onclick = () => location.href = `product.jsp?id=${ids[cur]}`;
+        btn.onclick = () => location.href = `product.html?id=${ids[cur]}`;
 
         dots.innerHTML = "";
         imgs.forEach((_, i) => {
