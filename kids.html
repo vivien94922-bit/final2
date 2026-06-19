@@ -123,29 +123,32 @@
 
     // 4. 啟動與資料處理
     document.addEventListener("DOMContentLoaded", async () => {
-    // 1. 先初始化佈局
-    await initLayout();
+        // 1. 先初始化佈局
+        await initLayout();
 
-    // 2. 讀取商品資料 (統一用 products.json)
-    fetch("products.json") 
-        .then(res => {
-            if (!res.ok) throw new Error("找不到產品檔案");
-            return res.json();
-        })
-        .then(data => {
-            // 修正：從 data.products 取得陣列，然後篩選 category
-            // 請將 'boarding' 改為該頁面所屬的類別 (如 'travel' 或 'family')
-            const allProducts = data.products || [];
-            const filtered = allProducts.filter(p => p.category === 'boarding'); 
-            
-            console.log("成功讀取資料，篩選數量:", filtered.length);
-            renderProducts(filtered, "boarding-grid");
-        })
-        .catch(err => {
-            console.error("資料載入失敗:", err);
-            document.getElementById("boarding-grid").innerHTML = "<p>資料載入中或發生錯誤，請稍後再試。</p>";
-        });
-});
+        // 2. 讀取商品資料 (統一用 products.json)
+        fetch("products.json") 
+            .then(res => {
+                if (!res.ok) throw new Error("找不到產品檔案");
+                return res.json();
+            })
+            .then(data => {
+                // 修改處：將類別改為 'family'
+                const allProducts = data.products || [];
+                const filtered = allProducts.filter(p => p.category === 'family'); 
+                
+                console.log("成功讀取資料，篩選數量:", filtered.length);
+                
+                // 修改處：將容器 ID 改為 'family-grid' (必須與 HTML 裡面的 div id 一致)
+                renderProducts(filtered, "family-grid");
+            })
+            .catch(err => {
+                console.error("資料載入失敗:", err);
+                // 修改處：錯誤顯示也要對應到 'family-grid'
+                const grid = document.getElementById("family-grid");
+                if (grid) grid.innerHTML = "<p>資料載入中或發生錯誤，請稍後再試。</p>";
+            });
+    });
 
     // 5. 購物車與其他互動
     document.addEventListener("click", (e) => {

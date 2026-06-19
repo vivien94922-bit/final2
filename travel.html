@@ -47,11 +47,9 @@
             const headerEl = document.getElementById('header-placeholder');
             const footerEl = document.getElementById('footer-placeholder');
             
-            // 如果你有 header.html 和 footer.html，請確保檔案存在且名稱正確
             // 如果沒有，請刪除這兩行 fetch
             const [hRes, fRes] = await Promise.all([
                 fetch('header.html').catch(() => ({ text: () => '' })),
-                fetch('footer.html').catch(() => ({ text: () => '' }))
             ]);
             
             if (headerEl) headerEl.innerHTML = await hRes.text();
