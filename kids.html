@@ -72,26 +72,18 @@
 <div id="footer-placeholder"></div>
 
 <script>
-    // 1. 初始化頁面與佈局 (Header/Footer)
+    // 1. 初始化頁面佈局
     async function initLayout() {
         try {
-            const [hRes, fRes] = await Promise.all([
-                fetch('header.html'),
-            ]);
+            const hRes = await fetch('header.html');
+            const fRes = await fetch('footer.html');
             
             const headerEl = document.getElementById('header-placeholder');
             const footerEl = document.getElementById('footer-placeholder');
             
-            if (headerEl) {
-                headerEl.innerHTML = await hRes.text();
-                initHeaderUI(); // 載入後立即初始化互動
-            }
-            if (footerEl) {
-                footerEl.innerHTML = await fRes.text();
-            }
-        } catch (err) {
-            console.error("Layout 載入失敗:", err);
-        }
+            if (headerEl) { headerEl.innerHTML = await hRes.text(); initHeaderUI(); }
+            if (footerEl) { footerEl.innerHTML = await fRes.text(); }
+        } catch (err) { console.error("Layout 載入失敗:", err); }
     }
 
     // 2. Header 互動 UI
@@ -100,12 +92,11 @@
         const searchBox = document.getElementById("searchBox");
         const menuIcon = document.getElementById("menuIcon");
         const menuBox = document.getElementById("menuBox");
-
         if (searchIcon && searchBox) searchIcon.addEventListener("click", () => searchBox.classList.toggle("active"));
         if (menuIcon && menuBox) menuIcon.addEventListener("click", () => menuBox.classList.toggle("active"));
     }
 
-    // 3. 渲染商品函式
+    // 3. 唯一的渲染函式 (整合了所有顯示邏輯)
     function renderProducts(products, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
@@ -133,41 +124,24 @@
         }).join('');
     }
 
-    // 4. 核心啟動邏輯
-    document.addEventListener("DOMContentLoaded", () => {
-        // 直接從根目錄讀取唯一的資料庫檔案
+    // 4. 啟動與資料處理
+    document.addEventListener("DOMContentLoaded", async () => {
+        await initLayout();
+
         fetch("products.json") 
             .then(res => res.json())
             .then(data => {
-                // 這裡假設你的 JSON 結構是 { "products": [...] }
-                // 如果你的結構是 { "family": [...] }，請將 'data.products' 改為 'data.family'
+                // 確保這裡抓取的是正確的陣列
                 const allProducts = data.products || []; 
-                
-                // 篩選該頁面需要的分類 (例如 family)
                 const filtered = allProducts.filter(p => p.category === 'family');
                 
                 console.log("篩選到的商品數量:", filtered.length);
                 renderProducts(filtered, "family-grid");
             })
-            .catch(err => console.error("資料載入失敗，請確認 products.json 是否存在:", err));
+            .catch(err => console.error("資料載入失敗:", err));
     });
 
-    // 2. 渲染邏輯 (保持不變)
-    function renderProducts(products, containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        container.innerHTML = products.map(p => `
-            <div class="product" data-id="${p.id}">
-                <a href="product.html?id=${p.id}">
-                    <img src="${p.image}" alt="${p.name}">
-                    <div class="product-name">${p.name}</div>
-                    <div class="product-price">NT$${p.price}</div>
-                </a>
-            </div>
-        `).join('');
-    }
-
-    // 5. 購物車全域點擊事件
+    // 5. 購物車與其他互動
     document.addEventListener("click", (e) => {
         if (e.target.classList.contains("add-cart-btn")) {
             e.preventDefault();
@@ -179,21 +153,17 @@
                 image: pEl.querySelector("img").src,
                 quantity: 1
             };
-
             let cart = JSON.parse(localStorage.getItem("cart")) || [];
             const existing = cart.find(i => i.id === item.id);
-            
             if (existing) existing.quantity += 1;
             else cart.push(item);
-
             localStorage.setItem("cart", JSON.stringify(cart));
             alert("已加入購物車！");
         }
     });
 
-    // 6. 佔位函式 (避免 Console 報錯)
-    function toggleFavorite(e, el) { e.preventDefault(); /* 實作你的收藏邏輯 */ }
-    function shareProduct(e, name, url) { e.preventDefault(); /* 實作你的分享邏輯 */ }
+    function toggleFavorite(e, el) { e.preventDefault(); /* 收藏邏輯 */ }
+    function shareProduct(e, name, url) { e.preventDefault(); /* 分享邏輯 */ }
 </script>
 </body>
 </html>
