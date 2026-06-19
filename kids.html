@@ -76,13 +76,10 @@
     async function initLayout() {
         try {
             const hRes = await fetch('header.html');
-            const fRes = await fetch('footer.html');
             
             const headerEl = document.getElementById('header-placeholder');
-            const footerEl = document.getElementById('footer-placeholder');
             
             if (headerEl) { headerEl.innerHTML = await hRes.text(); initHeaderUI(); }
-            if (footerEl) { footerEl.innerHTML = await fRes.text(); }
         } catch (err) { console.error("Layout 載入失敗:", err); }
     }
 
