@@ -105,15 +105,7 @@ function initBackToTop() {
 }
 
 function initCartAndFavorites() {
-    document.addEventListener("click", (e) => {
-        if (!e.target.classList.contains("add-cart-btn")) return;
-        const id = e.target.closest(".product").dataset.id;
-        let cart = JSON.parse(localStorage.getItem("cart")) || [];
-        cart.push({ id, quantity: 1 });
-        localStorage.setItem("cart", JSON.stringify(cart));
-        toast("已加入購物車");
-    });
-
+    // 只保留收藏功能的邏輯
     window.toggleFavorite = (e, el) => {
         e.stopPropagation(); e.preventDefault();
         const id = el.closest(".product").dataset.id;
