@@ -40,27 +40,7 @@
 <button id="backToTop" title="回到頂部">↑</button>
 
 <script>
-    // 簡單的 header 載入範例
-fetch('header.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('header-placeholder').innerHTML = data);
-    // 1. 定義 Header 與 Footer 載入及互動初始化函式
-    async function initPage() {
-        // 載入 Header 並等待完成
-        const headerRes = await fetch('header.html');
-        const headerText = await headerRes.text();
-        document.getElementById('header-placeholder').innerHTML = headerText;
-
-        // 載入 Footer 並等待完成
-        const footerRes = await fetch('footer.html');
-        const footerText = await footerRes.text();
-        document.getElementById('footer-placeholder').innerHTML = footerText;
-
-        // 【關鍵】Header 內容出現後，立刻初始化 UI 事件
-        initHeaderUI();
-    }
-
-    // 2. 初始化 Header 的互動功能
+    // 1. 初始化頁面互動 (Header/Footer 建議改為 HTML 直接嵌入以避免 404 錯誤)
     function initHeaderUI() {
         const searchIcon = document.getElementById("searchIcon");
         const searchBox = document.getElementById("searchBox");
@@ -68,36 +48,21 @@ fetch('header.html')
         const menuBox = document.getElementById("menuBox");
 
         if (searchIcon && searchBox) {
-            searchIcon.addEventListener("click", () => {
-                searchBox.classList.toggle("active");
-            });
+            searchIcon.addEventListener("click", () => searchBox.classList.toggle("active"));
         }
         if (menuIcon && menuBox) {
-            menuIcon.addEventListener("click", () => {
-                menuBox.classList.toggle("active");
-            });
+            menuIcon.addEventListener("click", () => menuBox.classList.toggle("active"));
         }
     }
 
-    // 3. 頁面啟動邏輯
-    document.addEventListener("DOMContentLoaded", async () => {
-        // 先載入 Layout
-        await initPage();
-
-        // 再載入商品資料
-        fetch("index_data.json")
-            .then(res => res.json())
-            .then(data => {
-               renderProducts(data.boarding, "boarding-grid");
-            });
-    });
-
-    // 4. 商品渲染函式
+    // 2. 商品渲染函式 (修正：避免重複執行與確保結構)
     function renderProducts(products, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        // 讀取本地收藏狀態
+        // 清空容器，確保重新渲染時不會堆疊
+        container.innerHTML = "";
+
         const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
         products.forEach(p => {
@@ -122,6 +87,28 @@ fetch('header.html')
             `);
         });
     }
+
+    // 3. 頁面啟動邏輯
+    document.addEventListener("DOMContentLoaded", () => {
+        // 初始化 Header UI
+        initHeaderUI();
+
+        // 統一讀取 products.json (請將檔名改為你實際的檔案名稱)
+        fetch("products.json")
+            .then(res => {
+                if (!res.ok) throw new Error("找不到檔案");
+                return res.json();
+            })
+            .then(data => {
+                // 如果你的 JSON 是 { "boarding": [...] } 結構
+                const products = data.boarding || [];
+                renderProducts(products, "boarding-grid");
+            })
+            .catch(err => {
+                console.error("資料載入失敗:", err);
+                document.getElementById("boarding-grid").innerHTML = "<p>無法載入商品資料。</p>";
+            });
+    });
 </script>
 </body>
 </html>
