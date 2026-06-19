@@ -739,78 +739,64 @@ tabs.forEach(tab => {
 });
 
 // 單一初始化入口
-async function init() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const id = parseInt(urlParams.get('id')) || 1;
-
-    // 1. 抓取資料
-    const res = await fetch('product_data.json');
-    const data = await res.json();
-    const p = data.products.find(item => item.id === id);
-
-    if (p) {
-        // 2. 更新商品資訊
-        document.getElementById('p-name').innerText = p.name;
-        document.getElementById('p-price').innerText = p.price;
-        document.getElementById('p-desc').innerText = p.description;
-        document.getElementById('p-image').src = p.image;
-        document.getElementById('p-stock').innerText = '庫存：' + p.stock;
-
-        // 3. 更新留言區 (選定 section 下的那個 feedback-list)
-        const list = document.getElementById('feedback-list');
-        if (p.comments && p.comments.length > 0) {
-            list.innerHTML = p.comments.map(c => `
-                <div class="feedback-item" style="text-align: left; border-bottom: 1px solid #eee; padding: 15px 0;">
-                    <strong>${c.username}</strong>
-                    <span style="color: #f39c12;">${'★'.repeat(c.rating)}</span>
-                    <p>${c.content}</p>
-                    <small style="color:#999;">${c.date}</small>
-                </div>
-            `).join('');
-        } else {
-            list.innerHTML = "<p>目前沒有評價</p>";
-        }
+document.addEventListener("DOMContentLoaded", async () => {
+    // 1. 載入 Header (如果你的 HTML 有 header-placeholder)
+    const headerRes = await fetch('header.html');
+    const headerData = await headerRes.text();
+    const headerEl = document.getElementById('header-placeholder');
+    if (headerEl) {
+        headerEl.innerHTML = headerData;
+        initHeaderUI();
     }
-}
+
+    // 2. 抓取商品資料 (統一用 products.json)
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = parseInt(urlParams.get('id')) || 1;
+        
+        const res = await fetch('products.json');
+        const data = await res.json();
+        const p = data.products.find(item => item.id === id);
+
+        if (p) {
+            document.getElementById('p-name').innerText = p.name.replace(/<br>/g, " ");
+            document.getElementById('p-price').innerText = p.price;
+            document.getElementById('p-desc').innerText = p.description;
+            document.getElementById('p-image').src = p.image;
+            document.getElementById('p-stock').innerText = '庫存：' + p.stock;
+
+            const list = document.getElementById('feedback-list');
+            if (p.comments && p.comments.length > 0) {
+                list.innerHTML = p.comments.map(c => `
+                    <div class="feedback-item" style="text-align: left; border-bottom: 1px solid #eee; padding: 15px 0;">
+                        <strong>${c.username}</strong>
+                        <span style="color: #f39c12;">${'★'.repeat(c.rating)}</span>
+                        <p>${c.content}</p>
+                        <small style="color:#999;">${c.date}</small>
+                    </div>
+                `).join('');
+            } else {
+                list.innerHTML = "<p>目前沒有評價</p>";
+            }
+        }
+    } catch (err) {
+        console.error("資料載入錯誤:", err);
+    }
+});
 
 function addToCart() {
     alert("商品已加入購物車！");
 }
-document.addEventListener("DOMContentLoaded", () => {
-    // 載入 Header
-    fetch('header.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('header-placeholder').innerHTML = data;
-            // 載入完成後，立刻初始化這些 UI 元件的點擊事件
-            initHeaderUI(); 
-        });
-    
-    // 載入 Footer
-    fetch('footer.html')
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById('footer-placeholder').innerHTML = data;
-        });
-});
-// 頁面載入時執行
-window.onload = init;
-// 新增這個函式，讓 header 載入後的互動功能恢復
+
 function initHeaderUI() {
     const searchIcon = document.getElementById("searchIcon");
     const menuIcon = document.getElementById("menuIcon");
-    
     if (searchIcon) {
-        searchIcon.addEventListener("click", () => {
-            document.getElementById("searchBox").classList.toggle("active");
-        });
+        searchIcon.addEventListener("click", () => document.getElementById("searchBox").classList.toggle("active"));
     }
     if (menuIcon) {
-        menuIcon.addEventListener("click", () => {
-            document.getElementById("menuBox").classList.toggle("active");
-        });
+        menuIcon.addEventListener("click", () => document.getElementById("menuBox").classList.toggle("active"));
     }
 }
 </script>
-</body>
 </html>
