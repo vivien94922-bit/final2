@@ -519,53 +519,41 @@ function toggleAuth() {
     }
 
     /* ==================== 收藏功能：整合版 ==================== */
+/* ==================== 收藏功能：整合版 ==================== */
 function loadFavorites() {
     const box = document.getElementById("favorite-list");
     if (!box) return;
 
     // 1. 統一讀取鍵名 "myFavorites"
     const favIds = JSON.parse(localStorage.getItem("myFavorites")) || [];
-    
+
+    // 2. 抓取正確的資料庫檔案 product.json
     fetch("product.json")
-    .then(res => res.json())
-    .then(data => {
-        const allProducts = data.products;
+        .then(res => res.json())
+        .then(data => {
+            const allProducts = data.products;
+            
+            // 過濾出有被收藏的商品
+            const myFavorites = allProducts.filter(p => favIds.includes(p.id.toString()));
 
-        const myFavorites =
-            allProducts.filter(p =>
-                favIds.includes(p.id.toString())
-            );
+            if (myFavorites.length === 0) {
+                box.innerHTML = "<p>目前沒有收藏商品</p>";
+                return;
+            }
 
-        if (myFavorites.length === 0) {
-            box.innerHTML = "<p>目前沒有收藏商品</p>";
-            return;
-        }
-
-        box.innerHTML = myFavorites.map(item => `
-            <div class="product" data-id="${item.id}">
-                <img src="${item.image}" alt="${item.name}">
-                <h3 class="product-name">${item.name}</h3>
-                <div class="product-price">NT$${item.price}</div>
-                <button class="add-cart-btn">加入購物車</button>
-                <img src="images/love.png"
-                     class="favorite-icon"
-                     onclick="toggleFavorite(event,this)">
-            </div>
-        `).join('');
-    });
-            // 2. 渲染 UI
+            // 3. 渲染 UI (使用正確的欄位 item.image，而不是 item.img)
             box.innerHTML = myFavorites.map(item => `
                 <div class="product" data-id="${item.id}">
-                    <img src="${item.img}" alt="${item.name}">
+                    <img src="${item.image}" alt="${item.name}">
                     <h3 class="product-name">${item.name}</h3>
                     <div class="product-price">NT$${item.price}</div>
                     <button class="add-cart-btn">加入購物車</button>
                     <img src="images/love.png" class="favorite-icon" onclick="toggleFavorite(event, this)" alt="取消收藏">
                 </div>
             `).join('');
-        });
+        })
+        .catch(err => console.error("讀取商品資料失敗:", err));
 }
-
 // 確保點擊愛心時，同步更新正確的鍵名
 window.toggleFavorite = (e, el) => {
     e.stopPropagation(); e.preventDefault();
@@ -607,37 +595,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
-    function renderFavorites() {
-    const box = document.getElementById("favorite-list");
-    if (!box) return; // 如果不是在收藏頁面，直接跳過
-
-    // 1. 從 localStorage 抓 ID
-    const favIds = JSON.parse(localStorage.getItem("favorites")) || [];
-    
-    // 2. 這裡假設你跟之前一樣，需要用 fetch 抓 data.json 來比對
-    fetch("data.json")
-        .then(res => res.json())
-        .then(data => {
-            const allProducts = data.products;
-            const myFavorites = allProducts.filter(p => favIds.includes(p.id.toString()));
-
-            if (myFavorites.length === 0) {
-                box.innerHTML = "<p>目前沒有收藏商品</p>";
-                return;
-            }
-
-            // 3. 渲染邏輯
-            box.innerHTML = myFavorites.map(item => `
-                <div class="product" data-id="${item.id}">
-                    <img src="${item.img}" alt="${item.name}">
-                    <h3 class="product-name">${item.name}</h3>
-                    <div class="product-price">${item.price}</div>
-                    <button class="add-cart-btn">加入購物車</button>
-                    <img src="images/love.png" class="favorite-icon" onclick="toggleFavorite(event, this)" alt="收藏">
-                </div>
-            `).join('');
-        });
-}
   </script>
 </body>
 </html>
