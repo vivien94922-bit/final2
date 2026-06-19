@@ -518,30 +518,57 @@ function toggleAuth() {
       if (target) target.classList.add('active');
     }
 
-    /* ==================== 收藏功能 ==================== */
-    window.loadFavorites = function() {
+    /* ==================== 收藏功能：整合版 ==================== */
+function loadFavorites() {
     const box = document.getElementById("favorite-list");
     if (!box) return;
 
+    // 1. 統一讀取鍵名 "myFavorites"
+    const favIds = JSON.parse(localStorage.getItem("myFavorites")) || [];
+    
     fetch("data.json")
         .then(res => res.json())
         .then(data => {
-            const allProducts = data.products; // 確保這裡抓到的陣列名稱正確
-            const favIds = JSON.parse(localStorage.getItem("myFavorites")) || [];
-            
-            // 【關鍵點】：篩選出那些 ID 存在於 favIds 中的商品
-            const myFavorites = allProducts.filter(product => 
-                favIds.includes(product.id.toString())
-            );
+            const allProducts = data.products;
+            const myFavorites = allProducts.filter(p => favIds.includes(p.id.toString()));
 
             if (myFavorites.length === 0) {
                 box.innerHTML = "<p>目前沒有收藏商品</p>";
                 return;
             }
 
-            // 接著進行渲染...
-            renderProducts(myFavorites, box);
+            // 2. 渲染 UI
+            box.innerHTML = myFavorites.map(item => `
+                <div class="product" data-id="${item.id}">
+                    <img src="${item.img}" alt="${item.name}">
+                    <h3 class="product-name">${item.name}</h3>
+                    <div class="product-price">NT$${item.price}</div>
+                    <button class="add-cart-btn">加入購物車</button>
+                    <img src="images/love.png" class="favorite-icon" onclick="toggleFavorite(event, this)" alt="取消收藏">
+                </div>
+            `).join('');
         });
+}
+
+// 確保點擊愛心時，同步更新正確的鍵名
+window.toggleFavorite = (e, el) => {
+    e.stopPropagation(); e.preventDefault();
+    const id = el.closest(".product").dataset.id;
+    let favs = JSON.parse(localStorage.getItem("myFavorites")) || []; // 統一改用 myFavorites
+    const idx = favs.indexOf(id);
+    
+    if (idx === -1) {
+        favs.push(id);
+        el.src = "images/love.png";
+        toast("已加入收藏");
+    } else {
+        favs.splice(idx, 1);
+        el.src = "images/heart.png";
+        toast("已移除收藏");
+        // 如果在收藏頁面，移除後直接刪除 DOM 節點會比較流暢
+        el.closest(".product").remove();
+    }
+    localStorage.setItem("myFavorites", JSON.stringify(favs));
 };
     /* ==================== 初始化與事件監聽 (修改後) ==================== */
 document.addEventListener('DOMContentLoaded', () => {
