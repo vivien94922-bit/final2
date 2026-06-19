@@ -123,20 +123,29 @@
 
     // 4. 啟動與資料處理
     document.addEventListener("DOMContentLoaded", async () => {
-        await initLayout();
+    // 1. 先初始化佈局
+    await initLayout();
 
-        fetch("products.json") 
-            .then(res => res.json())
-            .then(data => {
-                // 確保這裡抓取的是正確的陣列
-                const allProducts = data.products || []; 
-                const filtered = allProducts.filter(p => p.category === 'family');
-                
-                console.log("篩選到的商品數量:", filtered.length);
-                renderProducts(filtered, "family-grid");
-            })
-            .catch(err => console.error("資料載入失敗:", err));
-    });
+    // 2. 讀取商品資料 (統一用 products.json)
+    fetch("products.json") 
+        .then(res => {
+            if (!res.ok) throw new Error("找不到產品檔案");
+            return res.json();
+        })
+        .then(data => {
+            // 修正：從 data.products 取得陣列，然後篩選 category
+            // 請將 'boarding' 改為該頁面所屬的類別 (如 'travel' 或 'family')
+            const allProducts = data.products || [];
+            const filtered = allProducts.filter(p => p.category === 'boarding'); 
+            
+            console.log("成功讀取資料，篩選數量:", filtered.length);
+            renderProducts(filtered, "boarding-grid");
+        })
+        .catch(err => {
+            console.error("資料載入失敗:", err);
+            document.getElementById("boarding-grid").innerHTML = "<p>資料載入中或發生錯誤，請稍後再試。</p>";
+        });
+});
 
     // 5. 購物車與其他互動
     document.addEventListener("click", (e) => {
