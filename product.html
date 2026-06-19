@@ -787,56 +787,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-function addToCart() {
-
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-        alert("請先登入會員才能加入購物車！");
-        window.location.href = "login.html";
-        return;
-    }
-
-    if (!currentProduct) {
-        alert("商品資料尚未載入");
-        return;
-    }
-
-   let cart =
-JSON.parse(localStorage.getItem("cart")) || [];
-
-console.log("cart=", cart);
-console.log("currentProduct=", currentProduct);
-
-const exist =
-cart.find(item => item.id === currentProduct.id);
-
-    if (exist) {
-        exist.quantity += 1;
-
-    } else {
-        cart.push({
-            id: currentProduct.id,
-            name: currentProduct.name,
-            price: currentProduct.price,
-            image: currentProduct.image,
-            quantity: 1
-        });
-    }
-
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
-    alert("商品已成功加入購物車！");
-}
-function initHeaderUI() {
-    const searchIcon = document.getElementById("searchIcon");
-    const menuIcon = document.getElementById("menuIcon");
-    if (searchIcon) {
-        searchIcon.addEventListener("click", () => document.getElementById("searchBox").classList.toggle("active"));
-    }
-    if (menuIcon) {
-        menuIcon.addEventListener("click", () => document.getElementById("menuBox").classList.toggle("active"));
-    }
-}
 </script>
 </html>
