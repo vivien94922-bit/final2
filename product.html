@@ -787,5 +787,56 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
+function addToCart() {
+
+    if (!currentProduct) {
+        alert("商品資料尚未載入");
+        return;
+    }
+
+    const qty =
+    parseInt(
+        document.getElementById("qtyInput").value
+    ) || 1;
+
+    const size =
+    document.getElementById("sizeSelect").value;
+
+    let cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+    const exist =
+    cart.find(item =>
+        item &&
+        item.id === currentProduct.id &&
+        item.size === size
+    );
+
+    if (exist) {
+
+        exist.quantity += qty;
+
+    } else {
+
+        cart.push({
+            id: currentProduct.id,
+            name: currentProduct.name,
+            price: currentProduct.price,
+            image: currentProduct.images[0],
+            size: size,
+            quantity: qty
+        });
+
+    }
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    alert("成功加入購物車");
+}
 </script>
 </html>
