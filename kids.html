@@ -134,19 +134,38 @@
     }
 
     // 4. 核心啟動邏輯
-    document.addEventListener("DOMContentLoaded", async () => {
-        await initLayout();
-
-        // 載入商品資料並篩選
-        fetch("products.json")
+    document.addEventListener("DOMContentLoaded", () => {
+        // 直接從根目錄讀取唯一的資料庫檔案
+        fetch("products.json") 
             .then(res => res.json())
             .then(data => {
-                // 請確認 data.products 是你的 JSON 陣列結構
-                const familyProducts = data.products.filter(p => p.category === 'family');
-                renderProducts(familyProducts, "family-grid");
+                // 這裡假設你的 JSON 結構是 { "products": [...] }
+                // 如果你的結構是 { "family": [...] }，請將 'data.products' 改為 'data.family'
+                const allProducts = data.products || []; 
+                
+                // 篩選該頁面需要的分類 (例如 family)
+                const filtered = allProducts.filter(p => p.category === 'family');
+                
+                console.log("篩選到的商品數量:", filtered.length);
+                renderProducts(filtered, "family-grid");
             })
-            .catch(err => console.error("商品載入失敗:", err));
+            .catch(err => console.error("資料載入失敗，請確認 products.json 是否存在:", err));
     });
+
+    // 2. 渲染邏輯 (保持不變)
+    function renderProducts(products, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = products.map(p => `
+            <div class="product" data-id="${p.id}">
+                <a href="product.html?id=${p.id}">
+                    <img src="${p.image}" alt="${p.name}">
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-price">NT$${p.price}</div>
+                </a>
+            </div>
+        `).join('');
+    }
 
     // 5. 購物車全域點擊事件
     document.addEventListener("click", (e) => {
