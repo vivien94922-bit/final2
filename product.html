@@ -787,54 +787,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function addToCart() {
-
     if (!currentProduct) {
         alert("商品資料尚未載入");
         return;
     }
 
-    const qty =
-    parseInt(
-        document.getElementById("qtyInput").value
-    ) || 1;
+    const qty = parseInt(document.getElementById("qtyInput").value) || 1;
+    const size = document.getElementById("sizeSelect").value;
 
-    const size =
-    document.getElementById("sizeSelect").value;
+    // ✅ 過濾掉 null 或損壞的購物車資料
+    let cart = (JSON.parse(localStorage.getItem("cart")) || [])
+        .filter(item => item != null && item.id != null);
 
-    let cart =
-    JSON.parse(
-        localStorage.getItem("cart")
-    ) || [];
-
-    const exist =
-    cart.find(item =>
-        item &&
-        item.id === currentProduct.id &&
-        item.size === size
+    const exist = cart.find(item =>
+        item.id === currentProduct.id && item.size === size
     );
 
     if (exist) {
-
         exist.quantity += qty;
-
     } else {
-
         cart.push({
             id: currentProduct.id,
             name: currentProduct.name,
             price: currentProduct.price,
-            image: currentProduct.images[0],
+            // ✅ 修正：相容 image（字串）或 images（陣列）兩種格式
+            image: Array.isArray(currentProduct.images)
+                ? currentProduct.images[0]
+                : currentProduct.image,
             size: size,
             quantity: qty
         });
-
     }
 
-    localStorage.setItem(
-        "cart",
-        JSON.stringify(cart)
-    );
-
+    localStorage.setItem("cart", JSON.stringify(cart));
     alert("成功加入購物車");
 }
 </script>
