@@ -528,7 +528,7 @@ function loadFavorites() {
     const favIds = JSON.parse(localStorage.getItem("myFavorites")) || [];
 
     // 2. 抓取正確的資料庫檔案 product.json
-    fetch("product.json")
+    fetch("products.json")
         .then(res => res.json())
         .then(data => {
             const allProducts = data.products;
