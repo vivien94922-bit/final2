@@ -53,33 +53,42 @@ function requireLogin(redirectTo) {
 }
   
   // ===== 加入購物車 =====
-  async function addToCart(productId) {
-  const qty = document.getElementById('qtyInput').value;
+ function addToCart() {
 
-  const res = await fetch('addToCart.jsp', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `product_id=${productId}&quantity=${qty}`
-  });
+    const qty =
+    parseInt(document.getElementById("qtyInput").value) || 1;
 
-  // 沒登入
-  if (res.status === 401) {
-    alert("請先登入");
-    location.href = "login.jsp";
-    return;
-  }
+    let cart =
+    JSON.parse(localStorage.getItem("cart")) || [];
 
-  const data = await res.json();
+    const exist =
+    cart.find(item =>
+        item.id === productData.id
+    );
 
-  if (data.success) {
-    if (confirm(data.msg + "\n\n要去購物車嗎？")) {
-      location.href = "cart.jsp";
+    if (exist) {
+
+        exist.quantity += qty;
+
+    } else {
+
+        cart.push({
+            id: productData.id,
+            name: productData.name,
+            price: productData.price,
+            image: productData.images[0],
+            quantity: qty
+        });
+
     }
-  } else {
-    alert(data.msg);
-  }
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    alert("成功加入購物車");
+
 }
   // ===== Tab 切換 =====
   document.querySelectorAll(".tab").forEach(tab => {
