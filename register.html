@@ -133,41 +133,44 @@ body{
 <script src="cookie-consent.js" defer></script>
 <script>
 // 1. 載入 header (這部分保持不變)
+// 確保你的 HTML 頁面中有一個 <div id="header-placeholder"></div>
 fetch('header.html')
     .then(res => res.text())
-    .then(data => document.getElementById('header-placeholder').innerHTML = data);
+    .then(data => {
+        const placeholder = document.getElementById('header-placeholder');
+        if(placeholder) placeholder.innerHTML = data;
+    });
 
-// 2. 統一處理註冊邏輯
-document.getElementById('register-form').addEventListener('submit', async function(e) {
+// 2. 處理本地模擬註冊邏輯
+document.getElementById('register-form').addEventListener('submit', function(e) {
     e.preventDefault(); 
 
-    // 抓取所有 input 的值
+    const username = document.getElementById('reg-user').value;
+    const password = document.getElementById('reg-pass').value;
+    const name = document.getElementById('reg-name').value;
+    const email = document.getElementById('reg-email').value;
+    const phone = document.getElementById('reg-phone').value;
+
+    // 檢查帳號是否已存在
+    if (localStorage.getItem('user_' + username)) {
+        alert("此帳號已被註冊，請使用其他帳號");
+        return;
+    }
+
+    // 儲存用戶資料 (將帳號與密碼等資訊包裝為物件)
     const userData = {
-        username: document.getElementById('reg-user').value,
-        password: document.getElementById('reg-pass').value,
-        name: document.getElementById('reg-name').value,
-        email: document.getElementById('reg-email').value,
-        phone: document.getElementById('reg-phone').value
+        username: username,
+        password: password, // 注意：在真實環境中絕對不能存明碼
+        name: name,
+        email: email,
+        phone: phone
     };
 
-    try {
-        const response = await fetch('http://localhost:3000/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData)
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            alert(data.message);
-            window.location.href = 'login.html';
-        } else {
-            alert(data.message);
-        }
-    } catch (err) {
-        alert("伺服器連線失敗");
-    }
+    // 將資料存入 localStorage
+    localStorage.setItem('user_' + username, JSON.stringify(userData));
+    
+    alert("註冊成功！現在請使用剛剛設定的帳號密碼登入。");
+    window.location.href = 'login.html';
 });
 </script>
 </body>
