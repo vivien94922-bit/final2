@@ -526,17 +526,33 @@ function loadFavorites() {
     // 1. 統一讀取鍵名 "myFavorites"
     const favIds = JSON.parse(localStorage.getItem("myFavorites")) || [];
     
-    fetch("data.json")
-        .then(res => res.json())
-        .then(data => {
-            const allProducts = data.products;
-            const myFavorites = allProducts.filter(p => favIds.includes(p.id.toString()));
+    fetch("product.json")
+    .then(res => res.json())
+    .then(data => {
+        const allProducts = data.products;
 
-            if (myFavorites.length === 0) {
-                box.innerHTML = "<p>目前沒有收藏商品</p>";
-                return;
-            }
+        const myFavorites =
+            allProducts.filter(p =>
+                favIds.includes(p.id.toString())
+            );
 
+        if (myFavorites.length === 0) {
+            box.innerHTML = "<p>目前沒有收藏商品</p>";
+            return;
+        }
+
+        box.innerHTML = myFavorites.map(item => `
+            <div class="product" data-id="${item.id}">
+                <img src="${item.image}" alt="${item.name}">
+                <h3 class="product-name">${item.name}</h3>
+                <div class="product-price">NT$${item.price}</div>
+                <button class="add-cart-btn">加入購物車</button>
+                <img src="images/love.png"
+                     class="favorite-icon"
+                     onclick="toggleFavorite(event,this)">
+            </div>
+        `).join('');
+    });
             // 2. 渲染 UI
             box.innerHTML = myFavorites.map(item => `
                 <div class="product" data-id="${item.id}">
