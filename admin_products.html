@@ -1,14 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
-<%@ include file="dbutil.jsp" %>
-<%@ include file="webutil.jsp" %>
-<%
-Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
-if (isAdmin == null || !isAdmin) {
-    response.sendRedirect("admin_login.jsp");
-    return;
-}
-%>
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -61,18 +51,54 @@ button{padding:7px 12px;border:0;border-radius:4px;cursor:pointer;font-weight:bo
 <table>
 <thead><tr><th>圖片</th><th>ID</th><th>商品資料 / 編輯欄位</th><th>價格 / 庫存</th><th>操作</th></tr></thead>
 <tbody>
-<%
-try (Connection conn = getConnection();
-     PreparedStatement ps = conn.prepareStatement(
-         "SELECT id,name,price,image,description,category,stock FROM product ORDER BY id DESC");
-     ResultSet rs = ps.executeQuery()) {
-    while (rs.next()) {
-        int id = rs.getInt("id");
-        String name = rs.getString("name");
-        String image = rs.getString("image");
-        String description = rs.getString("description");
-        String category = rs.getString("category");
-%>
+<tbody id="productTable"></tbody>
+<script>
+fetch("getProducts.jsp")
+.then(res => res.json())
+.then(data => {
+
+    const tbody =
+    document.getElementById("productTable");
+
+    tbody.innerHTML = "";
+
+    data.forEach(product => {
+
+        tbody.innerHTML += `
+        <tr>
+            <td>
+                <img
+                src="${product.image}"
+                class="prod-img">
+            </td>
+
+            <td>${product.id}</td>
+
+            <td>${product.name}</td>
+
+            <td>
+                NT$${product.price}<br>
+                庫存:${product.stock}
+            </td>
+
+            <td>
+                <button
+                onclick="editProduct(${product.id})">
+                編輯
+                </button>
+
+                <button
+                onclick="deleteProduct(${product.id})">
+                刪除
+                </button>
+            </td>
+        </tr>
+        `;
+    });
+
+});
+
+</script>
 <tr>
   <td><img src="<%=escapeHtml(image)%>" alt="" class="prod-img"></td>
   <td><%=id%></td>
