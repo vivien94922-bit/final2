@@ -13,28 +13,68 @@ function saveCartToStorage(cart) {
 
 // 3. 修改後的 renderCart (直接從 localStorage 讀取)
 function renderCart() {
-    const container = document.getElementById("cart-container");
-    const cart = getCartFromStorage(); // 確保這裡抓得到資料
-    
-    // 如果 cart 是空的，先清空容器
+
+    const container =
+    document.getElementById("cart-container");
+
+    const cart =
+    getCartFromStorage();
+
     container.innerHTML = "";
 
-    if (cart && cart.length > 0) {
-        cart.forEach(item => {
-            const div = document.createElement("div");
-            div.className = "cart-item";
-            div.innerHTML = `
-                <p>${item.name}</p>
-                <p>數量: ${item.quantity}</p>
-                <p>單價: ${item.price}</p>
-            `;
-            container.appendChild(div);
-        });
-        // 記得計算總金額
-        updateTotalFromStorage(cart);
-    } else {
-        container.innerHTML = "<p>購物車空空如也...</p>";
+    if (!cart.length) {
+
+        container.innerHTML =
+        "<p>購物車空空如也...</p>";
+
+        document.getElementById("cart-total")
+        .innerText = "NT$0";
+
+        return;
     }
+
+    cart.forEach(item => {
+
+        const div =
+        document.createElement("div");
+
+        div.className = "cart-item";
+
+        div.innerHTML = `
+            <img src="${item.image}"
+                 width="120">
+
+            <h3>${item.name}</h3>
+
+            <p>NT$${item.price}</p>
+
+            <p>
+                數量：
+
+                <button onclick="
+                    updateCartQty(
+                        ${item.id},
+                        ${item.quantity - 1}
+                    )
+                ">－</button>
+
+                ${item.quantity}
+
+                <button onclick="
+                    updateCartQty(
+                        ${item.id},
+                        ${item.quantity + 1}
+                    )
+                ">＋</button>
+            </p>
+        `;
+
+        container.appendChild(div);
+
+    });
+
+    updateTotalFromStorage(cart);
+
 }
 
 // 4. 修改後的更新數量功能 (取代 sendUpdate)
@@ -48,4 +88,22 @@ function updateCartQty(cartId, newQty) {
     }
     saveCartToStorage(cart);
     renderCart(); // 重新渲染畫面
+}
+
+function updateTotalFromStorage(cart) {
+
+    let total = 0;
+
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+    });
+
+    const totalElement =
+    document.getElementById("cart-total");
+
+    if (totalElement) {
+        totalElement.innerText =
+        "NT$" + total.toLocaleString();
+    }
+
 }
