@@ -16,11 +16,6 @@ async function initPage() {
             initHeaderUI();
             checkLoginStatus();
         }
-
-        const footerRes = await fetch('footer.html');
-        const footerText = await footerRes.text();
-        const footerContainer = document.getElementById('footer-placeholder');
-        if (footerContainer) footerContainer.innerHTML = footerText;
     } catch (err) {
         console.error("載入失敗:", err);
     }
