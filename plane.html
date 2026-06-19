@@ -40,36 +40,37 @@
 <button id="backToTop" title="回到頂部">↑</button>
 
 <script>
-    // 1. 初始化頁面互動 (Header/Footer 建議改為 HTML 直接嵌入以避免 404 錯誤)
+    // 1. 初始化頁面佈局
+    async function initLayout() {
+        try {
+            const hRes = await fetch('header.html');
+            
+            const headerEl = document.getElementById('header-placeholder');
+            
+            if (headerEl) { headerEl.innerHTML = await hRes.text(); initHeaderUI(); }
+        } catch (err) { console.error("Layout 載入失敗:", err); }
+    }
+
+    // 2. Header 互動 UI
     function initHeaderUI() {
         const searchIcon = document.getElementById("searchIcon");
         const searchBox = document.getElementById("searchBox");
         const menuIcon = document.getElementById("menuIcon");
         const menuBox = document.getElementById("menuBox");
-
-        if (searchIcon && searchBox) {
-            searchIcon.addEventListener("click", () => searchBox.classList.toggle("active"));
-        }
-        if (menuIcon && menuBox) {
-            menuIcon.addEventListener("click", () => menuBox.classList.toggle("active"));
-        }
+        if (searchIcon && searchBox) searchIcon.addEventListener("click", () => searchBox.classList.toggle("active"));
+        if (menuIcon && menuBox) menuIcon.addEventListener("click", () => menuBox.classList.toggle("active"));
     }
 
-    // 2. 商品渲染函式 (修正：避免重複執行與確保結構)
+    // 3. 唯一的渲染函式 (整合了所有顯示邏輯)
     function renderProducts(products, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        // 清空容器，確保重新渲染時不會堆疊
-        container.innerHTML = "";
-
         const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-        products.forEach(p => {
+        container.innerHTML = products.map(p => {
             const isFav = favorites.includes(p.id.toString());
-            const heartImg = isFav ? "images/love.png" : "images/heart.png";
-
-            container.insertAdjacentHTML('beforeend', `
+            return `
                 <div class="product" data-id="${p.id}">
                     <a href="product.html?id=${p.id}" class="product-link">
                         <img src="${p.image}" alt="${p.name}">
@@ -79,36 +80,55 @@
                         </div>
                     </a>
                     <div class="product-actions">
-                        <img src="${heartImg}" class="favorite-icon" onclick="toggleFavorite(event, this)">
+                        <img src="${isFav ? 'images/love.png' : 'images/heart.png'}" class="favorite-icon" onclick="toggleFavorite(event, this)">
                         <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${p.name}', 'product.html?id=${p.id}')">
                     </div>
                     <button class="add-cart-btn">加入購物車</button>
                 </div>
-            `);
-        });
+            `;
+        }).join('');
     }
 
-    // 3. 頁面啟動邏輯
-    document.addEventListener("DOMContentLoaded", () => {
-        // 初始化 Header UI
-        initHeaderUI();
+    // 4. 啟動與資料處理
+    document.addEventListener("DOMContentLoaded", async () => {
+        await initLayout();
 
-        // 統一讀取 products.json (請將檔名改為你實際的檔案名稱)
-        fetch("products.json")
-            .then(res => {
-                if (!res.ok) throw new Error("找不到檔案");
-                return res.json();
-            })
+        fetch("products.json") 
+            .then(res => res.json())
             .then(data => {
-                // 如果你的 JSON 是 { "boarding": [...] } 結構
-                const products = data.boarding || [];
-                renderProducts(products, "boarding-grid");
+                // 確保這裡抓取的是正確的陣列
+                const allProducts = data.products || []; 
+                const filtered = allProducts.filter(p => p.category === 'boarding');
+                
+                console.log("篩選到的商品數量:", filtered.length);
+                renderProducts(filtered, "boarding-grid");
             })
-            .catch(err => {
-                console.error("資料載入失敗:", err);
-                document.getElementById("boarding-grid").innerHTML = "<p>無法載入商品資料。</p>";
-            });
+            .catch(err => console.error("資料載入失敗:", err));
     });
+
+    // 5. 購物車與其他互動
+    document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("add-cart-btn")) {
+            e.preventDefault();
+            const pEl = e.target.closest(".product");
+            const item = {
+                id: pEl.dataset.id,
+                name: pEl.querySelector(".product-name").textContent,
+                price: parseInt(pEl.querySelector(".product-price").textContent.replace(/[^0-9]/g, '')),
+                image: pEl.querySelector("img").src,
+                quantity: 1
+            };
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existing = cart.find(i => i.id === item.id);
+            if (existing) existing.quantity += 1;
+            else cart.push(item);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert("已加入購物車！");
+        }
+    });
+
+    function toggleFavorite(e, el) { e.preventDefault(); /* 收藏邏輯 */ }
+    function shareProduct(e, name, url) { e.preventDefault(); /* 分享邏輯 */ }
 </script>
 </body>
 </html>
