@@ -121,22 +121,36 @@ body{
 <script src="cookie-consent.js" defer></script>
 <script>
 document.getElementById('login-form').addEventListener('submit', function(e) {
-    e.preventDefault(); // 阻止頁面跳轉
+    e.preventDefault(); // 阻止表單預設送出行為
 
-    const user = document.getElementById('username').value;
-    const pass = document.getElementById('password').value;
+    const inputUser = document.getElementById('username').value;
+    const inputPass = document.getElementById('password').value;
 
-    // 這裡模擬你的後端資料驗證
-    // 真實應用中，這裡應該是 fetch('your-api-url')
-    if (user === "admin" && pass === "1234") {
-        alert("登入成功！");
-        localStorage.setItem('isLoggedIn', 'true'); // 設定登入狀態
-        location.href = 'member.html'; // 導向會員中心
+    // 從 localStorage 讀取該帳號對應的資料
+    // 注意：這裡的 key 名稱必須與 register.html 存入時的名稱一致 (user_ + 帳號)
+    const userDataString = localStorage.getItem('user_' + inputUser);
+
+    if (userDataString) {
+        // 如果帳號存在，將字串轉回物件
+        const userData = JSON.parse(userDataString);
+
+        // 比對密碼
+        if (userData.password === inputPass) {
+            alert("登入成功，歡迎 " + userData.name + "！");
+            
+            // 設定登入狀態與當前使用者名稱
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('currentUser', userData.name);
+            
+            // 跳轉至會員中心
+            location.href = 'member.html'; 
+        } else {
+            alert("密碼錯誤！");
+        }
     } else {
-        alert("帳號或密碼錯誤！");
+        alert("找不到此帳號，請確認後再試或前往註冊。");
     }
 });
 </script>
-
 </body>
 </html>
