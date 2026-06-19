@@ -725,6 +725,7 @@ body {
 
 </footer>
 <script>
+let currentProduct = null;
 // Tab 切換控制
 const tabs = document.querySelectorAll('.tab');
 const contents = document.querySelectorAll('.content');
@@ -759,6 +760,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         const p = data.products.find(item => item.id === id);
 
         if (p) {
+        currentProduct = p;
+
             document.getElementById('p-name').innerText = p.name.replace(/<br>/g, " ");
             document.getElementById('p-price').innerText = p.price;
             document.getElementById('p-desc').innerText = p.description;
@@ -785,17 +788,41 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function addToCart() {
-    // 檢查 localStorage 中是否有登入標記
-    // 請確認 'isLoggedIn' 是否為您登入時設定的 Key 名稱
+
     if (localStorage.getItem("isLoggedIn") !== "true") {
         alert("請先登入會員才能加入購物車！");
-        // 跳轉到登入頁面
         window.location.href = "login.html";
-        return; // 中止函式執行
+        return;
     }
 
-    // 若已登入，則繼續執行加入購物車的邏輯
-    // (這裡您可以根據需求，加入將商品資訊寫入 localStorage 的購物車邏輯)
+    if (!currentProduct) {
+        alert("商品資料尚未載入");
+        return;
+    }
+
+    let cart =
+    JSON.parse(localStorage.getItem("cart")) || [];
+
+    const exist =
+    cart.find(item => item.id === currentProduct.id);
+
+    if (exist) {
+        exist.quantity += 1;
+
+    } else {
+        cart.push({
+            id: currentProduct.id,
+            name: currentProduct.name,
+            price: currentProduct.price,
+            image: currentProduct.image,
+            quantity: 1
+        });
+    }
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
     alert("商品已成功加入購物車！");
 }
 function initHeaderUI() {
