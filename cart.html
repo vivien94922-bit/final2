@@ -116,31 +116,24 @@
 <div id="footer-placeholder"></div>
 
 <button id="backToTop" title="回到頂部">↑</button>
-    <script>
-        // 簡單的 header 載入範例
-fetch('header.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('header-placeholder').innerHTML = data);
-        function handleCheckout() {
-            const totalText = document.getElementById('cart-total').innerText; 
-            const pureTotalNumber = parseInt(totalText.replace(/[^0-9]/g, ''));
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // 1. 載入 Header
+        fetch('header.html')
+            .then(res => res.text())
+            .then(data => document.getElementById('header-placeholder').innerHTML = data);
 
-            if (!pureTotalNumber || pureTotalNumber <= 0) {
-                alert("購物車是空的，請先選購商品！");
-                return;
-            }
-
-            const btn = document.getElementById('checkoutBtn');
-            btn.disabled = true;
-            btn.innerText = '處理中...';
-            
-            setTimeout(() => {
-                location.href = 'checkout.jsp?amount=' + pureTotalNumber;
-            }, 400);
+        // 2. 檢查是否有資料並渲染
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        console.log("當前購物車內容:", cart); // 檢查是否有資料
+        
+        if (typeof renderCart === 'function') {
+            renderCart(); // 執行渲染
+        } else {
+            console.error("renderCart 未定義");
         }
-    </script>
-
-    <script src="cart.js"></script>
+    });
+</script>
     <script src="cookie-consent.js" defer></script>
 </body>
 </html>

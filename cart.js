@@ -2,9 +2,10 @@
 
 // 1. 取得購物車資料
 function getCartFromStorage() {
-    return JSON.parse(localStorage.getItem("cart")) || [];
+    const data = localStorage.getItem("cart");
+    console.log("從 localStorage 讀取到的資料:", data); // 測試用：在 Console 查看是否有資料
+    return data ? JSON.parse(data) : [];
 }
-
 // 2. 儲存購物車資料
 function saveCartToStorage(cart) {
     localStorage.setItem("cart", JSON.stringify(cart));
@@ -13,19 +14,26 @@ function saveCartToStorage(cart) {
 // 3. 修改後的 renderCart (直接從 localStorage 讀取)
 function renderCart() {
     const container = document.getElementById("cart-container");
-    const cart = getCartFromStorage();
+    const cart = getCartFromStorage(); // 確保這裡抓得到資料
     
-    container.replaceChildren();
+    // 如果 cart 是空的，先清空容器
+    container.innerHTML = "";
 
-    if (cart.length > 0) {
+    if (cart && cart.length > 0) {
         cart.forEach(item => {
-            // ... 這裡保留你原本用 document.createElement 產生 HTML 的邏輯 ...
-            // 記得在按鈕綁定事件時，呼叫下方的 updateCartQty
+            const div = document.createElement("div");
+            div.className = "cart-item";
+            div.innerHTML = `
+                <p>${item.name}</p>
+                <p>數量: ${item.quantity}</p>
+                <p>單價: ${item.price}</p>
+            `;
+            container.appendChild(div);
         });
+        // 記得計算總金額
         updateTotalFromStorage(cart);
     } else {
         container.innerHTML = "<p>購物車空空如也...</p>";
-        updateTotalFromStorage([]);
     }
 }
 
