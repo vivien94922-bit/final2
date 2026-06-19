@@ -134,19 +134,16 @@ function toast(msg) {
 }
 // 使用事件代理，監聽整個網頁的點擊事件
 document.addEventListener("click", (e) => {
-    // 檢查點擊的目標是否為「加入購物車」按鈕
     if (e.target.classList.contains("add-cart-btn")) {
         const productElement = e.target.closest(".product");
         const productId = productElement.dataset.id;
         
-        // 取得商品基本資料（從 DOM 或 JSON 讀取）
-        const productName = productElement.querySelector(".product-name").textContent;
+        // 從 DOM 取得文字時，記得要把 <br> 換成空格或處理一下，避免格式跑掉
+        const productName = productElement.querySelector(".product-name").innerText.replace(/\n/g, " ");
         const productPrice = productElement.querySelector(".product-price").textContent;
         
-        // 執行存入 localStorage 的邏輯
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
         
-        // 檢查是否已存在（數量 +1），若無則新增
         const existingItem = cart.find(item => item.id === productId);
         if (existingItem) {
             existingItem.quantity += 1;
@@ -160,6 +157,6 @@ document.addEventListener("click", (e) => {
         }
         
         localStorage.setItem("cart", JSON.stringify(cart));
-    
+        toast("已加入購物車"); // 記得加上這一行，不然使用者不知道按了沒
     }
 });
