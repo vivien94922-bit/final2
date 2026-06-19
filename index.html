@@ -357,209 +357,137 @@
 <script src="cookie-consent.js" defer></script>
 
 <script>
-    // 簡單的 header 載入範例
-fetch('header.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('header-placeholder').innerHTML = data);
+    // 1. 全域初始化邏輯
+    document.addEventListener("DOMContentLoaded", () => {
+        // A. Header 載入
+        fetch('header.html')
+            .then(res => res.text())
+            .then(data => {
+                const header = document.getElementById('header-placeholder');
+                if (header) {
+                    header.innerHTML = data;
+                    initHeaderUI();
+                }
+            });
 
-// 綁定 UI 事件
-function initHeaderUI() {
-    const searchIcon = document.getElementById("searchIcon");
-    const searchBox = document.getElementById("searchBox");
-    if (searchIcon && searchBox) {
-        searchIcon.addEventListener("click", () => searchBox.classList.toggle("active"));
-    }
-    // ... 其他選單互動邏輯
-}
-
-// 確保頁面載入時執行
-document.addEventListener("DOMContentLoaded", initPage);
-    // 1. 開場特效邏輯
-    window.addEventListener("load", () => {
-        const intro = document.getElementById("intro");
-        if (intro) {
-            setTimeout(() => {
-                intro.remove();
-            }, 2500);
+        // B. 開場動畫
+        if (!sessionStorage.getItem("intro_shown")) {
+            sessionStorage.setItem("intro_shown", "true");
+            const introEl = document.getElementById("intro");
+            if (introEl) introEl.style.display = "block";
         }
-    })
+        window.addEventListener("load", () => {
+            const intro = document.getElementById("intro");
+            if (intro) setTimeout(() => intro.remove(), 2500);
+        });
 
-    // 2. 心理測驗邏輯
-    let currentStep = 1;
-    const totalSteps = 5;
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const submitBtn = document.getElementById('submitBtn');
-    const progressText = document.getElementById('quizProgress');
+        // C. 心理測驗初始化
+        initQuiz();
 
-    function updateQuizStep() {
-        if (!prevBtn || !nextBtn) return;
-        document.querySelectorAll('.quiz-step').forEach(step => step.classList.remove('active'));
-        const currentStepEl = document.querySelector(`.quiz-step[data-step="${currentStep}"]`);
-        if (currentStepEl) currentStepEl.classList.add('active');
-        if (progressText) progressText.innerText = `第 ${currentStep} / ${totalSteps} 題`;
-        prevBtn.style.visibility = (currentStep === 1) ? 'hidden' : 'visible';
-        nextBtn.style.display = (currentStep === totalSteps) ? 'none' : 'inline-block';
-        submitBtn.style.display = (currentStep === totalSteps) ? 'inline-block' : 'none';
+        // D. 載入產品資料 (統一入口)
+        fetch("products.json")
+            .then(res => res.json())
+            .then(data => {
+                const all = data.products;
+                renderProducts(all.filter(p => p.category === 'boarding').slice(0, 3), "boarding-grid");
+                renderProducts(all.filter(p => p.category === 'travel').slice(0, 3), "travel-grid");
+                renderProducts(all.filter(p => p.category === 'family').slice(0, 3), "family-grid");
+                renderProducts(all.filter(p => [1, 5, 7].includes(p.id)), "hot-grid");
+            })
+            .catch(err => console.warn("商品載入失敗:", err));
+
+        // E. 時鐘初始化
+        updateClock();
+        setInterval(updateClock, 1000);
+    });
+
+    // 2. 功能模組：Header
+    function initHeaderUI() {
+        const sIcon = document.getElementById("searchIcon");
+        const sBox = document.getElementById("searchBox");
+        if (sIcon && sBox) sIcon.addEventListener("click", () => sBox.classList.toggle("active"));
     }
 
-    if (nextBtn) nextBtn.addEventListener('click', () => { if (currentStep < totalSteps) { currentStep++; updateQuizStep(); } });
-    if (prevBtn) prevBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateQuizStep(); } });
-
-    // 3. 核心載入與渲染
-    // 1. 頁面載入時的初始化
-document.addEventListener("DOMContentLoaded", () => {
-    // 開場動畫
-    if (!sessionStorage.getItem("intro_shown")) {
-        sessionStorage.setItem("intro_shown", "true");
-        const introEl = document.getElementById("intro");
-        if (introEl) introEl.style.display = "block";
-    }
-
-    // 載入商品資料 (統一用這一份)
-    fetch("products.json")
-        .then(res => res.json())
-        .then(data => {
-            const all = data.products;
-            // 渲染各區塊
-            renderProducts(all.filter(p => p.category === 'boarding').slice(0, 3), "boarding-grid");
-            renderProducts(all.filter(p => p.category === 'travel').slice(0, 3), "travel-grid");
-            renderProducts(all.filter(p => p.category === 'family').slice(0, 3), "family-grid");
-            renderProducts(all.filter(p => [1, 5, 7].includes(p.id)), "hot-grid");
-        })
-        .catch(err => console.warn("商品載入失敗:", err));
-});
-
-// 2. 通用的渲染函數 (確保此處只有一個)
-function renderProducts(products, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    container.innerHTML = "";
-    products.forEach(p => {
-        container.insertAdjacentHTML('beforeend', `
-            <div class="product" data-id="${p.id}">
-                <a href="product.html?id=${p.id}" class="product-link">
-                    <img src="${p.image}" alt="${p.name}">
-                    <div class="product-info">
-                        <div class="product-name" style="line-height: 1.4; min-height: 55px;">
-                            ${p.name}
+    // 3. 功能模組：商品渲染
+    function renderProducts(products, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = "";
+        products.forEach(p => {
+            container.insertAdjacentHTML('beforeend', `
+                <div class="product" data-id="${p.id}">
+                    <a href="product.html?id=${p.id}" class="product-link">
+                        <img src="${p.image}" alt="${p.name}">
+                        <div class="product-info">
+                            <div class="product-name" style="line-height: 1.4; min-height: 55px;">${p.name}</div>
+                            <div class="product-price">NT$${p.price}</div>
                         </div>
-                        <div class="product-price">NT$${p.price}</div>
+                    </a>
+                    <div class="product-actions">
+                        <img src="images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
+                        <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${p.name}', 'product.html?id=${p.id}')">
                     </div>
-                </a>
-                <div class="product-actions">
-                    <img src="images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
-                    <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${p.name}', 'product.html?id=${p.id}')">
+                    <button class="add-cart-btn">加入購物車</button>
                 </div>
-                <button class="add-cart-btn">加入購物車</button>
-            </div>
-        `);
-    });
-}
-    // 5. 分享功能 (Web Share API)
-    function shareProduct(event, name, url) {
-        event.preventDefault();
-        event.stopPropagation();
-        const shareData = { title: 'VANTERA 推薦商品', text: `看看這個行李箱：${name}`, url: window.location.origin + '/' + url };
-        if (navigator.share) {
-            navigator.share(shareData).catch(err => console.error(err));
-        } else {
-            navigator.clipboard.writeText(shareData.url).then(() => alert('連結已複製！'));
+            `);
+        });
+    }
+
+    // 4. 功能模組：心理測驗
+    function initQuiz() {
+        let currentStep = 1;
+        const totalSteps = 5;
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressText = document.getElementById('quizProgress');
+        const quizForm = document.getElementById('quizForm');
+
+        function updateQuizStep() {
+            if (!prevBtn || !nextBtn) return;
+            document.querySelectorAll('.quiz-step').forEach(s => s.classList.remove('active'));
+            const stepEl = document.querySelector(`.quiz-step[data-step="${currentStep}"]`);
+            if (stepEl) stepEl.classList.add('active');
+            if (progressText) progressText.innerText = `第 ${currentStep} / ${totalSteps} 題`;
+            prevBtn.style.visibility = (currentStep === 1) ? 'hidden' : 'visible';
+            nextBtn.style.display = (currentStep === totalSteps) ? 'none' : 'inline-block';
+            submitBtn.style.display = (currentStep === totalSteps) ? 'inline-block' : 'none';
+        }
+
+        if (nextBtn) nextBtn.addEventListener('click', () => { if (currentStep < totalSteps) { currentStep++; updateQuizStep(); } });
+        if (prevBtn) prevBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateQuizStep(); } });
+
+        if (quizForm) {
+            quizForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let score = Array.from(new FormData(this).values()).reduce((acc, v) => acc + parseInt(v), 0);
+                
+                let res = score <= 8 ? {t:"登機系列", l:"plane.html"} : (score <= 12 ? {t:"旅行系列", l:"travel.html"} : {t:"親子友善系列", l:"family.html"});
+                
+                quizForm.style.display = 'none';
+                if(progressText) progressText.style.display = 'none';
+                const resultArea = document.createElement('div');
+                resultArea.className = 'quiz-result-box';
+                resultArea.innerHTML = `<h4>推薦：${res.t}</h4><a href="${res.l}" class="quiz-btn">前往選購</a>`;
+                document.getElementById('quizSection').appendChild(resultArea);
+            });
         }
     }
 
-    // 6. 其他輔助函式 (測驗送出、收藏同步、時鐘)
-    // (確保這些函式在下方保持完整，特別是 toggleFavorite 和 quizForm 監聽)
-    // ... 這裡請保留你原有的 syncFavorites, toggleFavorite, 和 quizForm 邏輯 ...
-    
-    // 1. 確保表單提交時執行計算而非跳轉頁面
-document.getElementById('quizForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // 防止表單真正跳轉
-    
-    // 獲取選中的值並計算分數
-    const formData = new FormData(this);
-    let score = 0;
-    for (let value of formData.values()) {
-        score += parseInt(value);
+    // 5. 功能模組：輔助工具 (分享、時鐘)
+    function shareProduct(e, name, url) {
+        e.preventDefault(); e.stopPropagation();
+        if (navigator.share) navigator.share({title: 'VANTERA', text: name, url: url});
+        else { navigator.clipboard.writeText(window.location.origin + '/' + url); alert('連結已複製！'); }
     }
 
-    // 2. 判斷邏輯：根據分數給出推薦
-    // 分數 5-8: Boarding, 9-12: Travel, 13-15: Family
-    let result = {
-        title: "",
-        desc: "",
-        link: ""
-    };
-
-    // 修改這一段
-if (score <= 8) {
-    result.title = "推薦：登機系列 (Boarding)";
-    result.desc = "你追求效率與輕便，登機系列最能配合你快速移動的節奏。";
-    result.link = "plane.html"; // 改成你的頁面檔名
-} else if (score <= 12) {
-    result.title = "推薦：旅行系列 (Travel)";
-    result.desc = "你注重旅途中的穩定感與空間，旅行系列是你最可靠的選擇。";
-    result.link = "travel.html"; // 改成你的頁面檔名
-} else {
-    result.title = "推薦：親子友善系列 (Family)";
-    result.desc = "你通常需要攜帶大量物品，親子友善系列提供你最強大的收納支援。";
-    result.link = "family.html"; // 改成你的頁面檔名
-}
-
-    // 3. 切換顯示內容
-    document.getElementById('quizForm').style.display = 'none'; // 隱藏表單
-    document.getElementById('quizProgress').style.display = 'none'; // 隱藏進度條
-    
-    // 將結果顯示在頁面上 (請確保 HTML 有這兩個元素)
-    const resultArea = document.createElement('div');
-    resultArea.className = 'quiz-result-box';
-    resultArea.innerHTML = `
-        <h4>${result.title}</h4>
-        <p>${result.desc}</p>
-        <a href="${result.link}" class="quiz-btn next-btn" style="display:inline-block; margin-top:20px; text-decoration:none;">前往選購</a>
-    `;
-    document.getElementById('quizSection').appendChild(resultArea);
-});
-function updateClock() {
-    const now = new Date();
-
-    // 取得時間 (時:分:秒)
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
-    
-    // 取得日期 (年/月/日)
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-
-    // 更新 DOM 內容
-    const timeElement = document.querySelector('#digital-clock .time');
-    const dateElement = document.querySelector('#digital-clock .date');
-
-    if (timeElement) timeElement.textContent = `${hours}:${minutes}:${seconds}`;
-    if (dateElement) dateElement.textContent = `${year}/${month}/${day}`;
-}
-
-// 頁面載入後立即執行一次，避免剛打開時有 1 秒的延遲
-updateClock();
-
-// 每 1000 毫秒 (1秒) 執行一次 updateClock
-setInterval(updateClock, 1000);
-
-fetch("products.json")
-    .then(res => res.json())
-    .then(data => {
-        const all = data.products;
-        
-        // 首頁：只取每個類別的前 3 個
-        renderProducts(all.filter(p => p.category === 'boarding').slice(0, 3), "boarding-grid");
-        renderProducts(all.filter(p => p.category === 'travel').slice(0, 3), "travel-grid");
-        renderProducts(all.filter(p => p.category === 'family').slice(0, 3), "family-grid");
-        
-        // 熱門商品 (假設 id 為 1, 5, 7 是熱門)
-        renderProducts(all.filter(p => [1, 5, 7].includes(p.id)), "hot-grid");
-    });
+    function updateClock() {
+        const now = new Date();
+        const tEl = document.querySelector('#digital-clock .time');
+        const dEl = document.querySelector('#digital-clock .date');
+        if (tEl) tEl.textContent = now.toTimeString().split(' ')[0];
+        if (dEl) dEl.textContent = now.toISOString().split('T')[0].replace(/-/g, '/');
+    }
 </script>
 </body>
 </html>
