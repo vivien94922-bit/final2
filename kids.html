@@ -111,18 +111,25 @@ fetch('header.html')
         }
     }
 
-    // 3. 頁面啟動邏輯
-    document.addEventListener("DOMContentLoaded", async () => {
-        // 先載入 Layout
-        await initPage();
+    // 3. 頁面啟動邏輯 (修正版)
+document.addEventListener("DOMContentLoaded", async () => {
+    // 先載入 Layout
+    await initPage();
 
-        // 再載入商品資料
-        fetch("index_data.json")
-            .then(res => res.json())
-            .then(data => {
-                renderProducts(data.family, "family-grid");
-            });
-    });
+    // 改用統一的資料庫檔案，並篩選出正確分類
+    fetch("products.json") 
+        .then(res => res.json())
+        .then(data => {
+            // 這裡直接篩選所有 category 為 'family' 的商品
+            const familyProducts = data.products.filter(p => p.category === 'family');
+            
+            // 檢查是否真的抓到了
+            console.log("目前讀取到的親子系列商品:", familyProducts);
+            
+            renderProducts(familyProducts, "family-grid");
+        })
+        .catch(err => console.error("資料載入失敗:", err));
+});
 
     // 4. 商品渲染函式
     function renderProducts(products, containerId) {
