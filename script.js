@@ -130,6 +130,12 @@ function toast(msg) {
 // 使用事件代理，監聽整個網頁的點擊事件
 document.addEventListener("click", (e) => {
     if (e.target.classList.contains("add-cart-btn")) {
+        // --- 新增：登入檢查 ---
+        if (localStorage.getItem("isLoggedIn") !== "true") {
+            alert("請先登入會員才能加入購物車");
+            location.href = "login.html"; // 跳轉至登入頁
+            return;
+        }
         const productElement = e.target.closest(".product");
         const productId = productElement.dataset.id;
         

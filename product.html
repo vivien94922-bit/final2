@@ -785,9 +785,19 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function addToCart() {
-    alert("商品已加入購物車！");
-}
+    // 檢查 localStorage 中是否有登入標記
+    // 請確認 'isLoggedIn' 是否為您登入時設定的 Key 名稱
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        alert("請先登入會員才能加入購物車！");
+        // 跳轉到登入頁面
+        window.location.href = "login.html";
+        return; // 中止函式執行
+    }
 
+    // 若已登入，則繼續執行加入購物車的邏輯
+    // (這裡您可以根據需求，加入將商品資訊寫入 localStorage 的購物車邏輯)
+    alert("商品已成功加入購物車！");
+}
 function initHeaderUI() {
     const searchIcon = document.getElementById("searchIcon");
     const menuIcon = document.getElementById("menuIcon");

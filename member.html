@@ -478,9 +478,19 @@ function checkAuth(sectionId) {
 }
 
 // 切換登入狀態的範例
+// 切換登入狀態
 function toggleAuth() {
     if (isLogin) {
+        // 1. 清理登入相關的 LocalStorage
         localStorage.removeItem('isLoggedIn');
+        
+        // 2. 這裡可以視需求清理其他個人資料，例如：
+        // localStorage.removeItem('user_info');
+        
+        alert("已成功登出");
+        
+        // 3. 【關鍵點】：強制重新整理頁面，讓頁面狀態回歸遊客模式
+        location.reload(); 
     } else {
         location.href = 'login.html';
     }
