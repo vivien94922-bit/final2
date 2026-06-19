@@ -72,78 +72,50 @@
 <div id="footer-placeholder"></div>
 
 <script>
-    // 簡單的 header 載入範例
-fetch('header.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('header-placeholder').innerHTML = data);
-    // 1. 定義 Header 與 Footer 載入及互動初始化函式
-    async function initPage() {
-        // 載入 Header 並等待完成
-        const headerRes = await fetch('header.html');
-        const headerText = await headerRes.text();
-        document.getElementById('header-placeholder').innerHTML = headerText;
-
-        // 載入 Footer 並等待完成
-        const footerRes = await fetch('footer.html');
-        const footerText = await footerRes.text();
-        document.getElementById('footer-placeholder').innerHTML = footerText;
-
-        // 【關鍵】Header 內容出現後，立刻初始化 UI 事件
-        initHeaderUI();
+    // 1. 初始化頁面與佈局 (Header/Footer)
+    async function initLayout() {
+        try {
+            const [hRes, fRes] = await Promise.all([
+                fetch('header.html'),
+                fetch('footer.html')
+            ]);
+            
+            const headerEl = document.getElementById('header-placeholder');
+            const footerEl = document.getElementById('footer-placeholder');
+            
+            if (headerEl) {
+                headerEl.innerHTML = await hRes.text();
+                initHeaderUI(); // 載入後立即初始化互動
+            }
+            if (footerEl) {
+                footerEl.innerHTML = await fRes.text();
+            }
+        } catch (err) {
+            console.error("Layout 載入失敗:", err);
+        }
     }
 
-    // 2. 初始化 Header 的互動功能
+    // 2. Header 互動 UI
     function initHeaderUI() {
         const searchIcon = document.getElementById("searchIcon");
         const searchBox = document.getElementById("searchBox");
         const menuIcon = document.getElementById("menuIcon");
         const menuBox = document.getElementById("menuBox");
 
-        if (searchIcon && searchBox) {
-            searchIcon.addEventListener("click", () => {
-                searchBox.classList.toggle("active");
-            });
-        }
-        if (menuIcon && menuBox) {
-            menuIcon.addEventListener("click", () => {
-                menuBox.classList.toggle("active");
-            });
-        }
+        if (searchIcon && searchBox) searchIcon.addEventListener("click", () => searchBox.classList.toggle("active"));
+        if (menuIcon && menuBox) menuIcon.addEventListener("click", () => menuBox.classList.toggle("active"));
     }
 
-    // 3. 頁面啟動邏輯 (修正版)
-document.addEventListener("DOMContentLoaded", async () => {
-    // 先載入 Layout
-    await initPage();
-
-    // 改用統一的資料庫檔案，並篩選出正確分類
-    fetch("products.json") 
-        .then(res => res.json())
-        .then(data => {
-            // 這裡直接篩選所有 category 為 'family' 的商品
-            const familyProducts = data.products.filter(p => p.category === 'family');
-            
-            // 檢查是否真的抓到了
-            console.log("目前讀取到的親子系列商品:", familyProducts);
-            
-            renderProducts(familyProducts, "family-grid");
-        })
-        .catch(err => console.error("資料載入失敗:", err));
-});
-
-    // 4. 商品渲染函式
+    // 3. 渲染商品函式
     function renderProducts(products, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        // 讀取本地收藏狀態
         const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-        products.forEach(p => {
+        container.innerHTML = products.map(p => {
             const isFav = favorites.includes(p.id.toString());
-            const heartImg = isFav ? "images/love.png" : "images/heart.png";
-
-            container.insertAdjacentHTML('beforeend', `
+            return `
                 <div class="product" data-id="${p.id}">
                     <a href="product.html?id=${p.id}" class="product-link">
                         <img src="${p.image}" alt="${p.name}">
@@ -153,57 +125,57 @@ document.addEventListener("DOMContentLoaded", async () => {
                         </div>
                     </a>
                     <div class="product-actions">
-                        <img src="${heartImg}" class="favorite-icon" onclick="toggleFavorite(event, this)">
+                        <img src="${isFav ? 'images/love.png' : 'images/heart.png'}" class="favorite-icon" onclick="toggleFavorite(event, this)">
                         <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${p.name}', 'product.html?id=${p.id}')">
                     </div>
                     <button class="add-cart-btn">加入購物車</button>
                 </div>
-            `);
-        });
+            `;
+        }).join('');
     }
-    // 確保 DOM 加載完成後，監聽「整個網頁」的點擊
-document.addEventListener("click", (e) => {
-    if (e.target.classList.contains("add-cart-btn")) {
-        e.preventDefault();
-        
-        const productEl = e.target.closest(".product");
-        const id = productEl.dataset.id;
-        const name = productEl.querySelector(".product-name").textContent;
-        const priceText = productEl.querySelector(".product-price").textContent;
-        const price = parseInt(priceText.replace(/[^0-9]/g, ''));
-        const image = productEl.querySelector("img").src;
 
-        // --- 核心修正區 ---
-        let cartData = localStorage.getItem("cart");
-        let cart = [];
+    // 4. 核心啟動邏輯
+    document.addEventListener("DOMContentLoaded", async () => {
+        await initLayout();
 
-        try {
-            // 嘗試解析 JSON
-            cart = JSON.parse(cartData);
+        // 載入商品資料並篩選
+        fetch("products.json")
+            .then(res => res.json())
+            .then(data => {
+                // 請確認 data.products 是你的 JSON 陣列結構
+                const familyProducts = data.products.filter(p => p.category === 'family');
+                renderProducts(familyProducts, "family-grid");
+            })
+            .catch(err => console.error("商品載入失敗:", err));
+    });
+
+    // 5. 購物車全域點擊事件
+    document.addEventListener("click", (e) => {
+        if (e.target.classList.contains("add-cart-btn")) {
+            e.preventDefault();
+            const pEl = e.target.closest(".product");
+            const item = {
+                id: pEl.dataset.id,
+                name: pEl.querySelector(".product-name").textContent,
+                price: parseInt(pEl.querySelector(".product-price").textContent.replace(/[^0-9]/g, '')),
+                image: pEl.querySelector("img").src,
+                quantity: 1
+            };
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const existing = cart.find(i => i.id === item.id);
             
-            // 如果解析出來的不是陣列，就強制把它變回空陣列，避免報錯
-            if (!Array.isArray(cart)) {
-                cart = [];
-            }
-        } catch (error) {
-            // 如果裡面存的是亂碼或壞掉的格式，重置為空陣列
-            cart = [];
-        }
-        // ------------------
+            if (existing) existing.quantity += 1;
+            else cart.push(item);
 
-        // 現在 cart 保證是一個陣列，可以安全使用 find
-        const existingItem = cart.find(item => item.id === id);
-        
-        if (existingItem) {
-            existingItem.quantity += 1;
-        } else {
-            cart.push({ id, name, price, image, quantity: 1 });
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert("已加入購物車！");
         }
+    });
 
-        localStorage.setItem("cart", JSON.stringify(cart));
-        console.log("購物車目前內容:", JSON.parse(localStorage.getItem("cart")));
-    }
-});
+    // 6. 佔位函式 (避免 Console 報錯)
+    function toggleFavorite(e, el) { e.preventDefault(); /* 實作你的收藏邏輯 */ }
+    function shareProduct(e, name, url) { e.preventDefault(); /* 實作你的分享邏輯 */ }
 </script>
 </body>
 </html>
