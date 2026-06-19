@@ -1,24 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%
-    // 💡 1. 檢查管理員登入權限
-    Boolean isAdmin = (Boolean) session.getAttribute("isAdmin");
-    if(isAdmin == null || !isAdmin){
-        response.sendRedirect("admin_login.jsp");
-        return;
-    }
-%>
-<%@ page import="java.sql.*" %>
-<%@ include file="dbutil.jsp" %>
-<%!
-private String adminOrderEscapeHtml(String value) {
-    if (value == null) return "";
-    return value.replace("&", "&amp;")
-                .replace("<", "&lt;")
-                .replace(">", "&gt;")
-                .replace("\"", "&quot;")
-                .replace("'", "&#39;");
-}
-%>
+
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -69,14 +49,20 @@ private String adminOrderEscapeHtml(String value) {
   </style>
 </head>
 <body>
+	
+<table>
+<thead>
+<tr>
+<th>訂單編號</th>
+<th>會員</th>
+<th>金額</th>
+<th>狀態</th>
+<th>時間</th>
+</tr>
+</thead>
 
-  <%
-    // 💡 在全頁的最頂端統一開啟一次資料庫連線，變數名稱叫 con
-    Connection con = null;
-    try {
-        con = getConnection();
-  %>
-
+<tbody id="orderTable"></tbody>
+</table>
   <aside class="admin-sidebar">
     <h2>管理員後台</h2>
     <ul>
@@ -183,5 +169,36 @@ private String adminOrderEscapeHtml(String value) {
   %>
 
   <script src="cookie-consent.js" defer></script>
+  <script>
+	  <script>
+
+fetch("getOrders.jsp")
+
+.then(res => res.json())
+
+.then(data => {
+
+    const table =
+    document.getElementById("orderTable");
+
+    table.innerHTML = "";
+
+    data.forEach(order => {
+
+        table.innerHTML += `
+        <tr>
+            <td>${order.order_id}</td>
+            <td>${order.username}</td>
+            <td>${order.total_price}</td>
+            <td>${order.status}</td>
+            <td>${order.create_time}</td>
+        </tr>
+        `;
+    });
+
+});
+
+</script>
+  </script>
 </body>
 </html>
