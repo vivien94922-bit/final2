@@ -40,64 +40,43 @@
 <button id="backToTop" title="回到頂部">↑</button>
 
 <script>
-    // 簡單的 header 載入範例
-fetch('header.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('header-placeholder').innerHTML = data);
-    // 1. 定義 Header 與 Footer 載入及互動初始化函式
-    async function initPage() {
-        // 載入 Header 並等待完成
-        const headerRes = await fetch('header.html');
-        const headerText = await headerRes.text();
-        document.getElementById('header-placeholder').innerHTML = headerText;
-
-        // 載入 Footer 並等待完成
-        const footerRes = await fetch('footer.html');
-        const footerText = await footerRes.text();
-        document.getElementById('footer-placeholder').innerHTML = footerText;
-
-        // 【關鍵】Header 內容出現後，立刻初始化 UI 事件
-        initHeaderUI();
+    // 1. 初始化頁面佈局
+    async function initLayout() {
+        try {
+            // 建議直接在 HTML 寫好 Header/Footer，這裡僅作必要檢查
+            const headerEl = document.getElementById('header-placeholder');
+            const footerEl = document.getElementById('footer-placeholder');
+            
+            // 如果你有 header.html 和 footer.html，請確保檔案存在且名稱正確
+            // 如果沒有，請刪除這兩行 fetch
+            const [hRes, fRes] = await Promise.all([
+                fetch('header.html').catch(() => ({ text: () => '' })),
+                fetch('footer.html').catch(() => ({ text: () => '' }))
+            ]);
+            
+            if (headerEl) headerEl.innerHTML = await hRes.text();
+            if (footerEl) footerEl.innerHTML = await fRes.text();
+            
+            initHeaderUI();
+        } catch (err) { console.error("Layout 載入失敗:", err); }
     }
 
-    // 2. 初始化 Header 的互動功能
+    // 2. 初始化 Header 互動
     function initHeaderUI() {
         const searchIcon = document.getElementById("searchIcon");
         const searchBox = document.getElementById("searchBox");
         const menuIcon = document.getElementById("menuIcon");
         const menuBox = document.getElementById("menuBox");
-
-        if (searchIcon && searchBox) {
-            searchIcon.addEventListener("click", () => {
-                searchBox.classList.toggle("active");
-            });
-        }
-        if (menuIcon && menuBox) {
-            menuIcon.addEventListener("click", () => {
-                menuBox.classList.toggle("active");
-            });
-        }
+        if (searchIcon && searchBox) searchIcon.addEventListener("click", () => searchBox.classList.toggle("active"));
+        if (menuIcon && menuBox) menuIcon.addEventListener("click", () => menuBox.classList.toggle("active"));
     }
 
-    // 3. 頁面啟動邏輯
-    document.addEventListener("DOMContentLoaded", async () => {
-        // 先載入 Layout
-        await initPage();
-
-        // 再載入商品資料
-        fetch("index_data.json")
-            .then(res => res.json())
-            .then(data => {
-                renderProducts(data.travel, "travel-grid");
-            });
-    });
-
-    // 4. 商品渲染函式
+    // 3. 渲染商品函式
     function renderProducts(products, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
+        container.innerHTML = ""; // 清空舊內容
 
-        // 讀取本地收藏狀態
         const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
         products.forEach(p => {
@@ -122,6 +101,24 @@ fetch('header.html')
             `);
         });
     }
+
+    // 4. 核心啟動邏輯
+    document.addEventListener("DOMContentLoaded", async () => {
+        await initLayout();
+
+        // 讀取唯一的 JSON 檔案
+        fetch("products.json")
+            .then(res => res.json())
+            .then(data => {
+                // 使用你提供的 products.json 結構 (data.products)
+                // 這裡示範篩選 category 為 'travel' 的商品
+                const allProducts = data.products || [];
+                const travelProducts = allProducts.filter(p => p.category === 'travel');
+                
+                renderProducts(travelProducts, "travel-grid");
+            })
+            .catch(err => console.error("資料載入失敗，請確認 products.json 是否存在:", err));
+    });
 </script>
 </body>
 </html>
