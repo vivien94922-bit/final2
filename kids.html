@@ -77,7 +77,6 @@
         try {
             const [hRes, fRes] = await Promise.all([
                 fetch('header.html'),
-                fetch('footer.html')
             ]);
             
             const headerEl = document.getElementById('header-placeholder');
