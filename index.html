@@ -382,7 +382,7 @@ document.addEventListener("DOMContentLoaded", initPage);
                 intro.remove();
             }, 2500);
         }
-    });
+    })
 
     // 2. 心理測驗邏輯
     let currentStep = 1;
@@ -407,48 +407,55 @@ document.addEventListener("DOMContentLoaded", initPage);
     if (prevBtn) prevBtn.addEventListener('click', () => { if (currentStep > 1) { currentStep--; updateQuizStep(); } });
 
     // 3. 核心載入與渲染
-    document.addEventListener("DOMContentLoaded", () => {
-        if (!sessionStorage.getItem("intro_shown")) {
-            sessionStorage.setItem("intro_shown", "true");
-            const introEl = document.getElementById("intro");
-            if (introEl) introEl.style.display = "block";
-        }
-});
-
-    // 4. 商品渲染 (已加入分享按鈕)
-    function renderProducts(products, containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        container.innerHTML = "";
-        if (!products) return;
-        products.forEach(p => {
-            const fullName = p.name;
-            const splitIdx = fullName.lastIndexOf(" ");
-            const engName = (splitIdx !== -1) ? fullName.substring(0, splitIdx) : fullName;
-            const chName = (splitIdx !== -1) ? fullName.substring(splitIdx + 1) : "";
-
-            container.insertAdjacentHTML('beforeend', `
-                <div class="product" data-id="${p.id}">
-                    <a href="product.html?id=${p.id}" class="product-link">
-                        <img src="${p.image}" alt="${fullName}">
-                        <div class="product-info">
-                            <div class="product-name" style="line-height: 1.4; min-height: 48px;">
-                                <span style="font-weight: 600; display: block;">${engName}</span>
-                                <span style="font-size: 20px; color: #666;">${chName}</span>
-                            </div>
-                            <div class="product-price">NT$${p.price}</div>
-                        </div>
-                    </a>
-                    <div class="product-actions">
-                        <img src="images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
-                        <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${fullName}', 'product.html?id=${p.id}')">
-                    </div>
-                    <button class="add-cart-btn">加入購物車</button>
-                </div>
-            `);
-        });
+    // 1. 頁面載入時的初始化
+document.addEventListener("DOMContentLoaded", () => {
+    // 開場動畫
+    if (!sessionStorage.getItem("intro_shown")) {
+        sessionStorage.setItem("intro_shown", "true");
+        const introEl = document.getElementById("intro");
+        if (introEl) introEl.style.display = "block";
     }
 
+    // 載入商品資料 (統一用這一份)
+    fetch("products.json")
+        .then(res => res.json())
+        .then(data => {
+            const all = data.products;
+            // 渲染各區塊
+            renderProducts(all.filter(p => p.category === 'boarding').slice(0, 3), "boarding-grid");
+            renderProducts(all.filter(p => p.category === 'travel').slice(0, 3), "travel-grid");
+            renderProducts(all.filter(p => p.category === 'family').slice(0, 3), "family-grid");
+            renderProducts(all.filter(p => [1, 5, 7].includes(p.id)), "hot-grid");
+        })
+        .catch(err => console.warn("商品載入失敗:", err));
+});
+
+// 2. 通用的渲染函數 (確保此處只有一個)
+function renderProducts(products, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = "";
+    products.forEach(p => {
+        container.insertAdjacentHTML('beforeend', `
+            <div class="product" data-id="${p.id}">
+                <a href="product.html?id=${p.id}" class="product-link">
+                    <img src="${p.image}" alt="${p.name}">
+                    <div class="product-info">
+                        <div class="product-name" style="line-height: 1.4; min-height: 55px;">
+                            ${p.name}
+                        </div>
+                        <div class="product-price">NT$${p.price}</div>
+                    </div>
+                </a>
+                <div class="product-actions">
+                    <img src="images/heart.png" class="favorite-icon" onclick="toggleFavorite(event, this)">
+                    <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${p.name}', 'product.html?id=${p.id}')">
+                </div>
+                <button class="add-cart-btn">加入購物車</button>
+            </div>
+        `);
+    });
+}
     // 5. 分享功能 (Web Share API)
     function shareProduct(event, name, url) {
         event.preventDefault();
