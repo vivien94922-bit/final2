@@ -704,13 +704,15 @@ body {
 
     <div id="tab-reviews" class="content">
     <div id="feedback-form">
-        <p id="login-status">請登入後留言 (演示模式)</p>
+    <div id="login-area">
+        <input type="text" id="username" placeholder="請輸入暱稱以進行留言">
+        <button onclick="login()">登入</button>
     </div>
-    <hr>
-    <div class="feedback-list" id="feedback-list">
-        </div>
-    
-    <div id="pagination" style="text-align:center; margin-top:20px;"></div>
+    <div id="comment-area" style="display:none;">
+        <p>您好，<span id="display-user"></span> | <button onclick="logout()">登出</button></p>
+        <textarea id="commentText" placeholder="輸入留言..."></textarea>
+        <button onclick="submitComment()">送出</button>
+    </div>
 </div>
 </div>
 
@@ -822,5 +824,66 @@ function addToCart() {
     localStorage.setItem("cart", JSON.stringify(cart));
     alert("成功加入購物車");
 }
+    let currentUser = null;
+
+// 登入功能
+function login() {
+    const name = document.getElementById('username').value;
+    if (!name) return alert('請輸入暱稱');
+    currentUser = name;
+    document.getElementById('login-area').style.display = 'none';
+    document.getElementById('comment-area').style.display = 'block';
+    document.getElementById('display-user').innerText = name;
+}
+
+function logout() {
+    currentUser = null;
+    document.getElementById('login-area').style.display = 'block';
+    document.getElementById('comment-area').style.display = 'none';
+}
+
+// 送出留言
+function submitComment() {
+    const text = document.getElementById('commentText').value;
+    const comments = JSON.parse(localStorage.getItem('my_comments') || '[]');
+    
+    comments.push({
+        id: Date.now(), // 用時間戳記當作 ID
+        username: currentUser,
+        content: text
+    });
+    
+    localStorage.setItem('my_comments', JSON.stringify(comments));
+    document.getElementById('commentText').value = '';
+    renderComments();
+}
+
+// 刪除留言
+function deleteComment(id) {
+    let comments = JSON.parse(localStorage.getItem('my_comments') || '[]');
+    comments = comments.filter(c => c.id !== id);
+    localStorage.setItem('my_comments', JSON.stringify(comments));
+    renderComments();
+}
+
+// 渲染留言
+function renderComments() {
+    const comments = JSON.parse(localStorage.getItem('my_comments') || '[]');
+    const list = document.getElementById('feedback-list');
+    
+    list.innerHTML = comments.map(c => `
+        <div class="feedback-item">
+            <strong>${c.username}</strong>
+            <p>${c.content}</p>
+            ${currentUser === c.username ? 
+              `<button onclick="deleteComment(${c.id})">刪除我的留言</button>` : ''}
+        </div>
+    `).join('');
+}
+
+// 頁面載入時執行
+document.addEventListener("DOMContentLoaded", () => {
+    renderComments();
+});
 </script>
 </html>
