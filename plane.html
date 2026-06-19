@@ -62,32 +62,30 @@
     }
 
     // 3. 唯一的渲染函式 (整合了所有顯示邏輯)
-    function renderProducts(products, containerId) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
+    document.addEventListener("DOMContentLoaded", async () => {
+    // 1. 先初始化佈局
+    await initLayout();
 
-        const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-        container.innerHTML = products.map(p => {
-            const isFav = favorites.includes(p.id.toString());
-            return `
-                <div class="product" data-id="${p.id}">
-                    <a href="product.html?id=${p.id}" class="product-link">
-                        <img src="${p.image}" alt="${p.name}">
-                        <div class="product-info">
-                            <div class="product-name">${p.name}</div>
-                            <div class="product-price">NT$${p.price}</div>
-                        </div>
-                    </a>
-                    <div class="product-actions">
-                        <img src="${isFav ? 'images/love.png' : 'images/heart.png'}" class="favorite-icon" onclick="toggleFavorite(event, this)">
-                        <img src="images/share.png" class="share-icon" onclick="shareProduct(event, '${p.name}', 'product.html?id=${p.id}')">
-                    </div>
-                    <button class="add-cart-btn">加入購物車</button>
-                </div>
-            `;
-        }).join('');
-    }
+    // 2. 讀取商品資料 (統一用 products.json)
+    fetch("products.json") 
+        .then(res => {
+            if (!res.ok) throw new Error("找不到產品檔案");
+            return res.json();
+        })
+        .then(data => {
+            // 修正：從 data.products 取得陣列，然後篩選 category
+            // 請將 'boarding' 改為該頁面所屬的類別 (如 'travel' 或 'family')
+            const allProducts = data.products || [];
+            const filtered = allProducts.filter(p => p.category === 'boarding'); 
+            
+            console.log("成功讀取資料，篩選數量:", filtered.length);
+            renderProducts(filtered, "boarding-grid");
+        })
+        .catch(err => {
+            console.error("資料載入失敗:", err);
+            document.getElementById("boarding-grid").innerHTML = "<p>資料載入中或發生錯誤，請稍後再試。</p>";
+        });
+});
 
     // 4. 啟動與資料處理
     document.addEventListener("DOMContentLoaded", async () => {
