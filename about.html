@@ -120,34 +120,43 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        // 確保先載入 Header
+        // 1. 載入 Header
         fetch('header.html')
             .then(res => res.text())
             .then(data => {
                 document.getElementById('header-placeholder').innerHTML = data;
-                // 若 Header 內有選單互動，這裡記得呼叫 initHeaderUI()
+                // 若 Header 有互動功能，可以在這裡觸發初始化
             });
 
-        // 【關鍵修正】：使用 setTimeout 確保 DOM 渲染完成後再觸發寬度動畫
-        setTimeout(() => {
-            document.querySelectorAll(".progress-fill").forEach(bar => {
-                const percent = bar.dataset.percent;
-                if (percent) {
-                    bar.style.transition = "width 1.5s ease-in-out"; // 確保有轉場動畫
+        // 2. 使用 IntersectionObserver 監聽進度條是否進入視窗範圍
+        const observerOptions = {
+            threshold: 0.5 // 當元素顯示 50% 時觸發
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bar = entry.target;
+                    const percent = bar.dataset.percent;
                     bar.style.width = percent + "%";
+                    observer.unobserve(bar); // 動畫執行一次即可，不需要重複觸發
                 }
             });
-        }, 500); // 等待 0.5 秒確保頁面穩定
+        }, observerOptions);
 
-        // 回到頂部按鈕邏輯
+        // 監聽所有進度條
+        document.querySelectorAll(".progress-fill").forEach(bar => {
+            observer.observe(bar);
+        });
+
+        // 3. 回到頂部按鈕邏輯
         const backToTopBtn = document.getElementById("backToTop");
-        window.onscroll = () => {
+        window.addEventListener("scroll", () => {
             if (window.scrollY > 300) backToTopBtn.style.display = "block";
             else backToTopBtn.style.display = "none";
-        };
+        });
         backToTopBtn.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
     });
 </script>
-
 </body>
 </html>
