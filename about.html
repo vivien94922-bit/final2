@@ -90,30 +90,33 @@
 <button id="backToTop" title="回到頂部">↑</button>
 
 <script>
-    // 簡單的 header 載入範例
-fetch('header.html')
-    .then(res => res.text())
-    .then(data => document.getElementById('header-placeholder').innerHTML = data);
-
     document.addEventListener("DOMContentLoaded", () => {
-        loadLayout();
+        // 確保先載入 Header
+        fetch('header.html')
+            .then(res => res.text())
+            .then(data => {
+                document.getElementById('header-placeholder').innerHTML = data;
+                // 若 Header 內有選單互動，這裡記得呼叫 initHeaderUI()
+            });
 
-        // 進度條動畫
-        document.querySelectorAll(".progress-fill").forEach(bar => {
-            const percent = bar.dataset.percent;
-            setTimeout(() => bar.style.width = percent + "%", 300);
-        });
+        // 【關鍵修正】：使用 setTimeout 確保 DOM 渲染完成後再觸發寬度動畫
+        setTimeout(() => {
+            document.querySelectorAll(".progress-fill").forEach(bar => {
+                const percent = bar.dataset.percent;
+                if (percent) {
+                    bar.style.transition = "width 1.5s ease-in-out"; // 確保有轉場動畫
+                    bar.style.width = percent + "%";
+                }
+            });
+        }, 500); // 等待 0.5 秒確保頁面穩定
 
         // 回到頂部按鈕邏輯
         const backToTopBtn = document.getElementById("backToTop");
         window.onscroll = () => {
-            if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-                backToTopBtn.style.display = "block";
-            } else {
-                backToTopBtn.style.display = "none";
-            }
+            if (window.scrollY > 300) backToTopBtn.style.display = "block";
+            else backToTopBtn.style.display = "none";
         };
-        backToTopBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+        backToTopBtn.onclick = () => window.scrollTo({top: 0, behavior: 'smooth'});
     });
 </script>
 
