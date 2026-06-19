@@ -100,22 +100,25 @@ function initBackToTop() {
 }
 
 function initCartAndFavorites() {
-    // 只保留收藏功能的邏輯
+    // 統一改為 "myFavorites"
     window.toggleFavorite = (e, el) => {
         e.stopPropagation(); e.preventDefault();
         const id = el.closest(".product").dataset.id;
-        let favs = JSON.parse(localStorage.getItem("favorites")) || [];
+        
+        // 統一使用 "myFavorites"
+        let favs = JSON.parse(localStorage.getItem("myFavorites")) || [];
         const idx = favs.indexOf(id);
+        
         if (idx === -1) {
             favs.push(id);
-            el.src = "images/love.png";
+            el.src = "images/love.png"; // 假設這是愛心填滿的圖
             toast("已加入收藏");
         } else {
             favs.splice(idx, 1);
-            el.src = "images/heart.png";
+            el.src = "images/heart.png"; // 假設這是愛心空心的圖
             toast("已移除收藏");
         }
-        localStorage.setItem("favorites", JSON.stringify(favs));
+        localStorage.setItem("myFavorites", JSON.stringify(favs));
     };
 }
 
