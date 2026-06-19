@@ -800,11 +800,14 @@ function addToCart() {
         return;
     }
 
-    let cart =
-    JSON.parse(localStorage.getItem("cart")) || [];
+   let cart =
+JSON.parse(localStorage.getItem("cart")) || [];
 
-    const exist =
-    cart.find(item => item.id === currentProduct.id);
+console.log("cart=", cart);
+console.log("currentProduct=", currentProduct);
+
+const exist =
+cart.find(item => item.id === currentProduct.id);
 
     if (exist) {
         exist.quantity += 1;
