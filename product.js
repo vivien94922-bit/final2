@@ -1,3 +1,4 @@
+let currentProduct = null;
 document.addEventListener("DOMContentLoaded", () => {
   // 取得商品 ID
   const params = new URLSearchParams(window.location.search);
@@ -5,11 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 找到對應商品
   const productData = products.find(p => p.id === productId);
+ 
   if (!productData) {
     alert("找不到商品");
     return;
   }
-
+  currentProduct = productData;
   const productEl = document.querySelector(".product-container");
 
   // ===== 設定 dataset =====
