@@ -702,19 +702,16 @@ body {
 
 
 
-    <div id="tab-reviews" class="content">
-    <div id="feedback-form">
-    <section id="comment-section" class="content-section">
-    <h2>顧客留言板</h2>
-    <div id="comment-form-area">
-        <textarea id="comment-text" placeholder="輸入您的留言..." style="width:100%; height:80px;"></textarea>
-        <button onclick="postComment()" class="save-btn">發送留言</button>
+   <div id="tab-reviews" class="content">
+    <div id="comment-section">
+        <h2>顧客留言板</h2>
+        <div id="comment-form-area">
+            <textarea id="comment-text" placeholder="輸入您的留言..."></textarea>
+            <button onclick="postComment()" class="save-btn">發送留言</button>
+        </div>
+        <div id="comment-list" style="margin-top:20px;"></div>
     </div>
-    <div id="comment-list" style="margin-top:20px;"></div>
-</section>
 </div>
-</div>
-
 </section>
 <footer>
 
@@ -827,11 +824,18 @@ function addToCart() {
 
 // 1. 發送留言
 function postComment() {
+    // 檢查登入狀態 (假設你登入時會設定 localStorage 'isLoggedIn' 為 'true')
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (!isLoggedIn) {
+        alert("請先登入才能留言！");
+        window.location.href = 'login.html'; // 導向登入頁
+        return;
+    }
+
     const text = document.getElementById('comment-text').value;
     if (!text) return alert("請輸入留言內容");
 
-    // 從 localStorage 取得已儲存的使用者資訊 (假設你登入時存了這些)
-    const username = localStorage.getItem('userName') || "匿名會員"; 
+    const username = localStorage.getItem('userName') || "會員"; 
     
     const newComment = {
         id: Date.now(),
@@ -844,8 +848,8 @@ function postComment() {
     comments.push(newComment);
     localStorage.setItem('allComments', JSON.stringify(comments));
     
-    document.getElementById('comment-text').value = ''; // 清空輸入框
-    renderComments(); // 重新渲染
+    document.getElementById('comment-text').value = ''; 
+    renderComments();
 }
 
 // 2. 渲染留言列表
